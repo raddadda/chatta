@@ -3,11 +3,9 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const SocketIo = require('socket.io');
 
-
 const app = express();
 const PORT = 8000;
 const db = require('./models');
-
 
 app.set('view engine','ejs');
 app.use(express.urlencoded({extended:true}));
@@ -21,7 +19,6 @@ const io = SocketIo(server);
 
 const socketRouter = require('./routes/socket');
 socketRouter(io);
-
 
 const router = require('./routes/main');
 app.use('/',router);
