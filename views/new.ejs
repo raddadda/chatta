@@ -7,11 +7,11 @@
     <title>Document</title>
 </head>
 <body>
-    <h1> 메인 페이지 </h1>
+    <h1>new 페이지</h1>
 </body>
 <script>
-    const socket = io();
-    // 네임 스페이스 '/'의 경우에는 생략가능 (링크 개념이라)
+    const socket = io('/new');
+    // 네임 스페이스가 /new로 되어있는 소켓을 사용
     socket.emit('userLog')
 </script>
 </html>
