@@ -48,11 +48,11 @@ const friendListPost = async (req,res)=>{
 }
 
 const chatRoomPost = async (req,res)=>{
-    const {user_id,board_id,room_title,category}=req.body;
+    const {user_id,board_id,title,category}=req.body;
     const chatroom = await Chat_Room.create({
         owner_id:user_id,
         board_id,
-        room_title,
+        title,
         category,
     })
     res.json({result:true,chatroom});

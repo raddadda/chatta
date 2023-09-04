@@ -14,7 +14,7 @@ const Chat_Room = (sequelize) =>{
         board_id:{
             type:DataTypes.INTEGER,
         },
-        room_title:{
+        title:{
             type:DataTypes.STRING(20),
             allowNull:false,
         },
