@@ -1,6 +1,7 @@
 const {User} = require('../models');
 const bcrypt = require('bcrypt');
 const { v4 } = require('uuid');
+const constant = require('../common/constant');
 
 const dbIdCheck = async (login_id) => {
     const result = await User.findAll({where:{login_id}})
@@ -20,7 +21,7 @@ const dbpwCompare = async (pw,dbpw) => {
     const flag = await bcrypt.compare(pw,dbpw);
     return flag
 }
-    
+
 const signUp = async (req,res)=>{
     const {login_id,login_pw,user_name}=req.body
     try {
@@ -56,7 +57,10 @@ const signIn = async (req,res)=>{
             const {login_pw:dbpw} = result[0];
             const flag = await dbpwCompare(login_pw,dbpw);
             if(flag){
-                const {nickname} = result[0];
+                const {user_id,nickname} = result[0];
+                const cookieValue = {id:user_id,nickname};
+                const {loginCookie,cookieSetting} = constant;
+                res.cookie(loginCookie,cookieValue,cookieSetting);
                 res.json({result:true, message:`${nickname}님 어서오세요`})
             } else {
                 res.json({result:false, message:"pw가 일치하지 않습니다"})

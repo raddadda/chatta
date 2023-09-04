@@ -7,27 +7,30 @@ const {
     Chat_Room_Join,
     Chat_Message
 } = require('../models');
-const { v4 } = require('uuid');
+
 
 const main = (req,res)=>{
+    console.log("cookie",req.signedCookies.logined.id);
     res.render('index');
 }
+
 
 const newMain = (req,res)=>{
     res.render('new');
 }
 
+
 const boardPost = async (req,res)=>{
-    const {title,views,user_id} = req.body
+    const {title,user_id} = req.body
     // user_id는 쿠키를 생성해서 req.cookies로 가져와야 될거 같긴 한데
     // 백앤드로 관계형 잘 설정되는지만 보려고 일단은 req에 같이 넣음
     const board = await Board.create({
         title,
-        views,
-        poster_id:user_id,
+        poster_id : user_id,
     })
     res.json({result:true , title , user_id});
 }
+
 
 const bookmarkPost = async (req,res)=>{
     const {user_id,board_id}=req.body;
@@ -38,6 +41,7 @@ const bookmarkPost = async (req,res)=>{
     res.json({result:true , message:`${user_id}님이 ${board_id}를 북마크 했습니다`});
 }
 
+
 const friendListPost = async (req,res)=>{
     const {user_id,friend_id} = req.body;
     const friendlist = await Friend_List.create({
@@ -46,6 +50,7 @@ const friendListPost = async (req,res)=>{
     })
     res.json({result:true , message:`${user_id}님이 ${friend_id}님을 친구 추가 하셨습니다`});
 }
+
 
 const chatRoomPost = async (req,res)=>{
     const {user_id,board_id,title,category}=req.body;
@@ -58,6 +63,7 @@ const chatRoomPost = async (req,res)=>{
     res.json({result:true,chatroom});
 }
 
+
 const chatRoomJoinPost = async (req,res)=>{
     const {user_id,room_id}=req.body;
     const chatroomjoin = await Chat_Room_Join.create({
@@ -66,6 +72,7 @@ const chatRoomJoinPost = async (req,res)=>{
     })
     res.json({result:true,chatroomjoin});
 }
+
 
 const chatMessagePost = async (req,res)=>{
     const {user_id,room_id,content}=req.body;
@@ -86,6 +93,7 @@ const deleteUser = async (req,res)=>{
     res.send({result:true,dest});
 }
 
+
 const deleteBoard = async (req,res)=>{
     const {board_id:id} = req.body
     const dest = await Board.destroy({
@@ -95,6 +103,7 @@ const deleteBoard = async (req,res)=>{
 }
 // 외래키 연결이 잘 된건지 확인을 위해..
 
+
 const deleteFriend = async (req,res)=>{
     const {friend_list_id:id} = req.body
     const dest = await Board.destroy({
@@ -102,6 +111,7 @@ const deleteFriend = async (req,res)=>{
     })
     res.send({result:true,dest});
 }
+
 
 const deleteChatRoom = async (req,res)=>{
     const {chat_room_id:id} = req.body
@@ -111,6 +121,7 @@ const deleteChatRoom = async (req,res)=>{
     res.send({result:true,dest});
 }
 
+
 const deleteChatRoomJoin = async (req,res)=>{
     const {chat_room_join_id:id} = req.body
     const dest = await Chat_Room_Join.destroy({
@@ -118,6 +129,7 @@ const deleteChatRoomJoin = async (req,res)=>{
     })
     res.send({result:true,dest});
 }
+
 
 const deleteChatMessage = async (req,res)=>{
     const {chat_message_id:id} = req.body
