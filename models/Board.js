@@ -8,7 +8,7 @@ const Board = (sequelize) =>{
             allowNull:false,
             autoIncrement:true,
         },
-        board_title:{
+        title:{
             type:DataTypes.STRING(20),
             allowNull:false,
         },
