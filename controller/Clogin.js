@@ -30,7 +30,7 @@ const signUp = async (req,res)=>{
             return;
         }
         const hash = await pwHashing(login_pw);
-        uuid=v4();
+        const uuid=v4();
         const user = await User.create({
             user_id:uuid,
             login_id,
@@ -38,7 +38,7 @@ const signUp = async (req,res)=>{
             user_name,
             nickname:login_id,
         })
-        res.json({result:true,message:`${login_id}님이 회원가입 하셨습니다`});
+        res.json({result:true,message:`${login_id}님이 회원가입 하셨습니다`,uuid});
     } catch (error) {
         console.log(error);
     }

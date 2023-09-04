@@ -14,6 +14,7 @@ db.Chat_Room = require('./Chat_Room')(sequelize);
 db.Chat_Room_Join = require('./Chat_Room_Join')(sequelize);
 db.Chat_Message = require('./Chat_Message')(sequelize);
 
+
 db.User.hasMany(db.Friend_List,{foreignKey:'user_id'});
 db.Friend_List.belongsTo(db.User,{foreignKey:'user_id' , targetKey:'user_id' , onDelete:'CASCADE'})
 db.Friend_List.belongsTo(db.User,{foreignKey:'friend_id' , targetKey:'user_id' , onDelete:'CASCADE'})
@@ -35,7 +36,7 @@ db.Board_Bookmark.belongsTo(db.Board,{foreignKey:'board_id',targetKey:'id',onDel
 db.User.hasMany(db.Chat_Room_Join,{foreignKey:'user_id'});
 db.Chat_Room.hasMany(db.Chat_Room_Join,{foreignKey:'id'})
 db.Chat_Room_Join.belongsTo(db.User,{foreignKey:'user_id',onDelete:'CASCADE'});
-db.Chat_Room_Join.belongsTo(db.Board,{foreignKey:'room_id',targetKey:'id',onDelete:'CASCADE'})
+db.Chat_Room_Join.belongsTo(db.Chat_Room,{foreignKey:'room_id',targetKey:'id',onDelete:'CASCADE'})
 // 유저 - 채팅방 참여자 - 채팅방 의    다:다 관계   (채팅방 참여자)
 
 
