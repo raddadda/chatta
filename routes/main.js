@@ -10,9 +10,12 @@ router.get('/',controller.main);
 router.get('/new',cboard.newMain);
 router.post('/new/post',cboard.boardPost);
 router.delete('/new/delete', cboard.boardDelete);
-router.post('/new/edit',cboard.boardEdit)
-router.get('/new/edit',cboard.newEdit);
 router.post('/new/edit/post',cboard.boarduser_findone)
+
+router.get('/new/edit',cboard.newEdit);
+router.post('/new/edit',cboard.boardEdit);
+
+
 router.post('/signup',clogin.signUp)
 router.post('/signIn',clogin.signIn)
 

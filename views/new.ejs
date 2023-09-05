@@ -48,38 +48,6 @@
             }
         }
 
-        async function boardEdit(){
-        try{
-            const data = {
-                    title:boardForm.title.value,
-                    content:boardForm.content.value,
-                    event_time:boardForm.eventDate.value,
-                    bord_category:boardForm.category.value
-                }
-            const res = await axios({
-                method:"post",
-                url:"/new/edit",
-                data,
-            })
-        } catch(error) {
-            console.log(error);
-        }
-    }
-    
-        async function boardDelete () {
-
-            if(!confirm('정말로 삭제하시겠습니까?')) return;
-            const deleteRes = await axios({
-                method:"DELETE",
-                url:"/new/delete",
-            })
-
-            if (deleteRes.result) {
-                alert('삭제가 완료되었습니다.')
-            }
-            
-        }
-
     // const socket = io('/new');
     // // 네임 스페이스가 /new로 되어있는 소켓을 사용
     // socket.emit('userLog')

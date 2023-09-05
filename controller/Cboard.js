@@ -9,7 +9,9 @@ const newMain = (req,res)=>{
 const newEdit = (req,res)=>{
     res.render('postedit');
 }
-const user_id='53872819-2760-4c48-9267-8482f02d4a5c';
+
+
+const user_id = '53872819-2760-4c48-9267-8482f02d4a5c';
 
 const boardPost = async (req,res)=>{
     const {title,content,event_time,bord_category} = req.body
@@ -33,8 +35,10 @@ const boardPost = async (req,res)=>{
 
 const boardDelete = async (req, res) => {
 
+    const { id } = req.body;
+    
     try {
-        const board = await Board.destroy({ where : {id:1}})
+        const board = await Board.destroy({ where : { id }})
         console.log('board', board);
         if (board) {
             res.json({result:true});
@@ -49,7 +53,7 @@ const boardDelete = async (req, res) => {
 }
 
 const boardEdit = async(req,res)=>{
-    const {title,content,event_time,bord_category} = req.body
+    const {id, title,content,event_time,bord_category} = req.body
     try{
         const board = await Board.update({
             title,
@@ -58,8 +62,10 @@ const boardEdit = async(req,res)=>{
             event_time,
             bord_category
         },{
-            where:{poster_id : user_id}
+            where:{id}
         })
+
+        console.log(board);
         res.json({result:true , title , content, event_time, bord_category});
     }catch(e){
         console.log(e);
