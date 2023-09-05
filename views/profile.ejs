@@ -1,41 +1,45 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>사용자 프로필</title>
 </head>
+
 <body>
-    <h1>환영합니다, <%= user.nickname %></h1>
-    
+    <h1>환영합니다, <%= user.nickname %>
+    </h1>
+
     <!-- 사용자 정보 표시 -->
     <ul>
-        <li>ID: <%= user.id %></li>
-        <li>닉네임: <%= user.nickname %></li>
-        <li>나이: <%= user.age %></li>
-        <li>성별: <%= user.gender %></li>
-        <li>생년월일: <%= user.dateOfBirth %></li>
+        <li>ID: <%= user.login_id %>
+        </li>
+        <li>닉네임: <%= user.nickname %>
+        </li>
+        <li>나이: </li>
+        <li>성별: <%= user.gender %>
+        </li>
+        <li>생년월일: </li>
     </ul>
-    
+
     <!-- 프로필 사진 표시 -->
-    <img src="<%= user.profilePhoto %>" alt="프로필 사진">
-    
+    <img src="" alt="프로필 사진">
+
     <!-- 프로필 편집 및 삭제 버튼 -->
     <a href="/프로필-편집">프로필 편집</a>
     <a href="/프로필-삭제">프로필 삭제</a>
-    
+
     <!-- 친구 수 표시 -->
-    <p>친구 수: <%= user.friendCount %></p>
-    
+    <p>친구 수:
+    </p>
+
     <!-- 선호 및 비선호 카테고리 표시 -->
-    <p>선호하는 카테고리: <%= user.preferredCategories.join(', ') %></p>
-    <p>비선호하는 카테고리: <%= user.nonPreferredCategories.join(', ') %></p>
-    
-    <!-- 알림 설정 -->
-    <p>알림 설정: <%= user.notificationPreferences %></p>
-    
+    <p>선호하는 카테고리: </p>
+    <p>비선호하는 카테고리: </p>
+
     <!-- 참여 중인 채팅룸, 읽지 않은 메시지, 일정 목록 표시 -->
-    <!-- 이러한 목록을 표시하기 위해 반복문을 사용할 수 있습니다 -->
-    
+
 </body>
+
 </html>
