@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1> <%= user.nickname %> 프로필수정 </h1>
+    <form name="edit-profile">
+        프로필사진 : <img src="" alt="프로필사진"><br />
+
+        이름 : <input type="text" id="userName" value="<%= user.user_name %>" readonly>   
+        성별 : <input type="text" id="gender" value="<%= user.gender %>"> <br />
+
+        아이디 : <input type="text" id="loginId" value="<%= user.login_id %>" readonly>
+        비밀번호 : <input type="password" id="loginPw" value="<% user.login_pw"> <br />
+        <!-- <button type="button" onclick="pwEdit()">변경</button> -->
+
+    </form>
+</body>
+</html>
