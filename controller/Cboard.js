@@ -11,7 +11,7 @@ const newEdit = (req,res)=>{
 }
 
 
-const user_id = '53872819-2760-4c48-9267-8482f02d4a5c';
+const user_id = '296b63ea-6f1c-4f18-9f10-382f4a80e1cd';
 
 const boardPost = async (req,res)=>{
     const {title,content,event_time,bord_category} = req.body
@@ -72,10 +72,13 @@ const boardEdit = async(req,res)=>{
     }
 }
 const boarduser_findone = async(req,res)=>{
+    const {id} = req.body;
+    
     try{
-        const board = await Board.findone({
-            where: user_id
+        const board = await Board.findOne({
+            where: {id}
         })
+        console.log("board",board);
         res.json({result:true});
     }catch(e){
         console.log(e);
