@@ -146,6 +146,7 @@ const connection = (io,socket,loc)=>{
         console.log(`${loc}접속`)
     })
 }
+
 // 새로운 함수를 정의하는게 아닌 이 안에 모두 동작 함수를 넣어야함
 
 module.exports = {
