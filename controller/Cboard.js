@@ -72,18 +72,34 @@ const boardEdit = async(req,res)=>{
     }
 }
 const boarduser_findone = async(req,res)=>{
-    try{
-        const board = await Board.findone({
-            where: user_id
+
+    const {id} = req.body;
+
+    try {
+        
+        const board = await Board.findOne({
+            where: {id}
         })
-        res.json({result:true});
-    }catch(e){
+        if (board.dataValues){
+            res.json({result:true, 
+                id:board.dataValues.id,
+                title:board.dataValues.title,
+                views: board.dataValues.views,
+                content:board.dataValues.content,
+                event_time:board.dataValues.event_time,
+                bord_category:board.dataValues.bord_category,
+                createAt : board.dataValues.createdAt,
+            });
+        }   
+      
+    } catch(e) {
+
         console.log(e);
     }
 }
 
 const boarduser_findall = async(req,res)=>{
-    
+
     try{
         const board = await Board.findAll({
             where: user_id
