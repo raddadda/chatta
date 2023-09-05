@@ -61,12 +61,12 @@ const signIn = async (req,res)=>{
 }
 
 const userLogOut = async (req,res)=>{
-    // 쿠키로 할까 했는데 쿠키는 만들기 쉬워서 문제가 나지 않을까 싶음 (타인이 강제 로그아웃 시키는등);
-    // 중요한 정보를 다루는 일의 경우에는 session으로 어떤 해쉬값을 db에 넣어놔서
-    // 그 값을 이용하는게 좋지 않을까 싶은 (고려중)
+    res.clearCookie(constant.loginCookie);
+    res.json({result:true});
 }
 
 module.exports = {
     signUp,
     signIn,
+    userLogOut,
 }
