@@ -20,7 +20,7 @@ router.post('/chatroom',controller.chatRoomPost)
 router.post('/chatroomjoin',controller.chatRoomJoinPost)
 router.post('/chatmessage',controller.chatMessagePost)
 
-
+router.post('/new/delete',cboard.boardEdit)
 router.post('/delete/user',controller.deleteUser)
 router.post('/delete/board',controller.deleteBoard)
 router.post('/delete/friend',controller.deleteFriend)

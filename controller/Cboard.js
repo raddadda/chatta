@@ -23,11 +23,39 @@ const boardPost = async (req,res)=>{
     }catch(e){
         console.log(e);
     }
-   
-   
 }
 
+const boardEdit = async(req,res)=>{
+    const {title,content,event_time,bord_category} = req.body
+    try{
+        const board = await Board.update({
+            title,
+            poster_id : user_id,
+            content,
+            event_time,
+            bord_category
+        },{
+            where:{poster_id : user_id}
+        })
+        res.json({result:true , title , content, event_time, bord_category});
+    }catch(e){
+        console.log(e);
+    }
+}
+const boarduser_findall = async(req,res)=>{
+    
+    try{
+        const board = await Board.findAll({
+            where: user_id
+        })
+        res.json({result:true});
+    }catch(e){
+        console.log(e);
+    }
+}
 module.exports = {
     newMain,
-    boardPost
+    boardPost,
+    boardEdit,
+    boarduser_findall
 }
