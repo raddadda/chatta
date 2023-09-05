@@ -3,15 +3,19 @@ const router = express.Router();
 const controller = require('../controller/Cmain.js');
 const clogin = require('../controller/Clogin.js');
 const cprofile = require('../controller/Cprofile.js');
+const cprofileEdit = require('../controller/CprofileEdit.js')
 
 router.get('/', controller.main);
 router.get('/profile', cprofile.profile);
 router.get('/new', controller.newMain);
+router.get('/profile/edit', cprofileEdit.profileUpdate);
 
 router.get('/new/:userid',controller.newMain);
 
 router.post('/signup',clogin.signUp)
 router.post('/signIn',clogin.signIn)
+
+router.post('/profile/edit', cprofileEdit.post_profileUpdate)
 
 router.post('/board',controller.boardPost)
 router.post('/bookmark',controller.bookmarkPost)
