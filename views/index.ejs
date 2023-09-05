@@ -10,43 +10,85 @@
 </head>
 
 <body>
-    <h1>회원가입</h1>
-    <form name="signup-form">
-        <input type="text" name="name" placeholder="이름" /><br />
-        <input type="text" name="userid" placeholder="아이디"><br />
-        <input type="password" name="pw" placeholder="비밀번호"><br />
+    <div id="login_button_div">
+        <button id='sign_up_visible_btn' onclick="signUpVisible()"> 회원가입 </button>
+        <button id='sign_in_visible_btn' onclick="signInVisible()"> 로그인 </button>
+    </div>
+    <div id="after_login_div">
+        <a href="/profile">프로필 페이지로 이동</a>
+        <button onclick="userLogOut()">로그아웃</button>
+    </div>
+    <div id="sign_up_div" hidden>
+        <div>회원가입</div>
+        <form name="signup-form">
+            <input type="text" name="name" placeholder="이름"/><br/>
+            <input type="text" name="userid" placeholder="아이디"><br/>
+            <input type="password" name="pw" placeholder="비밀번호"><br/>
 
-        <label for="gender">성별:</label>
-        <select name="gender" id="gender">
-            <option value="남성">남성</option>
-            <option value="여성">여성</option>
-            <option value="기타">기타</option>
-        </select><br />
+            <label for="gender">성별:</label>
+            <select name="gender" id="gender">
+                <option value="남성">남성</option>
+                <option value="여성">여성</option>
+                <option value="기타">기타</option>
+            </select><br />
 
-        <label for="birth">생년월일:</label>
-        <select name="year" id="birth-year">
-        </select>
-        <select name="month" id="birth-month">
-        </select>
-        <select name="day" id="birth-day">
-        </select><br />
+            <label for="birth">생년월일:</label>
+            <select name="year" id="birth-year">
+            </select>
+            <select name="month" id="birth-month">
+            </select>
+            <select name="day" id="birth-day">
+            </select><br />
 
-        <button type="button" onclick="userSignUp()">회원가입</button>
-    </form>
-
-    <br />
-    <h1>로그인</h1>
-    <form name="signin-form">
-        <input type="text" name="userid" placeholder="아이디"><br />
-        <input type="password" name="pw" placeholder="비밀번호"><br />
-        <button type="button" onclick="userSignin()">로그인</button>
-    </form>
-    <br />
-    <button type="button" onclick="userLogOut()">로그아웃</button>
-    <br />
+            <button type="button" onclick="userSignUp()">회원가입</button>
+        </form>
+    </div>
+    <br/>
+    <div id="sign_in_div" hidden>
+        <div>로그인</div>
+        <form name="signin-form">
+            <input type="text" name="userid" placeholder="아이디"><br/>
+            <input type="password" name="pw" placeholder="비밀번호"><br/>
+            <button type="button" onclick="userSignin()">로그인</button>
+        </form>
+    </div>
+    <br/>
     <a href="/new">게시글 작성</a>
 </body>
 <script>
+    let isLogin = Boolean('<%= isLogin %>')
+    console.log('login',isLogin);
+    const login_button_div = document.getElementById('login_button_div');
+    const after_login_div = document.getElementById('after_login_div');
+    const sign_up_div = document.getElementById('sign_up_div');
+    const sign_in_div = document.getElementById('sign_in_div');
+    loginAdj(isLogin);
+
+    function loginAdj(isLogin){
+        login_button_div.toggleAttribute('hidden');
+        if(isLogin){
+            login_button_div.hidden = true;
+            after_login_div.hidden = false;
+        } else {
+            login_button_div.hidden = false;
+            after_login_div.hidden = true;
+        }
+    }
+
+    function signUpVisible(){
+        if(sign_up_div.hidden){
+            sign_up_div.hidden = false;
+        } else{
+            sign_up_div.hidden = true;
+        }
+    }
+    function signInVisible(){
+        if(sign_in_div.hidden){
+            sign_in_div.hidden = false;
+        } else{
+            sign_in_div.hidden = true;
+        }
+    }
     const yearDropdown = document.getElementById('birth-year');
     for (let year = new Date().getFullYear(); year >= 1900; year--) {
         const option = document.createElement('option');
@@ -87,11 +129,10 @@
                 url: "/signup",
                 data,
             });
-            if (!res.data.result) {
-                alert(res.data.message);
-                return;
-            } else {
-                alert(res.data.message);
+            alert(res.data.message);
+            if (res.data.result) {
+                sign_up_div.hidden = true;
+                sign_in_div.hidden = false;
             }
         } catch (error) {
             console.log(error);
@@ -111,11 +152,9 @@
                 url: "/signin",
                 data,
             })
-            if (!res.data.result) {
-                alert(res.data.message);
-                return;
-            } else {
-                alert(res.data.message)
+            alert(res.data.message);
+            if (res.data.result) {
+                document.location.assign('/profile');
             }
         } catch (error) {
             console.log(error);
@@ -127,6 +166,8 @@
             url: "/logout",
         })
         console.log("res", res)
+        isLogin = false;
+        loginAdj(isLogin);
     }
 </script>
 <script>

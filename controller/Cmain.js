@@ -10,8 +10,14 @@ const {
 
 
 const main = (req,res)=>{
-    console.log("cookie",req.signedCookies.logined.id);
-    res.render('index');
+    console.log("cookie",req.signedCookies.logined);
+    const data = {
+        isLogin:false,
+    }
+    if (req.signedCookies.logined){
+        data.isLogin = true
+    }
+    res.render('index',data);
 }
 
 
@@ -19,6 +25,9 @@ const newMain = (req,res)=>{
     res.render('new');
 }
 
+const chatMain = (req,res)=>{
+    res.render('chat');
+}
 
 const boardPost = async (req,res)=>{
     const {title,user_id} = req.body
@@ -152,6 +161,7 @@ const connection = (io,socket,loc)=>{
 module.exports = {
     main,
     newMain,
+    chatMain,
     connection,
     boardPost,
     bookmarkPost,
