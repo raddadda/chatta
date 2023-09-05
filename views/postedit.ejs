@@ -30,14 +30,15 @@
                 method: "POST",
                 url:"/new/edit/post",
                 data: {
-                    id: 4
+                    id: 5
                 }
             })
-            if (getpostRes.result) {
-                boardForm.title.value = getpostRes.title;
-                boardForm.content.value = getpostRes.content;
-                boardForm.eventDate.value = getpostRes.event_date;
-                boardForm.category.value = getpostRes.event_date;
+ 
+            if (getpostRes.data.result) {
+                boardForm.title.value = getpostRes.data.title;
+                boardForm.content.value = getpostRes.data.content;
+                boardForm.eventDate.value = getpostRes.data.event_time.split('T')[0];
+                boardForm.category.value = getpostRes.data.bord_category;
             }
 
         })()    
@@ -47,7 +48,7 @@
             const boardForm = document.forms["board-form"];
             try {
                 const data = {
-                    id : 4,
+                    id : 5,
                     title:boardForm.title.value,
                     content:boardForm.content.value,
                     event_time:boardForm.eventDate.value,
@@ -71,7 +72,7 @@
                 method:"DELETE",
                 url:"/new/delete",
                 data: {
-                    id: 4
+                    id: 5
                 }
             })
             if (deleteRes.result) {
