@@ -5,6 +5,10 @@ const {
 const newMain = (req,res)=>{
     res.render('new');
 }
+
+const newEdit = (req,res)=>{
+    res.render('postedit');
+}
 const user_id='53872819-2760-4c48-9267-8482f02d4a5c';
 
 const boardPost = async (req,res)=>{
@@ -61,6 +65,17 @@ const boardEdit = async(req,res)=>{
         console.log(e);
     }
 }
+const boarduser_findone = async(req,res)=>{
+    try{
+        const board = await Board.findone({
+            where: user_id
+        })
+        res.json({result:true});
+    }catch(e){
+        console.log(e);
+    }
+}
+
 const boarduser_findall = async(req,res)=>{
     
     try{
@@ -74,8 +89,10 @@ const boarduser_findall = async(req,res)=>{
 }
 module.exports = {
     newMain,
+    newEdit,
     boardPost,
     boardEdit,
+    boarduser_findone,
     boarduser_findall,
     boardDelete
 }
