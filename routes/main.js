@@ -11,7 +11,8 @@ router.get('/new', controller.newMain);
 router.get('/new/:userid',controller.newMain);
 
 router.post('/signup',clogin.signUp)
-router.post('/signIn',clogin.signIn)
+router.post('/signin',clogin.signIn)
+router.post('/logout',clogin.userLogOut)
 
 router.post('/board',controller.boardPost)
 router.post('/bookmark',controller.bookmarkPost)

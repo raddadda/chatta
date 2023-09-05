@@ -22,6 +22,9 @@
         <input type="password" name="pw" placeholder="비밀번호"><br/>
         <button type="button" onclick="userSignin()">로그인</button>
     </form>
+    <br/>
+    <button type="button" onclick="userLogOut()">로그아웃</button>
+    <br/>
     <a href="/new">게시글 작성</a>
 </body>
 <script>
@@ -50,27 +53,34 @@
     }
 
     async function userSignin(){
-            const signInForm = document.forms["signin-form"];
-            try {
-                const data = {
-                    login_id:signInForm.userid.value,
-                    login_pw:signInForm.pw.value,
-                }
-                const res = await axios({
-                    method:"post",
-                    url:"/signin",
-                    data,
-                })
-                if (!res.data.result){
-                    alert(res.data.message);
-                    return;
-                } else{
-                    alert(res.data.message)
-                }
-            } catch (error) {
-                console.log(error);
+        const signInForm = document.forms["signin-form"];
+        try {
+            const data = {
+                login_id:signInForm.userid.value,
+                login_pw:signInForm.pw.value,
             }
+            const res = await axios({
+                method:"post",
+                url:"/signin",
+                data,
+            })
+            if (!res.data.result){
+                alert(res.data.message);
+                return;
+            } else{
+                alert(res.data.message)
+            }
+        } catch (error) {
+            console.log(error);
         }
+    }
+    async function userLogOut(){
+        const res = await axios({
+            method:"post",
+            url:"/logout",
+        })
+        console.log("res",res)
+    }
 </script>
 <script>
     const socket1 = io();
