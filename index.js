@@ -2,6 +2,7 @@ const http = require('http');
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const SocketIo = require('socket.io');
+const constant = require('./common/constant');
 
 const app = express();
 const PORT = 8000;
@@ -10,7 +11,7 @@ const db = require('./models');
 app.set('view engine','ejs');
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());
-app.use(cookieParser());
+app.use(cookieParser(constant.cookieSecret));
 app.use('img',express.static(__dirname+'img'));
 
 
