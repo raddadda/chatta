@@ -8,9 +8,11 @@ router.get('/',controller.main);
 //router.get('/new/:userid',controller.newMain);
 
 router.get('/new',cboard.newMain);
-router.post('/new/post',cboard.boardPost);
-router.delete('/new/delete', cboard.boardDelete);
+router.get('/new/edit', cboard.newEdit);
 
+router.post('/new/post',cboard.boardPost);
+router.post('/new/edit',cboard.boardEdit);
+router.delete('/new/delete', cboard.boardDelete);
 
 router.post('/signup',clogin.signUp)
 router.post('/signIn',clogin.signIn)
@@ -22,7 +24,7 @@ router.post('/chatroom',controller.chatRoomPost)
 router.post('/chatroomjoin',controller.chatRoomJoinPost)
 router.post('/chatmessage',controller.chatMessagePost)
 
-router.post('/new/delete',cboard.boardEdit)
+
 router.post('/delete/user',controller.deleteUser)
 router.post('/delete/board',controller.deleteBoard)
 router.post('/delete/friend',controller.deleteFriend)

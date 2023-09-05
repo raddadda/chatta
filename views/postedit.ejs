@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>Document</title>
 </head>
 <body>
@@ -16,18 +17,67 @@
         <input type="date" id="eventDate" name="eventDate" placeholder="날짜를 입력해주세요."><br/>
         <label for="category"> 카테고리 : </label>
         <input type="text" id="category" name="category" placeholder="카테고리를 입력해주세요."><br/>
-        <button type="button" onclick="boardCreate()">게시판 만들기</button>
+        <button type="button" onclick="boardEdit()">게시판 수정</button>
+        <button type="button" onclick="boardDelete()">게시판 삭제</button>
     </form>
 
     <script>
 
-        (function(){
-            
-           
-    
+        ( async function(){
 
-        })()
+            const boardForm = document.forms["board-form"];
+            const getpostRes = await axios({
+                method: "POST",
+                url:"/new/edit/post",
+                data: {
+                    id: 4
+                }
+            })
+            if (deleteRes.result) {
+                boardForm.title.value = getpostRes.title;
+                boardForm.content.value = getpostRes.content;
+                boardForm.eventDate.value = getpostRes.event_date;
+                boardForm.category.value = getpostRes.event_date;
+            }
 
+        })()    
+
+        async function boardEdit() {
+
+            const boardForm = document.forms["board-form"];
+            try {
+                const data = {
+                    id : 4,
+                    title:boardForm.title.value,
+                    content:boardForm.content.value,
+                    event_time:boardForm.eventDate.value,
+                    bord_category:boardForm.category.value
+                }
+                const res = await axios({
+                    method:"post",
+                    url:"/new/edit",
+                    data,
+                })
+            } catch(error) {
+                console.log(error);
+            }
+        }
+
+          async function boardDelete () {
+
+            if(!confirm('정말로 삭제하시겠습니까?')) return;
+
+            const deleteRes = await axios({
+                method:"DELETE",
+                url:"/new/delete",
+                data: {
+                    id: 4
+                }
+            })
+            if (deleteRes.result) {
+                alert('삭제가 완료되었습니다.')
+            }
+        }
 
 
     </script>
