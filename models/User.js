@@ -24,6 +24,10 @@ const User = (sequelize) =>{
         gender:{
             type:DataTypes.STRING(10),
         },
+        islogin:{
+            type:DataTypes.BOOLEAN,
+            defaultValue:true,
+        }
     },
     {
         // tableName:'user',

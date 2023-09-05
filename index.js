@@ -1,8 +1,9 @@
 const http = require('http');
 const express = require('express');
 const cookieParser = require('cookie-parser');
+const session = require('express-session');
 const SocketIo = require('socket.io');
-const constant = require('./common/constant');
+const secret = require('./config/secret');
 
 const app = express();
 const PORT = 8000;
@@ -11,7 +12,13 @@ const db = require('./models');
 app.set('view engine','ejs');
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());
-app.use(cookieParser(constant.cookieSecret));
+app.use(cookieParser(secret.cookieSecret));
+app.use(session({
+    secret: '12345',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }
+}))
 app.use('img',express.static(__dirname+'img'));
 
 
