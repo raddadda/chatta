@@ -2,8 +2,11 @@ const express = require('express');
 const router = express.Router();
 const controller = require('../controller/Cmain.js');
 const clogin = require('../controller/Clogin.js');
+const cprofile = require('../controller/Cprofile.js');
 
-router.get('/',controller.main);
+router.get('/', controller.main);
+router.get('/profile', cprofile.profile);
+router.get('/new', controller.newMain);
 
 router.get('/new/:userid',controller.newMain);
 
