@@ -10,7 +10,7 @@ const {
 
 
 const main = (req,res)=>{
-    console.log("cookie",req.signedCookies.logined);
+    console.log("cookie",req.signedCookies.logined.id);
     res.render('index');
 }
 
