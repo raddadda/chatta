@@ -1,12 +1,15 @@
 const { User } = require('../models');
-const bcrypt = require('bcrypt');
 const { v4 } = require('uuid');
+const constant = require('../common/constant');
+const Cauth = require('./Cauth');
 
 const profile = async (req, res) => {
     try {
-        console.log(req.body)
-        const { user_id } = req.body.userId;
-        const user = await User.findOne({ where: { user_id } });
+        const cookieValue = req.signedCookies.logined.id;
+        console.log(cookieValue)
+        const userId = await Cauth.stringToUuid(cookieValue);
+
+        const user = await User.findOne({ where: { user_id: userId } });
 
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
@@ -18,6 +21,8 @@ const profile = async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 };
+
+
 
 const editProfile = async (req, res) => {
     try {
