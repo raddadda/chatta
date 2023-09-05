@@ -4,15 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>Document</title>
 </head>
 <body>
     <h1>new 페이지</h1>
-    
+    <form name="board-form">
+        <label for="title">게시글 제목 : </label>
+        <input type="text" id="title" name="title" placeholder="제목을 입력해주세요."><br/>
+        <label for="content"> 내용 : </label>
+        <input type="text" id="content" name="content" placeholder="내용을 입력해주세요."><br/>
+        <label for="eventDate"> 홍보시간 : </label>
+        <input type="date" id="eventDate" name="eventDate" placeholder="날짜를 입력해주세요."><br/>
+        <label for="category"> 카테고리 : </label>
+        <input type="text" id="category" name="category" placeholder="카테고리를 입력해주세요."><br/>
+        <button type="button" onclick="boardCreate()">게시판 만들기</button>
+    </form>
 </body>
 <script>
-    const socket = io('/new');
-    // 네임 스페이스가 /new로 되어있는 소켓을 사용
-    socket.emit('userLog')
+     async function boardCreate(){
+            const boardForm = document.forms["board-form"];
+            console.log("boardForm",boardForm)
+            if ( boardForm.title.value === "" ) return alert('제목을 확인해주세요.');
+            if ( boardForm.content.value === "" ) return alert('내용을 확인해주세요.');
+            if ( boardForm.eventDate.value === "" ) return alert('흥보시간 확인해주세요.');
+            if ( boardForm.category.value === "" ) return alert('카텔고리를 확인해주세요.');
+            try {
+                const data = {
+                    title:boardForm.title.value,
+                    content:boardForm.content.value,
+                    event_time:boardForm.eventDate.value,
+                    bord_category:boardForm.category.value
+                }
+                const res = await axios({
+                    method:"post",
+                    url:"/new/post",
+                    data,
+                })
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    // const socket = io('/new');
+    // // 네임 스페이스가 /new로 되어있는 소켓을 사용
+    // socket.emit('userLog')
 </script>
 </html>

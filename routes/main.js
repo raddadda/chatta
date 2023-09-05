@@ -2,15 +2,18 @@ const express = require('express');
 const router = express.Router();
 const controller = require('../controller/Cmain.js');
 const clogin = require('../controller/Clogin.js');
-
+const cboard = require('../controller/Cboard.js');
 router.get('/',controller.main);
 
-router.get('/new/:userid',controller.newMain);
+//router.get('/new/:userid',controller.newMain);
+
+router.get('/new',cboard.newMain);
+router.post('/new/post',cboard.boardPost)
 
 router.post('/signup',clogin.signUp)
 router.post('/signIn',clogin.signIn)
 
-router.post('/board',controller.boardPost)
+
 router.post('/bookmark',controller.bookmarkPost)
 router.post('/friendlist',controller.friendListPost)
 router.post('/chatroom',controller.chatRoomPost)

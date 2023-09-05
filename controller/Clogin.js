@@ -41,10 +41,10 @@ const signIn = async (req,res)=>{
             res.json({result:false, message:'사이트 문제로 로그인이 되지 않습니다'})
         } else if(user.length === 1) {
             const {login_pw:dbpw} = user[0];
-            const flag = await dbpwCompare(login_pw,dbpw);
+            const flag = await Cauth.dbpwCompare(login_pw,dbpw);
             if(flag){
                 const {user_id,nickname} = user[0];
-                const id = Cauth.stringToUuid(user_id);
+                const id = await Cauth.uuidToString(user_id);
                 const cookieValue = {id,nickname};
                 const {loginCookie,cookieSetting} = constant;
                 res.cookie(loginCookie,cookieValue,cookieSetting);
