@@ -20,9 +20,11 @@
         <input type="text" id="category" name="category" placeholder="카테고리를 입력해주세요."><br/>
         <button type="button" onclick="boardCreate()">게시판 만들기</button>
     </form>
+    <button type="button">수정</button>
+    <button type="button" onclick="boardDelete()">삭제</button>
 </body>
 <script>
-     async function boardCreate(){
+        async function boardCreate(){
             const boardForm = document.forms["board-form"];
             console.log("boardForm",boardForm)
             if ( boardForm.title.value === "" ) return alert('제목을 확인해주세요.');
@@ -45,6 +47,21 @@
                 console.log(error);
             }
         }
+
+        async function boardDelete () {
+
+            if(!confirm('정말로 삭제하시겠습니까?')) return;
+            const deleteRes = await axios({
+                method:"DELETE",
+                url:"/new/delete",
+            })
+
+            if (deleteRes.result) {
+                alert('삭제가 완료되었습니다.')
+            }
+            
+        }
+
     // const socket = io('/new');
     // // 네임 스페이스가 /new로 되어있는 소켓을 사용
     // socket.emit('userLog')

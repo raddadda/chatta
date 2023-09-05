@@ -8,7 +8,9 @@ router.get('/',controller.main);
 //router.get('/new/:userid',controller.newMain);
 
 router.get('/new',cboard.newMain);
-router.post('/new/post',cboard.boardPost)
+router.post('/new/post',cboard.boardPost);
+router.delete('/new/delete', cboard.boardDelete);
+
 
 router.post('/signup',clogin.signUp)
 router.post('/signIn',clogin.signIn)
