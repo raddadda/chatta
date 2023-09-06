@@ -7,8 +7,6 @@ const {
     Chat_Room_Join,
     Chat_Message
 } = require('../models');
-const Cauth = require('./Cauth');
-const constant = require('../common/constant');
 
 
 const main = (req,res)=>{

@@ -54,6 +54,8 @@
         </form>
     </div>
     <br/>
+    <button onclick="authKaKao()">카톡!</button>
+    <br/>
     <a href="/new">게시글 작성</a>
 </body>
 <script>
@@ -63,6 +65,10 @@
     const sign_up_div = document.getElementById('sign_up_div');
     const sign_in_div = document.getElementById('sign_in_div');
     loginAdj(isLogin);
+
+    function authKaKao() {
+            document.location.href = "/signup/kakao";
+        }
 
     function loginAdj(isLogin){
         if(isLogin){
