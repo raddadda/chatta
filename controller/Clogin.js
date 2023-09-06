@@ -1,5 +1,6 @@
 const {User} = require('../models');
 const { v4 } = require('uuid');
+const crypto = require('crypto');
 const constant = require('../common/constant');
 const Cauth = require('./Cauth');
 
@@ -14,7 +15,10 @@ const signUp = async (req,res)=>{
         }
         const hash = await Cauth.pwHashing(login_pw);
 
-        const uuid=v4();
+        const uuid = v4();
+        const auth = await Cauth.authCodeIssue(uuid);
+        const {minint,maxint} = constant.auth;
+        const auth_num = crypto.randomInt(maxint)+minint;
         const birthDate = new Date(birth);
         // console.log('uuid',uuid)
         // const uuidString = await Cauth.uuidToString(uuid)
@@ -29,6 +33,8 @@ const signUp = async (req,res)=>{
             nickname: login_id,
             gender,
             birth: birthDate,
+            auth,
+            auth_num,
         });
         res.json({result:true,message:`${login_id}님이 회원가입 하셨습니다`,uuid});
     } catch (error) {
@@ -45,8 +51,9 @@ const signIn = async (req,res)=>{
             if(flag){
                 const user = await Cauth.dbIdSearch(login_id);
                 const {user_id,nickname} = user;
+                const auth = await Cauth.authCodeIssue(user_id);
                 const id = await Cauth.uuidToString(user_id);
-                const cookieValue = {id,nickname};
+                const cookieValue = {id,nickname,auth};
                 const {loginCookie,cookieSetting} = constant;
                 res.cookie(loginCookie,cookieValue,cookieSetting);
                 res.json({result:true, message:`${nickname}님 어서오세요`})

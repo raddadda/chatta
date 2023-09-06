@@ -15,10 +15,17 @@ const signed = true
 const cookieSetting = {maxAge,httpOnly,signed};
 
 
+/////////////////////////auth//////////////////////////
+const keylen = 64
+const digest = 'sha512'
+const maxint = 16
+const minint = 3
+const auth = {keylen,digest,maxint,minint};
 
 
 module.exports = {
     nameSpace,
     loginCookie,
     cookieSetting,
+    auth,
 };
