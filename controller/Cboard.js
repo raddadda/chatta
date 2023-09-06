@@ -11,7 +11,7 @@ const newEdit = (req,res)=>{
 }
 
 
-const user_id = '296b63ea-6f1c-4f18-9f10-382f4a80e1cd';
+const user_id = 'c8150f3c-679b-44ad-b72d-95aafe752992';
 
 const boardPost = async (req,res)=>{
     const {title,content,event_time,bord_category} = req.body
@@ -103,25 +103,11 @@ const boarduser_findall = async(req,res)=>{
     console.log("id",id);
     try{
         const board = await Board.findAll({
-            where: {title:'123'}
+            attributes:['id', 'title', 'views', 'content', 'event_time', 'bord_category', 'createdAt'],
+            limit:3
         })
         console.log("board",board);
         res.json({result:true,board});
-        // for(let i=0; i<board.length; i++){
-        //     if (board[i].dataValues){
-        //         res.json({
-        //             result:true, 
-        //             id:board[i].dataValues.id,
-        //             title:board[i].dataValues.title,
-        //             views: board[i].dataValues.views,
-        //             content:board[i].dataValues.content,
-        //             event_time:board[i].dataValues.event_time,
-        //             bord_category:board[i].dataValues.bord_category,
-        //             createAt : board[i].dataValues.createdAt,
-        //         });
-        //     } 
-        // }
-          
        
     }catch(e){
         console.log(e);

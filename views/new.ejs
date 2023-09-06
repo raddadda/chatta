@@ -235,18 +235,6 @@
 
 </style>
 
-<script>
-
-    function loadDetailModal () {
-
-        document.getElementById('boardDetailModal').style.display = 'block';
-    }
-
-    function modalCloase () {
-        document.getElementById('boardDetailModal').style.display = 'none';
-    }
-</script>
-
 <body>
     <h1>new 페이지</h1>
     <form name="board-form">
@@ -262,49 +250,14 @@
     </form>
     <button type="button" onclick="boardEdit()">게시판 수정</button>
     <button type="button" onclick="boardDelete()">게시판 삭제</button>
-    <button onclick="loadDetailModal()">모달 불러오기</button>
-    
-    <div class="wrap"> </div>
-    <div class="board-detail-modal" id="boardDetailModal">
-        <div class="board-modal-close" onclick="modalCloase()">
-            <img src= "https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/close.png"
-                alt="close_img"
-            />
-        </div>
-        <div class="bd-image"></div>
-        <div class="board-detail-contents">
-            <div class="bd-info">
-                <div class="bd-info_category"> bord_category</div>
-                <h2 class="bd-info_title">titletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitle</h2>
-            </div>
-            <div id="eventDetailSubInfo" class="bd-sub-content">
-                <div class="txt-box">
-                    <h6>내용</h6>
-                    <p>sdadasdasdasdadasdasdasdadasdasdasdadasdasdasdadasdasdasdadasdasdasdadasdasdasdadasdasdasdadasdasdasdadasdasda</p>
-                </div>
-                <div class="txt-box">
-                    <h6>흥보 시간</h6>
-                    <p>asdasadas</p>
-                </div>
-
-                <div class="txt-box">
-                    <h6>채팅방</h6>
-                    <p><button>입장하기</button><p>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
 </body>
 <br/>
 <br/>
 <br/>
-
-
-<div id="wrap" class="wrap"> </div>
+<div class="wrap" id="wrap"> </div>
+<div class="board-detail-modal" id="boardDetailModal"></div>
 <script>
-        
+        let list = [];
         ( async function(){
            
             //console.log("boardBox",boardBox);
@@ -323,11 +276,12 @@
 
                 let boxhtml = ``;
                 
-                for(let i=0; i<res.data.board.length; i++){
+                for (let i=0; i<res.data.board.length; i++){
                     const date = res.data.board[i].createdAt.split('T')[0];
+                    list.push(res.data.board[i]);
                     if(i%2==0){
                         boxhtml += `
-                    <div class="imgFlex1">
+                    <div class="imgFlex1" onclick="loadDetailModal(${i})">
                         <div class="roomImg"></div>
                         <div class="boardInfo">
                             <div class="boxBordCategory">${res.data.board[i].bord_category}</div>
@@ -339,7 +293,7 @@
                     `;  
                     }else{
                         boxhtml += `
-                    <div class="imgFlex2">
+                    <div class="imgFlex2" onclick="loadDetailModal(${i})">
                         <div class="roomImg"></div>
                         <div class="boardInfo">
                             <div class="boxBordCategory">${res.data.board[i].bord_category}</div>
@@ -360,9 +314,6 @@
         
         async function boardCreate(){
             const boardForm = document.forms["board-form"];
-           
-            
-            console.log("boardForm",boardForm)
             if ( boardForm.title.value === "" ) return alert('제목을 확인해주세요.');
             if ( boardForm.content.value === "" ) return alert('내용을 확인해주세요.');
             if ( boardForm.eventDate.value === "" ) return alert('흥보시간 확인해주세요.');
@@ -386,6 +337,48 @@
             }
         }
 
+
+    function loadDetailModal (i) {
+        console.log('list', list);
+        console.log('i', i);
+        let modal = document.getElementById('boardDetailModal');
+
+        modal.style.display = 'block'
+        modal.innerHTML = `
+            <div class="board-modal-close" onclick="modalCloase()">
+                <img src= "https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/close.png"
+                    alt="close_img"
+                />
+            </div>
+            <div class="bd-image"></div>
+            <div class="board-detail-contents">
+                <div class="bd-info">
+                    <div class="bd-info_category"> ${list[i].bord_category}</div>
+                    <h2 class="bd-info_title">${list[i].title}</h2>
+                </div>
+                <div id="eventDetailSubInfo" class="bd-sub-content">
+                    <div class="txt-box">
+                        <h6>내용</h6>
+                        <p>${list[i].content}</p>
+                    </div>
+                    <div class="txt-box">
+                        <h6>흥보 시간</h6>
+                        <p>${list[i].event_time}</p>
+                    </div>
+
+                    <div class="txt-box">
+                        <h6>채팅방</h6>
+                        <p><button>입장하기</button><p>
+                    </div>
+
+                </div>
+            </div>
+        `
+    }
+
+    function modalCloase () {
+        document.getElementById('boardDetailModal').style.display = 'none';
+    }
     // const socket = io('/new');
     // // 네임 스페이스가 /new로 되어있는 소켓을 사용
     // socket.emit('userLog')
