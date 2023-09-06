@@ -11,6 +11,7 @@ router.get('/new',cboard.newMain);
 router.post('/new/post',cboard.boardPost);
 router.delete('/new/delete', cboard.boardDelete);
 router.post('/new/edit/post',cboard.boarduser_findone)
+router.post('/new/findall',cboard.boarduser_findall)
 
 router.get('/new/edit',cboard.newEdit);
 router.post('/new/edit',cboard.boardEdit);

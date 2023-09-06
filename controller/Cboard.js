@@ -78,6 +78,7 @@ const boarduser_findone = async(req,res)=>{
     try {
         
         const board = await Board.findOne({
+           
             where: {id}
         })
         if (board.dataValues){
@@ -93,22 +94,41 @@ const boarduser_findone = async(req,res)=>{
         }   
       
     } catch(e) {
-
         console.log(e);
     }
 }
 
 const boarduser_findall = async(req,res)=>{
-
+    const {id} = req.body;
+    console.log("id",id);
     try{
         const board = await Board.findAll({
-            where: user_id
+            where: {title:'123'}
         })
-        res.json({result:true});
+        console.log("board",board);
+        res.json({result:true,board});
+        // for(let i=0; i<board.length; i++){
+        //     if (board[i].dataValues){
+        //         res.json({
+        //             result:true, 
+        //             id:board[i].dataValues.id,
+        //             title:board[i].dataValues.title,
+        //             views: board[i].dataValues.views,
+        //             content:board[i].dataValues.content,
+        //             event_time:board[i].dataValues.event_time,
+        //             bord_category:board[i].dataValues.bord_category,
+        //             createAt : board[i].dataValues.createdAt,
+        //         });
+        //     } 
+        // }
+          
+       
     }catch(e){
         console.log(e);
     }
 }
+
+
 module.exports = {
     newMain,
     newEdit,

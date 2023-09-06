@@ -6,6 +6,107 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>Document</title>
+    <style>
+        body{
+            background-color: rgba(92, 92, 92, 0.595);
+        }
+        .wrap{
+            display: flex;
+            width: 100%;
+            height: 70%;
+        }
+        
+        .imgFlex1{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 200px;
+            width: 100%;
+            background-color: rgb(255, 255, 255);
+            border-radius: 5px;
+            margin-right: 20px;
+            margin-bottom: 20px;    
+        }
+        .imgFlex2{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 200px;
+            width: 100%;
+            background-color: white;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .roomImg{
+            position: relative;
+            /* display: inline-block; */
+            height: 150px;
+            width: 150px;
+            margin: 2%;
+            border-radius: 15%;
+            background-color: rgb(255, 255, 255);
+            border: 5px solid black;
+        }
+        .boardInfo{
+
+            position: relative;
+
+            height: 150px;
+            width: 70%;
+            margin-right: 2%;
+
+        }
+        .boxBordCategory{
+            height: 20%;
+            
+           
+        }
+        .boxTitle{
+        
+            height: 45%;
+            font-size: 35px;
+            /* margin-top: 10px;
+            margin-bottom: 20px; */
+            /* margin-left: 50px; */
+        }
+        /* .boxContent{
+            height: 25%;
+            background-color: rgb(100, 67, 25);
+        } */
+        .boxCreateAt{
+
+            height: 15%;
+        }
+        .boxViews{
+            height: 15%;
+            
+            color: rgb(124, 124, 124);
+        }
+
+        @media (max-width : 990px) {
+            .wrap{
+                display: block;
+              
+            }
+
+            .boardInfo{
+                width: 75%;
+            }
+        }
+        @media (max-width : 800px) {
+            .wrap{
+                display: block;
+                position: absolute;
+                max-width: 100%;
+            }
+
+            .boardInfo{
+                width: 75%;
+            }
+        }
+       
+</style>
+    </style>
 </head>
 <body>
     <h1>new 페이지</h1>
@@ -23,14 +124,72 @@
     <button type="button" onclick="boardEdit()">게시판 수정</button>
     <button type="button" onclick="boardDelete()">게시판 삭제</button>
 </body>
+<br/>
+<br/>
+<br/>
+
+
+<div id="wrap" class="wrap">
+    <div class="imgFlex1">
+        <div class="roomImg"></div>
+        <div class="boardInfo">
+            <div class="boxBordCategory"></div>
+            <div class="boxTitle"></div>
+            <div class="boxCreateAt"></div>
+            <div class="boxViews"></div>      
+        </div>
+    </div>
+</div>
 <script>
+        
+        ( async function(){
+           
+            //console.log("boardBox",boardBox);
+            console.log("222");
+            const res = await axios({
+                method: "POST",
+                url:"/new/findall",
+                data: {
+                    id: 5
+                }
+            })
+            console.log("@@",res.data.result)
+           
+            if(res.data.result){
+                const wrap = document.querySelector("#wrap");
+
+                let boxhtml = ``;
+                
+                for(let i=0; i<res.data.board.length; i++){
+                    const date = res.data.board[i].createdAt.split('T')[0];
+                    boxhtml += `
+                    <div class="imgFlex1">
+                        <div class="roomImg"></div>
+                        <div class="boardInfo">
+                            <div class="boxBordCategory">${res.data.board[i].bord_category}</div>
+                            <div class="boxTitle">${res.data.board[i].title}</div>
+                            <div class="boxCreateAt">${date}</div>
+                            <div class="boxViews">${res.data.board[i].views}</div>      
+                        </div>
+                    </div>
+                    `;   
+                }
+
+                wrap.innerHTML += boxhtml;
+                console.log("boxhtml",boxhtml);
+            }
+        })()    
+        
         async function boardCreate(){
             const boardForm = document.forms["board-form"];
+           
+            
             console.log("boardForm",boardForm)
             if ( boardForm.title.value === "" ) return alert('제목을 확인해주세요.');
             if ( boardForm.content.value === "" ) return alert('내용을 확인해주세요.');
             if ( boardForm.eventDate.value === "" ) return alert('흥보시간 확인해주세요.');
             if ( boardForm.category.value === "" ) return alert('카텔고리를 확인해주세요.');
+            
             try {
                 const data = {
                     title:boardForm.title.value,
@@ -43,6 +202,7 @@
                     url:"/new/post",
                     data,
                 })
+                console.log("result",res.result);
             } catch (error) {
                 console.log(error);
             }
