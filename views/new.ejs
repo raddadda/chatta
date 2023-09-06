@@ -115,7 +115,7 @@
         width: 65%; height: 650px; 
         background-color: #eee; display: none;
         position: fixed; top: 50px; left: 50%;
-        border-radius: 10px; 
+        border-radius: 10px;  z-index: 100;
         margin: auto; transform: translate(-50%, 0);
     }
     .board-detail-modal > .board-modal-close {
@@ -300,17 +300,7 @@
 <br/>
 
 
-<div id="wrap" class="wrap">
-    <div class="imgFlex1">
-        <div class="roomImg"></div>
-        <div class="boardInfo">
-            <div class="boxBordCategory"></div>
-            <div class="boxTitle"></div>
-            <div class="boxCreateAt"></div>
-            <div class="boxViews"></div>      
-        </div>
-    </div>
-</div>
+<div id="wrap" class="wrap"> </div>
 <script>
         
         ( async function(){
