@@ -48,6 +48,9 @@
             <li>
                 <a href="/chat/<%= room.id %>">
                     <%= room.title %>
+                        <% if (room.unreadMessages> 0) { %>
+                            <span class="unread-messages">(안 읽은 메시지: <%= room.unreadMessages %>)</span>
+                            <% } %>
                 </a>
             </li>
             <% }); %>
@@ -62,7 +65,21 @@
             <li>
                 <a href="/chat/<%= room.id %>">
                     <%= room.title %>
+                        <% if (room.unreadMessages> 0) { %>
+                            <span class="unread-messages">(안 읽은 메시지: <%= room.unreadMessages %>)</span>
+                            <% } %>
                 </a>
+            </li>
+            <% }); %>
+    </ul>
+
+
+    <!-- 일정 목록 표시 -->
+    <h2>일정 목록</h2>
+    <ul>
+        <% schedules.forEach(function(schedule) { %>
+            <li>
+                <%= schedule.title %> - 날짜: <%= schedule.date %>
             </li>
             <% }); %>
     </ul>
