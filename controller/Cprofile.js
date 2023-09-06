@@ -51,6 +51,33 @@ const getUserChatRooms = async (userId) => {
     }
 };
 
+const getUnreadMessages = async (userId) => {
+    try {
+        // 사용자가 참여한 채팅방 목록을 가져옴
+        const chatRooms = await getChatRooms(userId);
+
+        // 각 채팅방의 안 읽은 메시지를 조회
+        const unreadMessages = await Promise.all(
+            chatRooms.map(async (room) => {
+                const unreadMessagesInRoom = await Chat_Message.findAll({
+                    where: {
+                        room_id: room.id,
+                        user_id: userId,
+                        is_read: false, // 아직 안 읽은 메시지만 조회
+                    },
+                });
+                return unreadMessagesInRoom;
+            })
+        );
+
+        // 모든 채팅방에서 안 읽은 메시지를 합쳐서 반환
+        return unreadMessages.flat();
+    } catch (error) {
+        console.error('안 읽은 메시지 가져오기 오류:', error);
+        throw error;
+    }
+};
+
 const getSchedules = async (userId) => {
     try {
         // const schedules = await Schedule.findAll({ where: { user_id: userId } });
@@ -71,6 +98,7 @@ const profile = async (req, res) => {
         const friendCount = await Friend_List.count({ where: { user_id: userId } });
         const ownerChatRooms = await getOwnerChatRooms(userId);
         const userChatRooms = await getUserChatRooms(userId);
+        const unreadMessages = await getUnreadMessages(userId);
         const schedules = await getSchedules(userId);
         const age = await calculateAge(user.birth);
 
@@ -78,7 +106,7 @@ const profile = async (req, res) => {
             return res.status(404).json({ message: '사용자를 찾을 수 없습니다' });
         }
 
-        res.render('profile', { user, age, friendCount, ownerChatRooms, userChatRooms, schedules });
+        res.render('profile', { user, age, friendCount, ownerChatRooms, userChatRooms, unreadMessages, schedules });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: '내부 서버 오류' });
