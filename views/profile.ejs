@@ -11,6 +11,9 @@
     <h1>환영합니다, <%= user.nickname %>
     </h1>
 
+    <!-- 프로필 사진 표시 -->
+    <img src="" alt="프로필 사진">
+
     <!-- 사용자 정보 표시 -->
     <ul>
         <li>ID: <%= user.login_id %>
@@ -25,12 +28,8 @@
         </li>
     </ul>
 
-    <!-- 프로필 사진 표시 -->
-    <img src="" alt="프로필 사진">
-
     <!-- 프로필 편집 및 삭제 버튼 -->
     <a href="/profile/edit">프로필 편집</a>
-    <a href="/프로필-삭제">프로필 삭제</a>
 
     <!-- 친구 수 표시 -->
     <p>친구 수: <%= friendCount %>
@@ -40,10 +39,36 @@
     <p>선호하는 카테고리: </p>
     <p>비선호하는 카테고리: </p>
 
-    <!-- 참여 중인 채팅룸, 읽지 않은 메시지, 일정 목록 표시 -->
+    <!-- 사용자가 개설한 채팅방 목록 표시 -->
+    <h2>
+        <%= user.nickname %>님이 개설한 채팅방 목록
+    </h2>
+    <ul>
+        <% ownerChatRooms.forEach((room)=> { %>
+            <li>
+                <a href="/chat/<%= room.id %>">
+                    <%= room.title %>
+                </a>
+            </li>
+            <% }); %>
+    </ul>
+
+    <!-- 사용자가 참여한 채팅방 목록 표시 -->
+    <h2>
+        <%= user.nickname %>님이 참여한 채팅방 목록
+    </h2>
+    <ul>
+        <% userChatRooms.forEach((room)=> { %>
+            <li>
+                <a href="/chat/<%= room.id %>">
+                    <%= room.title %>
+                </a>
+            </li>
+            <% }); %>
+    </ul>
 
     <script>
-        
+
     </script>
 </body>
 
