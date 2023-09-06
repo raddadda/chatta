@@ -11,6 +11,8 @@ router.get('/new', controller.newMain);
 router.get('/profile', cprofile.profile);
 router.get('/profile/edit', cprofileEdit.profileUpdate);
 router.get('/chat',controller.chatMain);
+router.get('/signup/kakao',clogin.signUpKakao)
+router.get('/oauth/kakao',clogin.authKakao);
 
 router.get('/new/:userid',controller.newMain);
 
