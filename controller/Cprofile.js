@@ -1,4 +1,4 @@
-const { User, Friend_List, Chat_Room_Join, Chat_Room } = require('../models');
+const { User, Friend_List, Chat_Room_Join, Chat_Room, Chat_Message } = require('../models');
 const constant = require('../common/constant');
 const Cauth = require('./Cauth');
 
@@ -51,29 +51,16 @@ const getUserChatRooms = async (userId) => {
     }
 };
 
-const getUnreadMessages = async (userId) => {
+const calculateUnreadMessages = async (roomId, userId) => {
     try {
-        // 사용자가 참여한 채팅방 목록을 가져옴
-        const chatRooms = await getChatRooms(userId);
+        // roomId와 userId를 사용하여 해당 채팅방의 안 읽은 메시지 수 계산
+        const unreadMessages = await Chat_Message.count({
+            where: { room_id: roomId, user_id: { [Op.ne]: userId }, isRead: false },
+        });
 
-        // 각 채팅방의 안 읽은 메시지를 조회
-        const unreadMessages = await Promise.all(
-            chatRooms.map(async (room) => {
-                const unreadMessagesInRoom = await Chat_Message.findAll({
-                    where: {
-                        room_id: room.id,
-                        user_id: userId,
-                        is_read: false, // 아직 안 읽은 메시지만 조회
-                    },
-                });
-                return unreadMessagesInRoom;
-            })
-        );
-
-        // 모든 채팅방에서 안 읽은 메시지를 합쳐서 반환
-        return unreadMessages.flat();
+        return unreadMessages;
     } catch (error) {
-        console.error('안 읽은 메시지 가져오기 오류:', error);
+        console.error('안 읽은 메시지 수 계산 오류:', error);
         throw error;
     }
 };
@@ -82,6 +69,7 @@ const getSchedules = async (userId) => {
     try {
         // const schedules = await Schedule.findAll({ where: { user_id: userId } });
         // return schedules;
+        return [];
     } catch (error) {
         console.error('일정 가져오기 오류:', error);
         throw error;
@@ -94,11 +82,16 @@ const profile = async (req, res) => {
         const userId = await Cauth.stringToUuid(cookieValue);
 
         const user = await User.findOne({ where: { user_id: userId } });
-
         const friendCount = await Friend_List.count({ where: { user_id: userId } });
+
         const ownerChatRooms = await getOwnerChatRooms(userId);
         const userChatRooms = await getUserChatRooms(userId);
-        const unreadMessages = await getUnreadMessages(userId);
+        const allChatRooms = ownerChatRooms.concat(userChatRooms);
+
+        for (const room of allChatRooms) {
+            room.unreadMessages = await calculateUnreadMessages(room.id, userId);
+        };
+
         const schedules = await getSchedules(userId);
         const age = await calculateAge(user.birth);
 
