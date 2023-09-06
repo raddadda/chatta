@@ -30,7 +30,13 @@ const User = (sequelize) =>{
         islogin:{
             type:DataTypes.BOOLEAN,
             defaultValue:true,
-        }
+        },
+        auth:{
+            type:DataTypes.STRING(88),
+        },
+        auth_num:{
+            type:DataTypes.INTEGER,
+        },
     },
     {
         // tableName:'user',
