@@ -11,17 +11,21 @@
 
     <!-- 비밀번호 변경은 다른페이지로 분리 -->
     <a href="/profile/edit/pw">비밀번호 변경</a>
+    <!-- 회원탈퇴도 다른페이지로 분리 -->
+    <a href="/profile/edit/delete">회원 탈퇴</a>
 
     <form name="edit-profile">
         <input type="hidden" id="id" value="<%= user.user_id %>">
-        프로필사진 : <img src="" alt="프로필사진"><br />
+        프로필사진 : <img src="" alt="프로필사진">
+        <br />
 
         이름 : <input type="text" id="userName" value="<%= user.user_name %>" readonly />   
-        성별 : <input type="text" id="gender" value="<%= user.gender %>"> <br />
+        생년월일 : <input type="text" id="birth" value="<%= user.birth %>" readonly>
+        성별 : <input type="text" id="gender" value="<%= user.gender %>">
+        <br />
         
         아이디 : <input type="text" id="loginId" value="<%= user.login_id %>" readonly />
         닉네임 : <input type="text" id="nickName" value="<%= user.nickname %>">
-        <!-- 생년월일 : <input type="text" id="birth" value=""> -->
         <br />
 
         선호 카테고리 : <input type="text" id="categoryA">
