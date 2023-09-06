@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('../controller/Cmain.js');
+const cauth = require('../controller/Cauth.js')
 const clogin = require('../controller/Clogin.js');
 const cprofile = require('../controller/Cprofile.js');
 const cprofileEdit = require('../controller/CprofileEdit.js')
@@ -25,6 +26,7 @@ router.post('/friendlist',controller.friendListPost)
 router.post('/chatroom',controller.chatRoomPost)
 router.post('/chatroomjoin',controller.chatRoomJoinPost)
 router.post('/chatmessage',controller.chatMessagePost)
+router.post('/auth',cauth.authCheckPost);
 
 
 router.post('/delete/user',controller.deleteUser)

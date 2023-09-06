@@ -7,6 +7,8 @@ const {
     Chat_Room_Join,
     Chat_Message
 } = require('../models');
+const Cauth = require('./Cauth');
+const constant = require('../common/constant');
 
 
 const main = (req,res)=>{
@@ -17,6 +19,7 @@ const main = (req,res)=>{
     if (req.signedCookies.logined){
         data.isLogin = true
     }
+    console.log("islogin",data);
     res.render('index',data);
 }
 
@@ -28,6 +31,7 @@ const newMain = (req,res)=>{
 const chatMain = (req,res)=>{
     res.render('chat');
 }
+
 
 const boardPost = async (req,res)=>{
     const {title,user_id} = req.body
