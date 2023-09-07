@@ -13,6 +13,7 @@ router.get('/new', controller.newMain);
 router.get('/profile', cprofile.profile);
 router.get('/profile/edit', cprofileEdit.profileUpdate);
 router.get('/profile/edit/pw', cprofileEdit.pwUpdate)
+router.get('/profile/edit/delete', cprofileEdit.profileDelete)
 
 router.get('/signup/kakao',clogin.signUpKakao)
 router.get('/oauth/kakao',clogin.authKakao);
@@ -35,8 +36,9 @@ router.post('/signup',clogin.signUp)
 router.post('/signin',clogin.signIn)
 router.post('/logout',clogin.userLogOut)
 
-router.post('/profile/edit', cprofileEdit.post_profileUpdate)
-router.post('/profile/edit/pw', cprofileEdit.post_pwUpdate)
+router.post('/profile/edit', cprofileEdit.profileUpdatePost)
+router.post('/profile/edit/pw', cprofileEdit.pwUpdatePost)
+router.post('/profile/edit/delete', cprofileEdit.profileDeletePost)
 
 
 router.post('/bookmark',controller.bookmarkPost)
