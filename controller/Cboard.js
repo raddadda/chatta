@@ -113,7 +113,7 @@ const boarduser_findall = async(req,res)=>{
             res.json({result:false});
         }
     }catch(e){
-        es.json({result:false});
+        res.json({result:false});
         console.log(e);
     }
 }
