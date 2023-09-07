@@ -16,25 +16,66 @@
 
 <script src="../public/js/board/board_CRUD.js"></script>
 <script>
+    
     let list = [];
+
     ( async function(){
 
-         boradFindAll();
+        const findAllData = await boradFindAll();
+
+        if (findAllData.length > 0) {
+            const wrap = document.querySelector("#wrap");
+            let boxhtml = ``;
+            for (let i=0; i<findAllData.length; i++){
+                list.push(findAllData[i]);
+        
+                const data = {
+                    bord_category : findAllData[i] && findAllData[i].bord_category ? findAllData[i].bord_category : '',
+                    title :  findAllData[i] && findAllData[i].title ? findAllData[i].title : '',
+                    views : findAllData[i] && findAllData[i].views ? findAllData[i].views : 0,
+                    createAt : findAllData[i] && findAllData[i].createdAt.split('T')[0]? findAllData[i].createdAt.split('T')[0] : '',
+                }
+                
+                if(i%2==0){
+                    boxhtml += `
+                <div class="imgFlex1" onclick="loadDetailModal(${i})">
+                    <div class="roomImg"></div>
+                    <div class="boardInfo">
+                        <div class="boxBordCategory">${data.bord_category}</div>
+                        <div class="boxTitle">${data.title}</div>
+                        <div class="boxCreateAt">${data.createAt}</div>
+                        <div class="boxViews">${data.views}</div>      
+                    </div>
+                </div>
+                `;  
+                } else{
+                    boxhtml += `
+                <div class="imgFlex2" onclick="loadDetailModal(${i})">
+                    <div class="roomImg"></div>
+                    <div class="boardInfo">
+                        <div class="boxBordCategory">${data.bord_category}</div>
+                        <div class="boxTitle">${data.title}</div>
+                        <div class="boxCreateAt">${data.createAt}</div>
+                        <div class="boxViews">${data.views}</div>      
+                    </div>
+                </div>
+                `;  
+                }
+            }
+            wrap.innerHTML += boxhtml;
+        }
             
     })()    
-    
-    function loadDetailModal (i) {
-        console.log('list', list);
-        console.log('i', i);
+
+    function loadDetailModal (index) {
 
         const data = {
-            bord_category : list[i] && list[i].bord_category ? list[i].bord_category : '',
-            content: list[i] && list[i].content ? list[i].content : '',
-            title :  list[i] && list[i].title ? list[i].title : '',
-            views : list[i] && list[i].views ? list[i].views : 0,
-            event_time : list[i] && list[i].event_time.split('T')[0]? list[i].event_time.split('T')[0] : '',
+            bord_category : list[index] && list[index].bord_category ? list[index].bord_category : '',
+            content: list[index] && list[index].content ? list[index].content : '',
+            title :  list[index] && list[index].title ? list[index].title : '',
+            views : list[index] && list[index].views ? list[index].views : 0,
+            event_time : list[index] && list[index].event_time.split('T')[0]? list[index].event_time.split('T')[0] : '',
         }
-
         
         let modal = document.getElementById('boardDetailModal');
         modal.style.display = 'block'
