@@ -5,87 +5,227 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>사용자 프로필</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        .header {
+            background-color: #007bff;
+            padding: 10px 0;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header-title {
+            color: #fff;
+            font-size: 24px;
+        }
+
+        /* 상단 프로필 수정 버튼 */
+        .profile-edit-button {
+            background-color: #fff;
+            color: #007bff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        /* 중앙 사용자 정보 섹션 */
+        .user-info {
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            max-width: 1200px;
+            margin: 20px auto;
+        } 
+
+        /* 프로필 사진 */
+        .profile-picture img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+
+        /* 사용자 정보 */
+        .user-nickname {
+            text-align: left;
+            margin-top: 10px;
+        }
+
+        .user-nickname h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+
+        .user-nickname p {
+            font-size: 16px;
+            margin: 5px 0;
+        }
+
+        /* 친구 수 및 버튼 */
+        .friend-info {
+            text-align: center;
+        }
+
+        .friend-count {
+            font-size: 16px;
+            margin: 0;
+        }
+
+        .friend-info button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        /* 하단 섹션 (채팅방, 북마크, 일정) */
+        .bottom-section {
+            background-color: #fff;
+            margin-top: 20px;
+            padding: 20px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 카테고리 버튼 */
+        .category-button {
+            background-color: transparent;
+            border: none;
+            color: #007bff;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 10px;
+            padding: 0;
+            display: block;
+        }
+
+        /* 목록 스타일 */
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        ul li {
+            font-size: 16px;
+            margin: 5px 0;
+        }
+
+        ul li a {
+            text-decoration: none;
+            color: #007bff;
+            transition: color 0.3s;
+        }
+
+        ul li a:hover {
+            color: #0056b3;
+        }
+
+        /* 추가적인 스타일링을 원하는 대로 적용할 수 있습니다. */
+    </style>
 </head>
 
 <body>
-    <h1>환영합니다, <%= user.nickname %>
-    </h1>
+    <div class="header">
+        <div class="header-content">
+            <div class="header-title">
+                사용자 프로필
+            </div>
+            <div class="profile-edit-button">
+                <i class="fas fa-cog" alt="프로필 수정"></i>
+            </div>
+        </div>
+    </div>
 
-    <!-- 프로필 사진 표시 -->
-    <img src="" alt="프로필 사진">
+    <!-- 중앙 사용자 정보 섹션 -->
+    <div class="user-info">
+        <!-- 좌측 프로필 사진 및 닉네임 -->
+        <div class="left-section">
+            <div class="profile-picture">
+                <img src="" alt="프로필 사진">
+            </div>
+            <div class="user-nickname">
+                <h1>
+                    <%= user.nickname %>
+                </h1>
+            </div>
+        </div>
+        <!-- 우측 사용자 정보 -->
+        <div class="right-section">
+            <p>ID: <%= user.login_id %>
+            </p>
+            <p>나이: <%= age %>
+            </p>
+            <p>성별: <%= user.gender %>
+            </p>
+            <p>생년월일: <%= user.birth %>
+            </p>
+        </div>
+    </div>
 
-    <!-- 사용자 정보 표시 -->
-    <ul>
-        <li>ID: <%= user.login_id %>
-        </li>
-        <li>닉네임: <%= user.nickname %>
-        </li>
-        <li>나이: <%= age %>
-        </li>
-        <li>성별: <%= user.gender %>
-        </li>
-        <li>생년월일: <%= user.birth %>
-        </li>
-    </ul>
+    <div class="friend-info">
+        <!-- 친구 수 및 버튼 -->
+        <p class="friend-count">친구 수: <%= friendCount %>
+        </p>
+        <button>게시물 작성</button>
+    </div>
 
-    <!-- 프로필 편집 및 삭제 버튼 -->
-    <a href="/profile/edit">프로필 편집</a>
+    <div class="bottom-section">
+        <!-- 하단 섹션 (채팅방, 북마크, 일정) -->
+        <button class="category-button">채팅방 목록</button>
+        <ul>
+            <!-- 채팅방 목록 아이템들 -->
+        </ul>
 
-    <!-- 친구 수 표시 -->
-    <p>친구 수: <%= friendCount %>
-    </p>
+        <button class="category-button">북마크한 게시물 목록</button>
+        <ul>
+            <!-- 북마크한 게시물 목록 아이템들 -->
+        </ul>
 
-    <!-- 선호 및 비선호 카테고리 표시 -->
-    <p>선호하는 카테고리: </p>
-    <p>비선호하는 카테고리: </p>
-
-    <!-- 사용자가 개설한 채팅방 목록 표시 -->
-    <h2>
-        <%= user.nickname %>님이 개설한 채팅방 목록
-    </h2>
-    <ul>
-        <% ownerChatRooms.forEach((room)=> { %>
-            <li>
-                <a href="/chat/<%= room.id %>">
-                    <%= room.title %>
-                        <% if (room.unreadMessages> 0) { %>
-                            <span class="unread-messages">(안 읽은 메시지: <%= room.unreadMessages %>)</span>
-                            <% } %>
-                </a>
-            </li>
-            <% }); %>
-    </ul>
-
-    <!-- 사용자가 참여한 채팅방 목록 표시 -->
-    <h2>
-        <%= user.nickname %>님이 참여한 채팅방 목록
-    </h2>
-    <ul>
-        <% userChatRooms.forEach((room)=> { %>
-            <li>
-                <a href="/chat/<%= room.id %>">
-                    <%= room.title %>
-                        <% if (room.unreadMessages> 0) { %>
-                            <span class="unread-messages">(안 읽은 메시지: <%= room.unreadMessages %>)</span>
-                            <% } %>
-                </a>
-            </li>
-            <% }); %>
-    </ul>
-
-
-    <!-- 일정 목록 표시 -->
-    <h2>일정 목록</h2>
-    <ul>
-        <% schedules.forEach(function(schedule) { %>
-            <li>
-                <%= schedule.title %> - 날짜: <%= schedule.date %>
-            </li>
-            <% }); %>
-    </ul>
+        <button class="category-button">일정 목록</button>
+        <ul>
+            <!-- 일정 목록 아이템들 -->
+        </ul>
+    </div>
 
     <script>
+        // 프로필 수정 버튼 클릭 시 이벤트
+        document.querySelector('.profile-edit-button').addEventListener('click', function () {
+            // 프로필 수정 페이지로 이동 (URL을 수정 페이지의 경로로 변경)
+            window.location.href = '/profile/edit';
+        });
 
+        // 카테고리 버튼 클릭 시 목록 펼치기/닫기 이벤트
+        const categoryButtons = document.querySelectorAll('.category-button');
+        categoryButtons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                // 다른 모든 카테고리를 닫고 현재 클릭한 카테고리만 열기
+                categoryButtons.forEach(function (btn) {
+                    btn.nextElementSibling.style.display = 'none';
+                });
+                this.nextElementSibling.style.display = 'block';
+            });
+        });
     </script>
 </body>
 
