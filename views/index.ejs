@@ -54,7 +54,8 @@
         </form>
     </div>
     <br/>
-    <button onclick="authKaKao()">카톡!</button>
+    <button onclick="authKaKao()">카톡!</button> <br/>
+    <button onclick="logoutKaKao()">카톡 로그아웃</button> <br/>
     <br/>
     <a href="/new">게시글 작성</a>
 </body>
@@ -67,8 +68,16 @@
     loginAdj(isLogin);
 
     function authKaKao() {
-            document.location.href = "/signup/kakao";
-        }
+        document.location.href = "/signup/kakao";
+    }
+    
+    function logoutKaKao(){
+        document.location.href = "/kakao/leave";
+    }
+
+    // function kakaoTokenAuth(){
+    //     documnet.location.href = '/kakao/auth';
+    // }
 
     function loginAdj(isLogin){
         if(isLogin){

@@ -19,7 +19,7 @@ app.use(session({
     saveUninitialized: true,
     cookie: { secure: false }
 }))
-app.use('img',express.static(__dirname+'img'));
+app.use("/public",express.static(__dirname+'/public'));
 
 
 const server = http.createServer(app);

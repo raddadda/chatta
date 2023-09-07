@@ -8,6 +8,9 @@ const Cauth = require('./Cauth');
 const {REST_API_KEY} = secret;
 const REDIRECT_URI = "http://localhost:8000/oauth/kakao"
 
+let Authorization;
+let target_id;
+
 const signUp = async (req,res)=>{
     const {login_id,login_pw,user_name,gender,birth}=req.body
     try {
@@ -71,8 +74,28 @@ const signUpKakao = async (req,res)=>{
     res.redirect(url);
 }
 
+const logoutKakao = async (req,res)=>{
+    try {
+        const logout = await axios({
+            method: "POST",
+            url: "https://kapi.kakao.com/v1/user/unlink",
+            headers: {
+                "Authorization": Authorization,
+            },
+            data: {
+                "target_id_type":"user_id",
+                "target_id":target_id,
+            },
+        })
+        console.log("logout",logout.data);
+        res.redirect('/');
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 const authKakao = async (req,res)=>{
-    console.log(req.query.code);
+    console.log("query code",req.query.code);
     const auth = await axios({
         method: "POST",
         url: "https://kauth.kakao.com/oauth/token",
@@ -96,7 +119,11 @@ const authKakao = async (req,res)=>{
                 "content-type": "application/x-www-form-urlencoded;charset=utf-8",
             },
         });
+        Authorization = `Bearer ${auth.data.access_token}`;
+        target_id = user.data.id;
         console.log("user",user.data);
+        console.log("author",Authorization,"target",target_id)
+        res.redirect('/');
     } catch (error) {
         console.log(error)   
     }
@@ -113,4 +140,5 @@ module.exports = {
     userLogOut,
     signUpKakao,
     authKakao,
+    logoutKakao,
 }
