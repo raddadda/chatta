@@ -1,0 +1,171 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+    max-width: 1200px;
+}
+
+.header {
+    background-color: #007bff;
+    padding: 10px 0;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.header-title {
+    color: #fff;
+    font-size: 24px;
+}
+
+/* 상단 프로필 수정 버튼 */
+.profile-edit-button {
+    background-color: #fff;
+    color: #007bff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* 중앙 사용자 정보 섹션 */
+.user-info {
+    background-color: #fff;
+    padding: 70px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    max-width: 1200px;
+    justify-content: space-around;
+    
+} 
+
+/* 프로필 사진 */
+.profile-picture img {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+/* 사용자 정보 */
+.user-nickname {
+    text-align: left;
+    margin-top: 10px;
+}
+
+.user-nickname h1 {
+    font-size: 16px;
+    margin: 0;
+}
+
+.user-nickname p {
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+/* 친구 수 및 게시물 작성 버튼 */
+.friend-info {
+    background-color: #fff;
+    padding: 15px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    max-width: 1200px;
+    display: flex;
+    text-align: center;
+    justify-content: space-around;
+    flex-direction: row;
+}
+
+.friend-count {
+    font-size: 16px;
+}
+
+.friend-info button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 30px;
+}
+
+
+/* 하단 섹션 (채팅방, 북마크, 일정) */
+.bottom-section {
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* 카테고리 버튼 */
+.category-button {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    border: none;
+    color: gray;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 10px;
+    padding: 0;
+    display: block;
+    text-align: center;
+}
+
+/* 카테고리 버튼 클릭 시 글자 색상 변경 */
+.category-button:active,
+.category-button:focus {
+    color: black;
+}
+
+.category {
+    display: inline-block;
+    width: calc(33.33% - 10px);
+    vertical-align: top;
+}
+
+.categories-container {
+    display: flex;
+    justify-content: center;
+}
+
+/* 목록 숨김 상태 */
+.category ul {
+    display: none;
+}
+
+/* 카테고리 버튼 클릭 시 목록 표시 */
+.category.active ul {
+    display: block;
+}
+
+/* 목록 스타일 */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+ul li a {
+    text-decoration: none;
+    color: #007bff;
+    transition: color 0.3s;
+}
+
+ul li a:hover {
+    color: #0056b3;
+}
