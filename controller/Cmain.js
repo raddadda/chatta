@@ -10,17 +10,29 @@ const {
 
 
 const main = (req,res)=>{
-
-
-    console.log("cookie",req.signedCookies.logined);
-    const data = {
-        isLogin:false,
+    console.log("cookie",req.signedCookies);
+    const {logined, kakao_logined} = req.signedCookies;
+    let data;
+    if (logined){
+        data = {
+            isLogin:true,
+        }
+    } else if (kakao_logined){
+        data = {
+            isLogin:true,
+        }
+    } else {
+        data = {
+            isLogin:false,
+        }
     }
-    if (req.signedCookies.logined){
-        data.isLogin = true
-    }
-    console.log("islogin",data);
+    console.log("data",data);
     res.render('index',data);
+}
+
+const signUpKakaoMain = (req,res)=>{
+    console.log(req.params);
+    res.render('kakao');
 }
 
 
@@ -164,6 +176,7 @@ const connection = (io,socket,loc)=>{
 module.exports = {
     main,
     newMain,
+    signUpKakaoMain,
     chatMain,
     connection,
     bookmarkPost,
