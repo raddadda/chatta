@@ -15,12 +15,13 @@ router.get('/profile/edit', cprofileEdit.profileUpdate);
 router.get('/profile/edit/pw', cprofileEdit.pwUpdate)
 router.get('/profile/edit/delete', cprofileEdit.profileDelete)
 
+router.get('/chat',controller.chatMain);
+
 router.get('/signup/kakao',clogin.signUpKakao)
 router.get('/oauth/kakao',cauth.authKakao);
 router.get('/kakao/leave',clogin.logoutKakao);
 
-router.get('/chat',controller.chatMain);
-
+router.post('/mail', cprofileEdit.findPwPost)
 //router.get('/new/:userid',controller.newMain);
 
 router.get('/new',cboard.newMain);

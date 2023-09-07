@@ -12,7 +12,7 @@ let Authorization;
 let target_id;
 
 const signUp = async (req,res)=>{
-    const {login_id,login_pw,user_name,gender,birth}=req.body
+    const {login_id,login_pw,user_name,gender,birth,email}=req.body
     try {
         const flag = await Cauth.dbIdCheck(login_id)
         if(flag){
@@ -33,6 +33,7 @@ const signUp = async (req,res)=>{
             nickname: login_id,
             gender,
             birth: birthDate,
+            email,
             auth,
             auth_num,
         });
