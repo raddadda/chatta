@@ -1,8 +1,9 @@
-const { User, Friend_List, Chat_Room_Join, Chat_Room, Chat_Message } = require('../models');
+const { User, Friend_List, Chat_Room_Join, Chat_Room, Chat_Message, Board, Board_Bookmark } = require('../models');
 const constant = require('../common/constant');
 const Cauth = require('./Cauth');
 
 function calculateAge(birthdate) {
+    // 생년월일로 나이 계산
     const birthDate = new Date(birthdate);
     const currentDate = new Date();
 
@@ -65,6 +66,21 @@ const calculateUnreadMessages = async (roomId, userId) => {
     }
 };
 
+const getBookmarkedBoards = async (userId) => {
+    try {
+        // 사용자가 북마크한 게시물 목록
+        const bookmarkedBoards = await Board_Bookmark.findAll({
+            where: { user_id: userId },
+            include: [Board],
+        });
+
+        return bookmarkedBoards.map((bookmark) => bookmark.Board);
+    } catch (error) {
+        console.error('북마크한 게시물 가져오기 오류:', error);
+        throw error;
+    }
+};
+
 const getSchedules = async (userId) => {
     try {
         // const schedules = await Schedule.findAll({ where: { user_id: userId } });
@@ -92,14 +108,15 @@ const profile = async (req, res) => {
             room.unreadMessages = await calculateUnreadMessages(room.id, userId);
         };
 
+        const bookmarkedBoards = await getBookmarkedBoards(userId);
         const schedules = await getSchedules(userId);
         const age = await calculateAge(user.birth);
 
         if (!user) {
-            return res.status(404).json({ message: '사용자를 찾을 수 없습니다' });
+            return res.status(404).render('404');
         }
 
-        res.render('profile', { user, age, friendCount, ownerChatRooms, userChatRooms, unreadMessages, schedules });
+        res.render('profile', { user, age, friendCount, ownerChatRooms, userChatRooms, bookmarkedBoards, schedules });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: '내부 서버 오류' });
