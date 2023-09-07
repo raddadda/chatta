@@ -22,7 +22,15 @@ const Board = (sequelize) =>{
             allowNull:false,
         },
         content:{
-            type:DataTypes.STRING(100),
+            type:DataTypes.STRING(500),
+        },
+        event_time:{
+            type:DataTypes.DATE,
+            allowNull:false,
+        },
+        bord_category:{
+            type:DataTypes.STRING(20),
+            allowNull:false,
         }
     },
     {

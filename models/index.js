@@ -47,6 +47,9 @@ db.User.hasMany(db.Chat_Message,{foreignKey:'user_id'})
 db.Chat_Room.hasMany(db.Chat_Message,{foreignKey:'room_id'})
 db.Chat_Message.belongsTo(db.User,{foreignKey:'user_id'});
 db.Chat_Message.belongsTo(db.Chat_Room,{foreignKey:'room_id',onDelete:'CASCADE'})
+//
+
+
 // 유저 - 채팅 메시지 - 채팅방 의   다:다 관계   (채팅 메시지)
 
 

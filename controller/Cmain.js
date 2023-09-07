@@ -10,6 +10,8 @@ const {
 
 
 const main = (req,res)=>{
+
+
     console.log("cookie",req.signedCookies.logined);
     const data = {
         isLogin:false,
@@ -41,7 +43,6 @@ const boardPost = async (req,res)=>{
     })
     res.json({result:true , title , user_id});
 }
-
 
 const bookmarkPost = async (req,res)=>{
     const {user_id,board_id}=req.body;
@@ -165,7 +166,6 @@ module.exports = {
     newMain,
     chatMain,
     connection,
-    boardPost,
     bookmarkPost,
     chatRoomPost,
     chatRoomJoinPost,

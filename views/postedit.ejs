@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <h1>new 페이지</h1>
+    <form name="board-form">
+        <label for="title">게시글 제목 : </label>
+        <input type="text" id="title" name="title" placeholder="제목을 입력해주세요."><br/>
+        <label for="content"> 내용 : </label>
+        <input type="text" id="content" name="content" placeholder="내용을 입력해주세요."><br/>
+        <label for="eventDate"> 홍보시간 : </label>
+        <input type="date" id="eventDate" name="eventDate" placeholder="날짜를 입력해주세요."><br/>
+        <label for="category"> 카테고리 : </label>
+        <input type="text" id="category" name="category" placeholder="카테고리를 입력해주세요."><br/>
+        <button type="button" onclick="boardEdit()">게시판 수정</button>
+        <button type="button" onclick="boardDelete()">게시판 삭제</button>
+    </form>
+
+    <script>
+
+        ( async function(){
+
+            const boardForm = document.forms["board-form"];
+            const getpostRes = await axios({
+                method: "POST",
+                url:"/new/edit/post",
+                data: {
+                    id: 5
+                }
+            })
+            if (getpostRes.data.result) {
+                boardForm.title.value = getpostRes.data.board.title;
+                boardForm.content.value = getpostRes.data.board.content;
+                boardForm.eventDate.value = getpostRes.data.board.event_time.split('T')[0];
+                boardForm.category.value = getpostRes.data.board.bord_category;
+            }
+
+        })()    
+
+        async function boardEdit() {
+
+            const boardForm = document.forms["board-form"];
+            try {
+                const data = {
+                    id : 5,
+                    title:boardForm.title.value,
+                    content:boardForm.content.value,
+                    event_time:boardForm.eventDate.value,
+                    bord_category:boardForm.category.value
+                }
+                const res = await axios({
+                    method:"post",
+                    url:"/new/edit",
+                    data,
+                })
+                if(res.data.result){
+                    alert("수정이 완료되었습니다.");
+                    window.location.reload();
+                }else{
+                    alert("다시 시도해주세요.");
+                }
+            } catch(error) {
+                alert("잠시후 다시 시도해주세요.");
+                console.log(error);
+            }
+        }
+
+          async function boardDelete () {
+
+            if(!confirm('정말로 삭제하시겠습니까?')) return;
+            try{
+                const deleteRes = await axios({
+                method:"DELETE",
+                url:"/new/delete",
+                data: {
+                    id: 5
+                }
+            })
+                if (deleteRes.result) {
+                    alert('삭제가 완료되었습니다.')
+                }else{
+                    alert("다시 시도해주세요.");
+                }
+            }catch(error){
+                alert("다시 시도해주세요.");
+            }
+            
+        }
+
+    </script>
+</body>
+</html>

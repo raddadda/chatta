@@ -3,6 +3,8 @@ const router = express.Router();
 const controller = require('../controller/Cmain.js');
 const cauth = require('../controller/Cauth.js')
 const clogin = require('../controller/Clogin.js');
+const cboard = require('../controller/Cboard.js');
+
 const cprofile = require('../controller/Cprofile.js');
 const cprofileEdit = require('../controller/CprofileEdit.js')
 
@@ -17,7 +19,17 @@ router.get('/oauth/kakao',clogin.authKakao);
 
 router.get('/chat',controller.chatMain);
 
-router.get('/new/:userid',controller.newMain);
+//router.get('/new/:userid',controller.newMain);
+
+router.get('/new',cboard.newMain);
+router.post('/new/post',cboard.boardPost);
+router.delete('/new/delete', cboard.boardDelete);
+router.post('/new/edit/post',cboard.boarduser_findone)
+router.post('/new/findall',cboard.boarduser_findall)
+
+router.get('/new/edit',cboard.newEdit);
+router.post('/new/edit',cboard.boardEdit);
+
 
 router.post('/signup',clogin.signUp)
 router.post('/signin',clogin.signIn)
@@ -26,7 +38,7 @@ router.post('/logout',clogin.userLogOut)
 router.post('/profile/edit', cprofileEdit.post_profileUpdate)
 router.post('/profile/edit/pw', cprofileEdit.post_pwUpdate)
 
-router.post('/board',controller.boardPost)
+
 router.post('/bookmark',controller.bookmarkPost)
 router.post('/friendlist',controller.friendListPost)
 router.post('/chatroom',controller.chatRoomPost)

@@ -4,15 +4,404 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>Document</title>
+    <style>
+        body{
+            background-color: rgba(186, 186, 186, 0.595);
+        }
+        .wrap{
+            display: flex;
+            /* width: 100%;
+            height: 70%; */
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .imgFlex1{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 200px;
+            width: 45%;
+            background-color: rgb(255, 255, 255);
+            border-radius: 7px;
+            margin-left: 2.5%;
+            margin-bottom: 20px;    
+        }
+        .imgFlex2{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 200px;
+            width: 45%;
+            background-color: white;
+            border-radius: 7px;
+            margin-bottom: 20px;
+            margin-right: 2.5%;
+        }
+        .roomImg{
+            position: relative;
+            height: 150px;
+            width: 150px;
+            margin: 2%;
+            border-radius: 15%;
+            background-color: rgb(255, 255, 255);
+            border: 5px solid black;
+            
+        }
+        .boardInfo{
+            position: relative;
+            height: 150px;
+            width: 70%;
+            margin-right: 2%;
+
+        }
+        .boxBordCategory{
+            height: 20%; 
+        }
+        .boxTitle{
+            height: 45%;
+            font-size: 35px;
+        }
+        .boxCreateAt{
+            height: 15%;
+        }
+        .boxViews{
+            height: 15%;
+            
+            color: rgb(124, 124, 124);
+        }
+
+        @media (max-width : 990px) {
+            .wrap{
+                /* display: block; */
+                /* width: 50%; */
+            }
+            .imgFlex1{
+                display: flex;
+                width: 100%;
+                margin-right: 0px;
+                margin-left: 0px;
+            }
+            .imgFlex2{
+                display: flex;
+                width: 100%;
+                margin-right: 0px;
+                margin-left: 0px;
+            }
+            .boardInfo{
+                width: 75%;
+            }
+        }
+        @media (max-width : 800px) {
+            .wrap{
+                display: block;
+                position: absolute;
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .boardInfo{
+                width: 75%;
+            }
+        }
+       
+</style>
+    </style>
 </head>
+
+<style>
+
+    .board-detail-modal {
+        width: 65%; height: 650px; 
+        background-color: #eee; display: none;
+        position: fixed; top: 50px; left: 50%;
+        border-radius: 10px;  z-index: 100;
+        margin: auto; transform: translate(-50%, 0);
+    }
+    .board-detail-modal > .board-modal-close {
+        position: absolute; top: -30px; right: 2px;
+        width: 16px; height: 16px;
+        cursor: pointer;
+    }
+    .board-detail-modal > .board-modal-close > img {
+        width: 100%; height: 100%;
+    }
+
+    .board-detail-modal > .board-modal-close:hover {
+        animation: rotate 0.5s
+    }
+
+    .board-detail-modal > .bd-image {
+        width: 100%; height: 200px;
+        /* background-color: rgb(1, 1, 61); */
+        background-image: url("https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/test_1280.jpg");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        border-top-left-radius: 10px; border-top-right-radius: 10px; 
+    }
+
+
+    .board-detail-modal > .board-detail-contents {
+        width: 96%; height: 450px; margin: auto;
+        margin-top: -30px;
+    }
+
+
+    .board-detail-modal > .board-detail-contents > .bd-info {
+        width: 100%; height: 125px; background-color: #fff;
+        border-radius: 9px; margin-bottom: 20px;
+    }
+
+    .board-detail-modal > .board-detail-contents > .bd-info > .bd-info_category {
+        text-align: center; font-weight: bold; font-size: 1.2em; color: #ccc;
+        line-height: 1.2em; padding: 10px 0;
+    }
+
+    .board-detail-modal > .board-detail-contents > .bd-info > .bd-info_title {
+        width: 90%;  margin: auto;  overflow:hidden; min-height: 35px;
+        vertical-align:top; text-overflow: ellipsis; word-break:break-all;
+        display: block;
+        display: -webkit-box;
+        -webkit-box-orient:vertical;
+        -webkit-line-clamp:2
+        
+    }
+
+    .board-detail-modal > .board-detail-contents >  .bd-sub-content {
+        width: 98%; margin: auto; height: 310px; overflow: auto; overflow-x: hidden;
+        text-align: left;
+    }
+
+    .board-detail-modal > .board-detail-contents >  .bd-sub-content::-webkit-scrollbar {
+        width: 8px;  /* 스크롤바의 너비 */
+    }
+
+    .board-detail-modal > .board-detail-contents >  .bd-sub-content::-webkit-scrollbar-thumb {
+        height: 30%; /* 스크롤바의 길이 */
+        background: #ccc; /* 스크롤바의 색상 */
+        border-radius: 10px;
+    }
+
+    .board-detail-modal > .board-detail-contents >  .bd-sub-content::-webkit-scrollbar-track {
+        background: rgba(33, 122, 244, .1);  /*스크롤바 뒷 배경 색상*/
+    }
+
+    .board-detail-modal > .board-detail-contents >  .bd-sub-content > h3 {
+        color: #333; font-size: 24px; line-height: 1.95;
+    
+    }
+
+    .board-detail-modal > .board-detail-contents > .bd-sub-content > .txt-box {
+        color: #333; font-size: 24px; line-height: 1.95;
+    }
+
+    .board-detail-modal > .board-detail-contents > .bd-sub-content > .txt-box > h6 {
+        margin: 20px 0 0; font-weight: 600;
+        color: #333; font-size: 16px; line-height: 1.75;
+    }
+
+    .board-detail-modal > .board-detail-contents > .bd-sub-content > .txt-box >  p {
+        color: #333; font-weight: 400;
+        word-wrap: break-word; white-space: pre-wrap;
+        font-size: 16px; line-height: 1.75; padding-right: 1em;
+    }
+  
+    @media screen and (max-width:756px) {
+        .board-detail-modal {
+            width: 90%; height: 600px;
+        }
+
+        .board-detail-modal > .board-detail-contents >  .bd-sub-content {
+            height: 260px; 
+        }
+    }
+
+    @keyframes rotate {
+        from {
+            -webkit-transform: rotate(0deg);
+            -o-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+
+        to {
+            -webkit-transform: rotate(360deg);
+            -o-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
+
+</style>
+
 <body>
     <h1>new 페이지</h1>
-    <a href="/profile">프로필</a>
+
+    <form name="board-form">
+        <label for="title">게시글 제목 : </label>
+        <input type="text" id="title" name="title" placeholder="제목을 입력해주세요."><br/>
+        <label for="content"> 내용 : </label>
+        <input type="text" id="content" name="content" placeholder="내용을 입력해주세요."><br/>
+        <label for="eventDate"> 홍보시간 : </label>
+        <input type="date" id="eventDate" name="eventDate" placeholder="날짜를 입력해주세요."><br/>
+        <label for="category"> 카테고리 : </label>
+        <input type="text" id="category" name="category" placeholder="카테고리를 입력해주세요."><br/>
+        <button type="button" onclick="boardCreate()">게시판 만들기</button>
+    </form>
+
 </body>
+<br/>
+<br/>
+<br/>
+<div class="wrap" id="wrap"> </div>
+<div class="board-detail-modal" id="boardDetailModal"></div>
 <script>
-    const socket = io('/new');
-    // 네임 스페이스가 /new로 되어있는 소켓을 사용
-    socket.emit('userLog')
+        let list = [];
+        ( async function(){
+           
+            //console.log("boardBox",boardBox);
+            console.log("222");
+            const res = await axios({
+                method: "POST",
+                url:"/new/findall",
+                data: {
+                    id: 5
+                }
+            })
+           
+            if(res.data.result){
+                const wrap = document.querySelector("#wrap");
+                let boxhtml = ``;
+                
+                for (let i=0; i<res.data.board.length; i++){
+                    list.push(res.data.board[i]);
+            
+                    const data = {
+                        bord_category : res.data.board[i] && res.data.board[i].bord_category ? res.data.board[i].bord_category : '',
+                        title :  res.data.board[i] && res.data.board[i].title ? res.data.board[i].title : '',
+                        views : res.data.board[i] && res.data.board[i].views ? res.data.board[i].views : 0,
+                        createAt : res.data.board[i] && res.data.board[i].createdAt.split('T')[0]? res.data.board[i].createdAt.split('T')[0] : '',
+                    }
+                    
+                    if(i%2==0){
+                        boxhtml += `
+                    <div class="imgFlex1" onclick="loadDetailModal(${i})">
+                        <div class="roomImg"></div>
+                        <div class="boardInfo">
+                            <div class="boxBordCategory">${data.bord_category}</div>
+                            <div class="boxTitle">${data.title}</div>
+                            <div class="boxCreateAt">${data.createAt}</div>
+                            <div class="boxViews">${data.views}</div>      
+                        </div>
+                    </div>
+                    `;  
+                    } else{
+                        boxhtml += `
+                    <div class="imgFlex2" onclick="loadDetailModal(${i})">
+                        <div class="roomImg"></div>
+                        <div class="boardInfo">
+                            <div class="boxBordCategory">${data.bord_category}</div>
+                            <div class="boxTitle">${data.title}</div>
+                            <div class="boxCreateAt">${data.createAt}</div>
+                            <div class="boxViews">${data.views}</div>      
+                        </div>
+                    </div>
+                    `;  
+                    }
+                }
+                wrap.innerHTML += boxhtml;
+            }else{
+                console.log('res',res);
+            }
+        })()    
+        
+        async function boardCreate(){
+            const boardForm = document.forms["board-form"];
+            if ( boardForm.title.value === "" ) return alert('제목을 확인해주세요.');
+            if ( boardForm.content.value === "" ) return alert('내용을 확인해주세요.');
+            if ( boardForm.eventDate.value === "" ) return alert('흥보시간 확인해주세요.');
+            if ( boardForm.category.value === "" ) return alert('카텔고리를 확인해주세요.');
+            
+            try {
+                const data = {
+                    title:boardForm.title.value,
+                    content:boardForm.content.value,
+                    event_time:boardForm.eventDate.value,
+                    bord_category:boardForm.category.value
+                }
+                const res = await axios({
+                    method:"post",
+                    url:"/new/post",
+                    data,
+                })
+                if(res.data.result){
+                    alert("등록 되었습니다.");
+                    window.location.href = "/";
+                }else{
+                    alert("다시 시도해주세요.");
+                }
+                
+                console.log("result",res.result);
+            } catch (error) {
+                alert("잠시 후에 시도해주세요.");
+                console.log(error);
+            }
+        }
+
+
+    function loadDetailModal (i) {
+        console.log('list', list);
+        console.log('i', i);
+
+        const data = {
+            bord_category : list[i] && list[i].bord_category ? list[i].bord_category : '',
+            content: list[i] && list[i].content ? list[i].content : '',
+            title :  list[i] && list[i].title ? list[i].title : '',
+            views : list[i] && list[i].views ? list[i].views : 0,
+            event_time : list[i] && list[i].event_time.split('T')[0]? list[i].event_time.split('T')[0] : '',
+        }
+
+        
+        let modal = document.getElementById('boardDetailModal');
+        modal.style.display = 'block'
+        modal.innerHTML = `
+            <div class="board-modal-close" onclick="modalCloase()">
+                <img src= "https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/close.png"
+                    alt="close_img"
+                />
+            </div>
+            <div class="bd-image"></div>
+            <div class="board-detail-contents">
+                <div class="bd-info">
+                    <div class="bd-info_category"> ${data.bord_category}</div>
+                    <h2 class="bd-info_title">${data.title}</h2>
+                </div>
+                <div id="eventDetailSubInfo" class="bd-sub-content">
+                    <div class="txt-box">
+                        <h6>내용</h6>
+                        <p>${data.content}</p>
+                    </div>
+                    <div class="txt-box">
+                        <h6>흥보 시간</h6>
+                        <p>${data.event_time}</p>
+                    </div>
+
+                    <div class="txt-box">
+                        <h6>채팅방</h6>
+                        <p><button>입장하기</button><p>
+                    </div>
+
+                </div>
+            </div>
+        `
+    }
+
+    function modalCloase () {
+        document.getElementById('boardDetailModal').style.display = 'none';
+    }
+    // const socket = io('/new');
+    // // 네임 스페이스가 /new로 되어있는 소켓을 사용
+    // socket.emit('userLog')
 </script>
 </html>
