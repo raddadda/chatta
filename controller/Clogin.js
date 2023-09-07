@@ -1,9 +1,12 @@
-const {User} = require('../models');
+const axios = require('axios');
 const { v4 } = require('uuid');
 const crypto = require('crypto');
+const secret = require('../config/secret');
 const constant = require('../common/constant');
+const {User} = require('../models');
 const Cauth = require('./Cauth');
-
+const {REST_API_KEY} = secret;
+const REDIRECT_URI = "http://localhost:8000/oauth/kakao"
 
 const signUp = async (req,res)=>{
     const {login_id,login_pw,user_name,gender,birth}=req.body
@@ -20,11 +23,6 @@ const signUp = async (req,res)=>{
         const {minint,maxint} = constant.auth;
         const auth_num = crypto.randomInt(maxint)+minint;
         const birthDate = new Date(birth);
-        // console.log('uuid',uuid)
-        // const uuidString = await Cauth.uuidToString(uuid)
-        // console.log('uuid string',uuidString);
-        // const newUuid = await Cauth.stringToUuid(uuidString);
-        // console.log('uuid new', newUuid);
         const user = await User.create({
             user_id: uuid,
             login_id,
@@ -68,6 +66,42 @@ const signIn = async (req,res)=>{
     }
 }
 
+const signUpKakao = async (req,res)=>{
+    const url = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}`;
+    res.redirect(url);
+}
+
+const authKakao = async (req,res)=>{
+    console.log(req.query.code);
+    const auth = await axios({
+        method: "POST",
+        url: "https://kauth.kakao.com/oauth/token",
+        headers: {
+            "content-type": "application/x-www-form-urlencoded",
+        },
+        data: {
+            grant_type: "authorization_code",
+            client_id: REST_API_KEY,
+            redirect_uri: REDIRECT_URI,
+            code: req.query.code,
+        },
+    });
+    console.log(auth.data);
+    try {
+        const user = await axios({
+            method: "POST",
+            url: "https://kapi.kakao.com/v2/user/me",
+            headers: {
+                "Authorization": `Bearer ${auth.data.access_token}`,
+                "content-type": "application/x-www-form-urlencoded;charset=utf-8",
+            },
+        });
+        console.log("user",user.data);
+    } catch (error) {
+        console.log(error)   
+    }
+}
+
 const userLogOut = async (req,res)=>{
     res.clearCookie(constant.loginCookie);
     res.json({result:true});
@@ -77,4 +111,6 @@ module.exports = {
     signUp,
     signIn,
     userLogOut,
+    signUpKakao,
+    authKakao,
 }
