@@ -32,18 +32,6 @@ const chatMain = (req,res)=>{
     res.render('chat');
 }
 
-
-const boardPost = async (req,res)=>{
-    const {title,user_id} = req.body
-    // user_id는 쿠키를 생성해서 req.cookies로 가져와야 될거 같긴 한데
-    // 백앤드로 관계형 잘 설정되는지만 보려고 일단은 req에 같이 넣음
-    const board = await Board.create({
-        title,
-        poster_id : user_id,
-    })
-    res.json({result:true , title , user_id});
-}
-
 const bookmarkPost = async (req,res)=>{
     const {user_id,board_id}=req.body;
     const bookmark = await Board_Bookmark.create({

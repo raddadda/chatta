@@ -88,54 +88,12 @@ async function boradFindAll(){
     const res = await axios({
         method: "POST",
         url:"/post/findall",
-        data: {
-            id: 5
-        }
     })
     
-    if(res.data.result){
-        const wrap = document.querySelector("#wrap");
-        let boxhtml = ``;
-        
-        for (let i=0; i<res.data.board.length; i++){
-            list.push(res.data.board[i]);
-    
-            const data = {
-                bord_category : res.data.board[i] && res.data.board[i].bord_category ? res.data.board[i].bord_category : '',
-                title :  res.data.board[i] && res.data.board[i].title ? res.data.board[i].title : '',
-                views : res.data.board[i] && res.data.board[i].views ? res.data.board[i].views : 0,
-                createAt : res.data.board[i] && res.data.board[i].createdAt.split('T')[0]? res.data.board[i].createdAt.split('T')[0] : '',
-            }
-            
-            if(i%2==0){
-                boxhtml += `
-            <div class="imgFlex1" onclick="loadDetailModal(${i})">
-                <div class="roomImg"></div>
-                <div class="boardInfo">
-                    <div class="boxBordCategory">${data.bord_category}</div>
-                    <div class="boxTitle">${data.title}</div>
-                    <div class="boxCreateAt">${data.createAt}</div>
-                    <div class="boxViews">${data.views}</div>      
-                </div>
-            </div>
-            `;  
-            } else{
-                boxhtml += `
-            <div class="imgFlex2" onclick="loadDetailModal(${i})">
-                <div class="roomImg"></div>
-                <div class="boardInfo">
-                    <div class="boxBordCategory">${data.bord_category}</div>
-                    <div class="boxTitle">${data.title}</div>
-                    <div class="boxCreateAt">${data.createAt}</div>
-                    <div class="boxViews">${data.views}</div>      
-                </div>
-            </div>
-            `;  
-            }
-        }
-        wrap.innerHTML += boxhtml;
-    }else{
+    if (res.data.result){
+        return res.data.board;
+    } else{
         console.log('res',res);
+        return [];
     }
-    
 }
