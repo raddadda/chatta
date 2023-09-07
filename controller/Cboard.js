@@ -2,24 +2,29 @@ const {
     Board,
 } = require('../models');
 
-const newMain = (req,res)=>{
-    res.render('new');
+const boardList = (req,res)=>{
+    res.render('boardList');
 }
 
-const newEdit = (req,res)=>{
-    res.render('postedit');
+const create_board = (req,res)=>{
+    res.render('postNew');
 }
+
+const edit_board = (req,res)=>{
+    res.render('postEdit');
+}
+
 
 
 const user_id = '296b63ea-6f1c-4f18-9f10-382f4a80e1cd';
 
-const boardPost = async (req,res)=>{
+const create_board_post = async (req,res)=>{
     const {title,content,event_time,bord_category} = req.body
     // user_id는 쿠키를 생성해서 req.cookies로 가져와야 될거 같긴 한데
     // 백앤드로 관계형 잘 설정되는지만 보려고 일단은 req에 같이 넣음
     try {
         const board = await Board.create({
-            //title,
+            title,
             poster_id : user_id,
             content,
             event_time,
@@ -35,7 +40,7 @@ const boardPost = async (req,res)=>{
         console.log(e);
     }
 }
-const boardEdit = async(req,res)=>{
+const edit_board_post = async(req,res)=>{
     const {id, title,content,event_time,bord_category} = req.body
     try{
         const board = await Board.update({
@@ -58,7 +63,7 @@ const boardEdit = async(req,res)=>{
         console.log(e);
     }
 }
-const boardDelete = async (req, res) => {
+const delete_board = async (req, res) => {
 
     const { id } = req.body;
     
@@ -120,11 +125,12 @@ const boarduser_findall = async(req,res)=>{
 
 
 module.exports = {
-    newMain,
-    newEdit,
-    boardPost,
-    boardEdit,
+    create_board,
+    create_board_post,
+    edit_board,
+    edit_board_post,
+    delete_board,
+    boardList,
     boarduser_findone,
     boarduser_findall,
-    boardDelete
 }

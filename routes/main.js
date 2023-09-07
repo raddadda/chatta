@@ -23,14 +23,20 @@ router.get('/chat',controller.chatMain);
 
 //router.get('/new/:userid',controller.newMain);
 
-router.get('/new',cboard.newMain);
-router.post('/new/post',cboard.boardPost);
-router.delete('/new/delete', cboard.boardDelete);
-router.post('/new/edit/post',cboard.boarduser_findone)
-router.post('/new/findall',cboard.boarduser_findall)
+//boardlist
+router.get('/post',cboard.boardList);
+//boardCreate 생성
+router.get('/post/new',cboard.create_board);
+router.post('/post/new',cboard.create_board_post);
+//boardEdit 생성
+router.get('/post/edit',cboard.edit_board);
+router.post('/post/edit',cboard.edit_board_post);
+//boardDelete 삭제
+router.delete('/post/delete', cboard.delete_board);
+//board 조회
+router.post('/post/findone',cboard.boarduser_findone)
+router.post('/post/findall',cboard.boarduser_findall)
 
-router.get('/new/edit',cboard.newEdit);
-router.post('/new/edit',cboard.boardEdit);
 
 
 router.post('/signup',clogin.signUp)
