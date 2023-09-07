@@ -5,36 +5,105 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>프로필 수정</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        .header {
+            background-color: #007bff;
+            padding: 10px 0;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header-title {
+            color: #fff;
+            font-size: 29px;
+        }
+
+        /* 중앙 유저 정보 */
+        .user-info {
+
+        }
+
+        /* 프로필 사진 영역 */
+        .top-info {
+            display: flex;
+            justify-content: center;
+            height: 200px;
+        }
+
+        .center-info {
+
+        }
+
+        .center-top-info {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .center-bottom-info {
+
+        }
+    </style>
 </head>
 <body>
-    <h1> <%= user.nickname %> 님 프로필 수정 </h1>
+    <div class="header">
+        <div class="header-content">
+            <div class="header-title">
+                프로필 편집
+            </div>
+        </div>
+    </div>
 
-    <!-- 비밀번호 변경은 다른페이지로 분리 -->
-    <a href="/profile/edit/pw">비밀번호 변경</a>
-    <!-- 회원탈퇴도 다른페이지로 분리 -->
-    <a href="/profile/edit/delete">회원 탈퇴</a>
+    <!-- 중앙 사용자 정보 영역 -->
+    <div class="user-info">
+        <!-- 비밀번호 변경은 다른페이지로 분리 -->
+        <a href="/profile/edit/pw">비밀번호 변경</a>
+        <!-- 회원탈퇴도 다른페이지로 분리 -->
+        <a href="/profile/edit/delete">회원 탈퇴</a>
+    
+        <form name="edit-profile">
+            <input type="hidden" id="id" value="<%= user.user_id %>"> 
+            <!-- 상단 프로필 사진 영역 -->
+            <div class="top-info">
+                <img src="" alt="프로필사진">
+                <br />
+            </div>
 
-    <form name="edit-profile">
-        <input type="hidden" id="id" value="<%= user.user_id %>">
-        프로필사진 : <img src="" alt="프로필사진">
-        <br />
+            <!-- 중앙 유저 정보 영역 -->
+            <div class="center-info">
+                
+                <!-- 유저 정보 상단 영역 -->
+                <div class="center-top-info">
+                    이름 : <input type="text" id="userName" value="<%= user.user_name %>" readonly />   
+                    아이디 : <input type="text" id="loginId" value="<%= user.login_id %>" readonly />
+                    성별 : <input type="text" id="gender" value="<%= user.gender %>">
+                    닉네임 : <input type="text" id="nickName" value="<%= user.nickname %>">
+                    생년월일 : <input type="text" id="birth" value="<%= user.birth %>" readonly>
+                </div>
 
-        이름 : <input type="text" id="userName" value="<%= user.user_name %>" readonly />   
-        생년월일 : <input type="text" id="birth" value="<%= user.birth %>" readonly>
-        성별 : <input type="text" id="gender" value="<%= user.gender %>">
-        <br />
-        
-        아이디 : <input type="text" id="loginId" value="<%= user.login_id %>" readonly />
-        닉네임 : <input type="text" id="nickName" value="<%= user.nickname %>">
-        <br />
-
-        선호 카테고리 : <input type="text" id="categoryA">
-        비선호 카테고리 : <input type="text" id="categoryB"><br />
-        <!-- 비밀번호 : <input type="password" id="loginPw" value="<%= user.login_pw %>" > <br /> -->
-        
-        <!-- 저장 버튼 -->
-        <button type="button" onclick="edit()">저장하기</button>
-    </form>
+                <!-- 유저 정보 하단 영역 -->
+                <div class="center-bottom-info">
+                    선호 카테고리 : <input type="text" id="categoryA">
+                    비선호 카테고리 : <input type="text" id="categoryB"><br />
+                </div>
+            </div>
+            <!-- 저장 버튼 -->
+            <button type="button" onclick="edit()">저장하기</button>
+        </form>
+    </div>
 
     <script>
         // 저장 버튼 함수 (POST)
