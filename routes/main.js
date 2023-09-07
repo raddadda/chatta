@@ -17,6 +17,7 @@ router.get('/profile/edit/delete', cprofileEdit.profileDelete)
 
 router.get('/signup/kakao',clogin.signUpKakao)
 router.get('/oauth/kakao',clogin.authKakao);
+router.get('/kakao/leave',clogin.logoutKakao);
 
 router.get('/chat',controller.chatMain);
 
