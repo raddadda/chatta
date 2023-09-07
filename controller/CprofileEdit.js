@@ -4,18 +4,19 @@ const constant = require('../common/constant');
 const Cauth = require('./Cauth');
 const bcrypt = require('bcrypt');
 
+///////////GET////////////
 const profileUpdate = async (req, res) => {
     try {
         const cookieValue = req.signedCookies.logined.id;
         console.log(cookieValue)
         const userId = await Cauth.stringToUuid(cookieValue);
-
+        
         const user = await User.findOne({ where: { user_id: userId } });
-
+        
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
-
+        
         res.render('profileEdit', { user });
     } catch (error) {
         console.error(error);
@@ -23,7 +24,47 @@ const profileUpdate = async (req, res) => {
     }
 };
 
-const post_profileUpdate = async (req,res)=>{
+const pwUpdate = async (req, res) => {
+    try {
+        const cookieValue = req.signedCookies.logined.id;
+        console.log(cookieValue)
+        const userId = await Cauth.stringToUuid(cookieValue);
+        
+        const user = await User.findOne({ where: { user_id: userId } });
+        
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        
+        res.render('pwEdit', { user });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+const profileDelete = async (req,res) => {
+    try {
+        const cookieValue = req.signedCookies.logined.id;
+        console.log(cookieValue)
+        const userId = await Cauth.stringToUuid(cookieValue);
+        
+        const user = await User.findOne({ where: { user_id: userId } });
+        
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        res.render('profileDelete', { user });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+
+////////////POST//////////////
+const profileUpdatePost = async (req,res)=>{
     try {
         const {id,nick} = req.body
 
@@ -35,26 +76,7 @@ const post_profileUpdate = async (req,res)=>{
     }
 }
 
-const pwUpdate = async (req, res) => {
-    try {
-        const cookieValue = req.signedCookies.logined.id;
-        console.log(cookieValue)
-        const userId = await Cauth.stringToUuid(cookieValue);
-
-        const user = await User.findOne({ where: { user_id: userId } });
-
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-
-        res.render('pwEdit', { user });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Internal server error' });
-    }
-};
-
-const post_pwUpdate = async (req,res)=>{
+const pwUpdatePost = async (req,res)=>{
     try {
         const {id, login_id, login_pw, Cpw, pw_edit, pw_edit2,} = req.body
         
@@ -72,7 +94,25 @@ const post_pwUpdate = async (req,res)=>{
         } else {
             res.send({message : '작성한 내용을 확인해주세요'})
         }
+    } catch (error) {
+        console.log(error)
+    }
+}
 
+const profileDeletePost = async (req,res) => {
+    try {
+        const {id, login_id, login_pw, Cid, Cpw,} = req.body
+
+        const pwCompare = await bcrypt.compare(Cpw,login_pw)
+
+        if(pwCompare && login_id === Cid) {
+            const destroy = await User.destroy({where : {user_id : id}})
+            res.json({result : true})
+        } else if(!pwCompare && login_id === Cid) {
+            res.send({message : '비밀번호가 틀립니다.'})
+        } else {
+            res.send({message : '존재하지 않는 회원입니다.'})
+        }
     } catch (error) {
         console.log(error)
     }
@@ -80,9 +120,11 @@ const post_pwUpdate = async (req,res)=>{
 
 module.exports ={
     profileUpdate,
-    post_profileUpdate,
     pwUpdate,
-    post_pwUpdate
+    profileDelete,
+    profileUpdatePost,
+    pwUpdatePost,
+    profileDeletePost,
 }
 
 
