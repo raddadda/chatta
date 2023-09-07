@@ -59,7 +59,16 @@
                     url:"/new/edit",
                     data,
                 })
+                if (res.data.result) {
+
+                    alert('수정이 완료되었습니다.');
+                    window.location.reload();
+                } else {
+                    alert('다시 시도해 주세요.');
+                }
+
             } catch(error) {
+                alert('잠시 후 다시 시도해주세요.');
                 console.log(error);
             }
         }
@@ -68,18 +77,23 @@
 
             if(!confirm('정말로 삭제하시겠습니까?')) return;
 
-            const deleteRes = await axios({
-                method:"DELETE",
-                url:"/new/delete",
-                data: {
-                    id: 5
+            try {
+                const deleteRes = await axios({
+                    method:"DELETE",
+                    url:"/new/delete",
+                    data: {
+                        id: 5
+                    }
+                })
+                if (deleteRes.result) {
+                    alert('삭제가 완료되었습니다.')
+                } else {
+                    alert('다시 시도해 주세요.');
                 }
-            })
-            if (deleteRes.result) {
-                alert('삭제가 완료되었습니다.')
+            } catch (error) {
+                alert('잠시 후 다시 시도해주세요.');
             }
         }
-
 
     </script>
 </body>
