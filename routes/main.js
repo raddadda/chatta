@@ -15,12 +15,9 @@ router.get('/profile/edit', cprofileEdit.profileUpdate);
 router.get('/profile/edit/pw', cprofileEdit.pwUpdate)
 router.get('/profile/edit/delete', cprofileEdit.profileDelete)
 
-router.get('/signup/kakao',ckakao.signUpKakao)
-router.get('/oauth/kakao',ckakao.authKakao);
-router.get('/kakao/leave',ckakao.logoutKakao);
-
 router.get('/chat',controller.chatMain);
 
+router.post('/mail', cprofileEdit.findPwPost)
 //router.get('/new/:userid',controller.newMain);
 
 router.get('/new',cboard.newMain);

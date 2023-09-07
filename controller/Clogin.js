@@ -4,15 +4,16 @@ const Cauth = require('./Cauth');
 
 
 const signUp = async (req,res)=>{
-    const {login_id,login_pw,user_name,gender,birth}=req.body
+    const {login_id,login_pw,user_name,gender,birth,email}=req.body
     try {
         const flag = await Cauth.dbIdCheck(login_id)
         if(flag){
             res.json({result:false , message:'아이디가 중복되어 사용할 수 없습니다'})
             return;
         }
+
         const signConst = await Cauth.signUpConst (login_pw);
-        const uuid = await signUpCreate(login_id,user_name,gender,birth,signConst);
+        const uuid = await signUpCreate(login_id,user_name,gender,birth,email,signConst);
         res.json({result:true,message:`${login_id}님이 회원가입 하셨습니다`,uuid});
     } catch (error) {
         console.log(error);
@@ -21,7 +22,7 @@ const signUp = async (req,res)=>{
 
 
 
-const signUpCreate = async (login_id,user_name,gender,birth,signConst) => {
+const signUpCreate = async (login_id,user_name,gender,birth,email,signConst) => {
     const {uuid,hash,auth,auth_num} = signConst;
     const user = await User.create({
         user_id: uuid,
@@ -31,6 +32,7 @@ const signUpCreate = async (login_id,user_name,gender,birth,signConst) => {
         nickname: login_id,
         gender,
         birth,
+        email,
         auth,
         auth_num,
     });

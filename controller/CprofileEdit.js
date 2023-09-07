@@ -3,6 +3,8 @@ const { v4 } = require('uuid');
 const constant = require('../common/constant');
 const Cauth = require('./Cauth');
 const bcrypt = require('bcrypt');
+const nodemailer = require('nodemailer');
+const mailer = require('../routes/mail');
 
 ///////////GET////////////
 const profileUpdate = async (req, res) => {
@@ -118,6 +120,23 @@ const profileDeletePost = async (req,res) => {
     }
 }
 
+const findPwPost = (req, res) => {
+    const { email }  = req.body;
+  
+    let emailParam = {
+      toEmail: email,     // 수신할 이메일
+  
+      subject: 'New Email From Gyunny',   // 메일 제목
+  
+      text: `Gyunny 회원님!`  // 메일 내용
+    };
+  
+    mailer.sendGmail(emailParam);
+  
+    res.status(200).send("성공");
+  }
+
+
 module.exports ={
     profileUpdate,
     pwUpdate,
@@ -125,6 +144,7 @@ module.exports ={
     profileUpdatePost,
     pwUpdatePost,
     profileDeletePost,
+    findPwPost,
 }
 
 
