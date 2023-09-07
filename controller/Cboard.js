@@ -11,7 +11,7 @@ const newEdit = (req,res)=>{
 }
 
 
-const user_id = 'c8150f3c-679b-44ad-b72d-95aafe752992';
+const user_id = '296b63ea-6f1c-4f18-9f10-382f4a80e1cd';
 
 const boardPost = async (req,res)=>{
     const {title,content,event_time,bord_category} = req.body
@@ -25,33 +25,16 @@ const boardPost = async (req,res)=>{
             event_time,
             bord_category
         })
-       
-        res.json({result:true , title , content, event_time, bord_category});
-    
+       if(board){
+            res.json({result:true , title , content, event_time, bord_category});
+       }else{
+            res.json({result:false});
+       }
     } catch(e){
+        res.json({result:false});
         console.log(e);
     }
 }
-
-const boardDelete = async (req, res) => {
-
-    const { id } = req.body;
-    
-    try {
-        const board = await Board.destroy({ where : { id }})
-        console.log('board', board);
-        if (board) {
-            res.json({result:true});
-        } else {
-            res.json({result:false});
-        } 
-
-    } catch (e) {
-        res.json({result:false});
-    }
-
-}
-
 const boardEdit = async(req,res)=>{
     const {id, title,content,event_time,bord_category} = req.body
     try{
@@ -64,13 +47,37 @@ const boardEdit = async(req,res)=>{
         },{
             where:{id}
         })
-
-        console.log(board);
-        res.json({result:true , title , content, event_time, bord_category});
+        if(board.dataValues){
+            res.json({result:true , title , content, event_time, bord_category});
+        }else{
+            res.json({result:false});
+        }
+       
     }catch(e){
+        res.json({result:false});
         console.log(e);
     }
 }
+const boardDelete = async (req, res) => {
+
+    const { id } = req.body;
+    
+    try {
+        const board = await Board.destroy({ where : { id }})
+        if (board) {
+            res.json({result:true});
+        } else {
+            res.json({result:false});
+        } 
+        
+    } catch (e) {
+        res.json({result:false});
+        console.log(e);
+    }
+
+}
+
+
 const boarduser_findone = async(req,res)=>{
 
     const {id} = req.body;
@@ -78,22 +85,17 @@ const boarduser_findone = async(req,res)=>{
     try {
         
         const board = await Board.findOne({
-           
+            attributes:['id', 'title', 'views', 'content', 'event_time', 'bord_category', 'createdAt'],
             where: {id}
         })
         if (board.dataValues){
-            res.json({result:true, 
-                id:board.dataValues.id,
-                title:board.dataValues.title,
-                views: board.dataValues.views,
-                content:board.dataValues.content,
-                event_time:board.dataValues.event_time,
-                bord_category:board.dataValues.bord_category,
-                createAt : board.dataValues.createdAt,
-            });
+            res.json({result:true,board});
+        }else{
+            res.json({result:false});
         }   
       
     } catch(e) {
+        res.json({result:false});
         console.log(e);
     }
 }
@@ -106,10 +108,13 @@ const boarduser_findall = async(req,res)=>{
             attributes:['id', 'title', 'views', 'content', 'event_time', 'bord_category', 'createdAt'],
             limit:3
         })
-        console.log("board",board);
-        res.json({result:true,board});
-       
+        if(board){
+            res.json({result:true,board});
+        }else{
+            res.json({result:false});
+        }
     }catch(e){
+        es.json({result:false});
         console.log(e);
     }
 }

@@ -248,8 +248,8 @@
         <input type="text" id="category" name="category" placeholder="카테고리를 입력해주세요."><br/>
         <button type="button" onclick="boardCreate()">게시판 만들기</button>
     </form>
-    <button type="button" onclick="boardEdit()">게시판 수정</button>
-    <button type="button" onclick="boardDelete()">게시판 삭제</button>
+
+
 </body>
 <br/>
 <br/>
@@ -277,17 +277,24 @@
                 let boxhtml = ``;
                 
                 for (let i=0; i<res.data.board.length; i++){
-                    const date = res.data.board[i].createdAt.split('T')[0];
                     list.push(res.data.board[i]);
+            
+                    const data = {
+                        bord_category : res.data.board[i] && res.data.board[i].bord_category ? res.data.board[i].bord_category : '',
+                        title :  res.data.board[i] && res.data.board[i].title ? res.data.board[i].title : '',
+                        views : res.data.board[i] && res.data.board[i].views ? res.data.board[i].views : 0,
+                        createAt : res.data.board[i] && res.data.board[i].createdAt.split('T')[0]? res.data.board[i].createdAt.split('T')[0] : '',
+                    }
+                    
                     if(i%2==0){
                         boxhtml += `
                     <div class="imgFlex1" onclick="loadDetailModal(${i})">
                         <div class="roomImg"></div>
                         <div class="boardInfo">
-                            <div class="boxBordCategory">${res.data.board[i].bord_category}</div>
-                            <div class="boxTitle">${res.data.board[i].title}</div>
-                            <div class="boxCreateAt">${date}</div>
-                            <div class="boxViews">${res.data.board[i].views}</div>      
+                            <div class="boxBordCategory">${data.bord_category}</div>
+                            <div class="boxTitle">${data.title}</div>
+                            <div class="boxCreateAt">${data.createAt}</div>
+                            <div class="boxViews">${data.views}</div>      
                         </div>
                     </div>
                     `;  
@@ -296,19 +303,18 @@
                     <div class="imgFlex2" onclick="loadDetailModal(${i})">
                         <div class="roomImg"></div>
                         <div class="boardInfo">
-                            <div class="boxBordCategory">${res.data.board[i].bord_category}</div>
-                            <div class="boxTitle">${res.data.board[i].title}</div>
-                            <div class="boxCreateAt">${date}</div>
-                            <div class="boxViews">${res.data.board[i].views}</div>      
+                            <div class="boxBordCategory">${data.bord_category}</div>
+                            <div class="boxTitle">${data.title}</div>
+                            <div class="boxCreateAt">${data.createAt}</div>
+                            <div class="boxViews">${data.views}</div>      
                         </div>
                     </div>
                     `;  
                     }
- 
                 }
-
                 wrap.innerHTML += boxhtml;
-                console.log("boxhtml",boxhtml);
+            }else{
+                console.log('res',res);
             }
         })()    
         
@@ -331,8 +337,16 @@
                     url:"/new/post",
                     data,
                 })
+                if(res.data.result){
+                    alert("등록 되었습니다.");
+                    window.location.href = "/";
+                }else{
+                    alert("다시 시도해주세요.");
+                }
+                
                 console.log("result",res.result);
             } catch (error) {
+                alert("잠시 후에 시도해주세요.");
                 console.log(error);
             }
         }
@@ -342,6 +356,13 @@
         console.log('list', list);
         console.log('i', i);
         let modal = document.getElementById('boardDetailModal');
+
+        const data = {
+                        bord_category : list[i] && list[i].bord_category ? list[i].bord_category : '',
+                        title :  list[i] && list[i].title ? list[i].title : '',
+                        event_time: list[i] && list[i].event_time.split('T')[0]? list[i].event_time.split('T')[0] : '',
+                        content : list[i] && list[i].content ? list[i].content : '',
+                    }
 
         modal.style.display = 'block'
         modal.innerHTML = `
@@ -353,17 +374,17 @@
             <div class="bd-image"></div>
             <div class="board-detail-contents">
                 <div class="bd-info">
-                    <div class="bd-info_category"> ${list[i].bord_category}</div>
-                    <h2 class="bd-info_title">${list[i].title}</h2>
+                    <div class="bd-info_category"> ${data.bord_category}</div>
+                    <h2 class="bd-info_title">${data.title}</h2>
                 </div>
                 <div id="eventDetailSubInfo" class="bd-sub-content">
                     <div class="txt-box">
                         <h6>내용</h6>
-                        <p>${list[i].content}</p>
+                        <p>${data.content}</p>
                     </div>
                     <div class="txt-box">
                         <h6>흥보 시간</h6>
-                        <p>${list[i].event_time}</p>
+                        <p>${data.event_time}</p>
                     </div>
 
                     <div class="txt-box">
