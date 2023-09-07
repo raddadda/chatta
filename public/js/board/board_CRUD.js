@@ -89,49 +89,55 @@ async function boradFindAll(){
         method: "POST",
         url:"/post/findall",
         data: {
-            id: 5
+            id: '3bfb3e72-c33b-4cbe-bc98-c4a7aee51d82'
         }
     })
-    
+   
     if(res.data.result){
         const wrap = document.querySelector("#wrap");
         let boxhtml = ``;
         
         for (let i=0; i<res.data.board.length; i++){
-            list.push(res.data.board[i]);
-    
-            const data = {
-                bord_category : res.data.board[i] && res.data.board[i].bord_category ? res.data.board[i].bord_category : '',
-                title :  res.data.board[i] && res.data.board[i].title ? res.data.board[i].title : '',
-                views : res.data.board[i] && res.data.board[i].views ? res.data.board[i].views : 0,
-                createAt : res.data.board[i] && res.data.board[i].createdAt.split('T')[0]? res.data.board[i].createdAt.split('T')[0] : '',
-            }
+
             
-            if(i%2==0){
-                boxhtml += `
-            <div class="imgFlex1" onclick="loadDetailModal(${i})">
-                <div class="roomImg"></div>
-                <div class="boardInfo">
-                    <div class="boxBordCategory">${data.bord_category}</div>
-                    <div class="boxTitle">${data.title}</div>
-                    <div class="boxCreateAt">${data.createAt}</div>
-                    <div class="boxViews">${data.views}</div>      
-                </div>
-            </div>
-            `;  
-            } else{
-                boxhtml += `
-            <div class="imgFlex2" onclick="loadDetailModal(${i})">
-                <div class="roomImg"></div>
-                <div class="boardInfo">
-                    <div class="boxBordCategory">${data.bord_category}</div>
-                    <div class="boxTitle">${data.title}</div>
-                    <div class="boxCreateAt">${data.createAt}</div>
-                    <div class="boxViews">${data.views}</div>      
-                </div>
-            </div>
-            `;  
-            }
+                console.log("데이타",res.data.board[i].poster_chk)
+                list.push(res.data.board[i]);
+                const data = {
+                    bord_category : res.data.board[i] && res.data.board[i].bord_category ? res.data.board[i].bord_category : '',
+                    title :  res.data.board[i] && res.data.board[i].title ? res.data.board[i].title : '',
+                    views : res.data.board[i] && res.data.board[i].views ? res.data.board[i].views : 0,
+                    createAt : res.data.board[i] && res.data.board[i].createdAt.split('T')[0]? res.data.board[i].createdAt.split('T')[0] : '',
+                }
+                if(res.data.board[i]){
+                    if(i%2==0){
+                        boxhtml += `
+                    <div class="imgFlex1" onclick="loadDetailModal(${i})">
+                        <div class="roomImg"></div>
+                        <div class="boardInfo">
+                            <div class="boxBordCategory">${data.bord_category}</div>
+                            <div class="boxTitle">${data.title}</div>
+                            <div class="boxCreateAt">${data.createAt}</div>
+                            <div class="boxViews">${data.views}</div>      
+                        </div>
+                    </div>
+                    `;  
+                    } else{
+                        boxhtml += `
+                    <div class="imgFlex2" onclick="loadDetailModal(${i})">
+                        <div class="roomImg"></div>
+                        <div class="boardInfo">
+                            <div class="boxBordCategory">${data.bord_category}</div>
+                            <div class="boxTitle">${data.title}</div>
+                            <div class="boxCreateAt">${data.createAt}</div>
+                            <div class="boxViews">${data.views}</div>      
+                        </div>
+                    </div>
+                    `;  
+                    }
+                }
+                
+            
+            
         }
         wrap.innerHTML += boxhtml;
     }else{

@@ -2,6 +2,8 @@ const {
     Board,
 } = require('../models');
 
+const {stringToUuid} = require('./Cauth');
+
 const boardList = (req,res)=>{
     res.render('boardList');
 }
@@ -16,7 +18,7 @@ const edit_board = (req,res)=>{
 
 
 
-const user_id = '296b63ea-6f1c-4f18-9f10-382f4a80e1cd';
+ const user_id = '231cc155-a8b7-4809-8432-efa38c0ff057';
 
 const create_board_post = async (req,res)=>{
     const {title,content,event_time,bord_category} = req.body
@@ -105,6 +107,9 @@ const boarduser_findone = async(req,res)=>{
 }
 
 const boarduser_findall = async(req,res)=>{
+    const test = await stringToUuid(req.signedCookies['logined'].id);
+   
+    console.log("cookie",test);
     const {id} = req.body;
     console.log("id",id);
     try{
@@ -112,13 +117,29 @@ const boarduser_findall = async(req,res)=>{
             attributes:['id', 'title', 'views', 'content', 'event_time', 'bord_category', 'createdAt', 'poster_id'],
             limit:3
         })
+        console.log("id",id);
         if(board){
+            let poster_chk= false;
+            
+            board.forEach(e => {
+               
+                const chk_id = e.dataValues.poster_id;
+                console.log("test",test);
+                console.log("chk_id",chk_id);
+                if(test === chk_id){
+                    console.log("본인 게시물")
+                    e.dataValues.poster_chk=true;
+                }else{
+                    console.log("남의 게시물");
+                    e.dataValues.poster_chk=false;
+                }
+            });
             res.json({result:true,board});
         }else{
             res.json({result:false});
         }
     }catch(e){
-        es.json({result:false});
+        res.json({result:false});
         console.log(e);
     }
 }
