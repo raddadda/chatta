@@ -10,12 +10,39 @@ const {
 
 
 const main = (req,res)=>{
-    //console.log("cookie",req.signedCookies.logined.id);
-    res.render('index');
+
+
+    console.log("cookie",req.signedCookies.logined);
+    const data = {
+        isLogin:false,
+    }
+    if (req.signedCookies.logined){
+        data.isLogin = true
+    }
+    console.log("islogin",data);
+    res.render('index',data);
 }
 
 
+const newMain = (req,res)=>{
+    res.render('new');
+}
 
+const chatMain = (req,res)=>{
+    res.render('chat');
+}
+
+
+const boardPost = async (req,res)=>{
+    const {title,user_id} = req.body
+    // user_id는 쿠키를 생성해서 req.cookies로 가져와야 될거 같긴 한데
+    // 백앤드로 관계형 잘 설정되는지만 보려고 일단은 req에 같이 넣음
+    const board = await Board.create({
+        title,
+        poster_id : user_id,
+    })
+    res.json({result:true , title , user_id});
+}
 
 const bookmarkPost = async (req,res)=>{
     const {user_id,board_id}=req.body;
@@ -136,6 +163,8 @@ const connection = (io,socket,loc)=>{
 
 module.exports = {
     main,
+    newMain,
+    chatMain,
     connection,
     bookmarkPost,
     chatRoomPost,

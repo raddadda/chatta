@@ -14,7 +14,7 @@ app.use(express.urlencoded({extended:true}));
 app.use(express.json());
 app.use(cookieParser(secret.cookieSecret));
 app.use(session({
-    secret: '12345',
+    secret: secret.sessionSecret,
     resave: false,
     saveUninitialized: true,
     cookie: { secure: false }
