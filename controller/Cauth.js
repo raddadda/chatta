@@ -83,6 +83,11 @@ const authCodeIssue = async (user_id)=>{
     return hash;
 }
 
+const loginCookieRes = async (res,cookieValue)=>{
+    const {loginCookie,cookieSetting} = constant;
+    res.cookie(loginCookie,cookieValue,cookieSetting);
+}
+
 const authCheck = async (id,auth)=>{
     const user_id = await stringToUuid(id)
     const user = await User.findOne({attributes: ["auth","auth_num"],where:{user_id},raw:true})
@@ -127,6 +132,56 @@ const authCheckPost = async (req,res)=>{
     res.json({result:false})
 }
 
+const authKakao = async (req,res)=>{
+    try {
+    console.log("query code",req.query.code);
+    const auth = await axios({
+        method: "POST",
+        url: "https://kauth.kakao.com/oauth/token",
+        headers: {
+            "content-type": "application/x-www-form-urlencoded",
+        },
+        data: {
+            grant_type: "authorization_code",
+            client_id: REST_API_KEY,
+            redirect_uri: REDIRECT_URI,
+            code: req.query.code,
+        },
+    });
+    console.log(auth.data);
+        const user = await axios({
+            method: "POST",
+            url: "https://kapi.kakao.com/v2/user/me",
+            headers: {
+                "Authorization": `Bearer ${auth.data.access_token}`,
+                "content-type": "application/x-www-form-urlencoded;charset=utf-8",
+            },
+        });
+        Authorization = `Bearer ${auth.data.access_token}`;
+        target_id = user.data.id;
+        const {profile,birthday,gender} = user.data.kakao_account
+        const data = {
+            id:target_id,
+            authorization:Authorization,
+            nickname:profile.nickname,
+            birth_month:birthday.slice(0,2),
+            birth_day:birthday.slice(2,4),
+            gender,
+        }
+        console.log("data",data)
+        const kakaoIdCheck = await Cauth.dbIdCheck(target_id);
+        let isExist = false;
+        if (kakaoIdCheck){
+            isExist = true;
+        }
+        const {kakaoLoginCookie,cookieSetting} = constant;
+        res.cookie(kakaoLoginCookie,data,cookieSetting);
+        res.redirect('/');
+    } catch (error) {
+        console.log(error)   
+    }
+}
+
 module.exports = {
     dbIdCheck,
     dbIdSearch,
@@ -135,6 +190,8 @@ module.exports = {
     uuidToString,
     stringToUuid,
     authCodeIssue,
+    loginCookieRes,
     authCheck,
     authCheckPost,
+    authKakao,
 }

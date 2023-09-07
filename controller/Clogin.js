@@ -20,7 +20,6 @@ const signUp = async (req,res)=>{
             return;
         }
         const hash = await Cauth.pwHashing(login_pw);
-
         const uuid = v4();
         const auth = await Cauth.authCodeIssue(uuid);
         const {minint,maxint} = constant.auth;
@@ -55,8 +54,7 @@ const signIn = async (req,res)=>{
                 const auth = await Cauth.authCodeIssue(user_id);
                 const id = await Cauth.uuidToString(user_id);
                 const cookieValue = {id,nickname,auth};
-                const {loginCookie,cookieSetting} = constant;
-                res.cookie(loginCookie,cookieValue,cookieSetting);
+                await Cauth.loginCookieRes(res,cookieValue);
                 res.json({result:true, message:`${nickname}님 어서오세요`})
             } else {
                 res.json({result:false, message:"pw가 일치하지 않습니다"})
@@ -87,47 +85,13 @@ const logoutKakao = async (req,res)=>{
                 "target_id":target_id,
             },
         })
-        console.log("logout",logout.data);
+        alert (`${logout.data.id}님이 로그아웃 하셨습니다`)
         res.redirect('/');
     } catch (error) {
         console.log(error);
     }
 }
 
-const authKakao = async (req,res)=>{
-    console.log("query code",req.query.code);
-    const auth = await axios({
-        method: "POST",
-        url: "https://kauth.kakao.com/oauth/token",
-        headers: {
-            "content-type": "application/x-www-form-urlencoded",
-        },
-        data: {
-            grant_type: "authorization_code",
-            client_id: REST_API_KEY,
-            redirect_uri: REDIRECT_URI,
-            code: req.query.code,
-        },
-    });
-    console.log(auth.data);
-    try {
-        const user = await axios({
-            method: "POST",
-            url: "https://kapi.kakao.com/v2/user/me",
-            headers: {
-                "Authorization": `Bearer ${auth.data.access_token}`,
-                "content-type": "application/x-www-form-urlencoded;charset=utf-8",
-            },
-        });
-        Authorization = `Bearer ${auth.data.access_token}`;
-        target_id = user.data.id;
-        console.log("user",user.data);
-        console.log("author",Authorization,"target",target_id)
-        res.redirect('/');
-    } catch (error) {
-        console.log(error)   
-    }
-}
 
 const userLogOut = async (req,res)=>{
     res.clearCookie(constant.loginCookie);
@@ -139,6 +103,5 @@ module.exports = {
     signIn,
     userLogOut,
     signUpKakao,
-    authKakao,
     logoutKakao,
 }

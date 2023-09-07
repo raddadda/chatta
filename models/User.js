@@ -37,6 +37,13 @@ const User = (sequelize) =>{
         auth_num:{
             type:DataTypes.INTEGER,
         },
+        iskakao:{
+            type:DataTypes.BOOLEAN,
+            defaultValue:false,
+        },
+        token:{
+            type:DataTypes.STRING(56),
+        },
     },
     {
         // tableName:'user',
