@@ -33,12 +33,11 @@
                     id: 5
                 }
             })
- 
             if (getpostRes.data.result) {
-                boardForm.title.value = getpostRes.data.title;
-                boardForm.content.value = getpostRes.data.content;
-                boardForm.eventDate.value = getpostRes.data.event_time.split('T')[0];
-                boardForm.category.value = getpostRes.data.bord_category;
+                boardForm.title.value = getpostRes.data.board.title;
+                boardForm.content.value = getpostRes.data.board.content;
+                boardForm.eventDate.value = getpostRes.data.board.event_time.split('T')[0];
+                boardForm.category.value = getpostRes.data.board.bord_category;
             }
 
         })()    
@@ -92,7 +91,6 @@
             }
             
         }
-
 
     </script>
 </body>

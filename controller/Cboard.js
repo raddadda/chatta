@@ -19,7 +19,7 @@ const boardPost = async (req,res)=>{
     // 백앤드로 관계형 잘 설정되는지만 보려고 일단은 req에 같이 넣음
     try {
         const board = await Board.create({
-            title,
+            //title,
             poster_id : user_id,
             content,
             event_time,
@@ -77,7 +77,6 @@ const boardDelete = async (req, res) => {
 
 }
 
-
 const boarduser_findone = async(req,res)=>{
 
     const {id} = req.body;
@@ -105,7 +104,7 @@ const boarduser_findall = async(req,res)=>{
     console.log("id",id);
     try{
         const board = await Board.findAll({
-            attributes:['id', 'title', 'views', 'content', 'event_time', 'bord_category', 'createdAt'],
+            attributes:['id', 'title', 'views', 'content', 'event_time', 'bord_category', 'createdAt', 'poster_id'],
             limit:3
         })
         if(board){

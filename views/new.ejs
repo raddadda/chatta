@@ -248,8 +248,6 @@
         <input type="text" id="category" name="category" placeholder="카테고리를 입력해주세요."><br/>
         <button type="button" onclick="boardCreate()">게시판 만들기</button>
     </form>
-
-
 </body>
 <br/>
 <br/>
@@ -269,11 +267,9 @@
                     id: 5
                 }
             })
-            console.log("@@",res.data.result)
            
             if(res.data.result){
                 const wrap = document.querySelector("#wrap");
-
                 let boxhtml = ``;
                 
                 for (let i=0; i<res.data.board.length; i++){
@@ -298,7 +294,7 @@
                         </div>
                     </div>
                     `;  
-                    }else{
+                    } else{
                         boxhtml += `
                     <div class="imgFlex2" onclick="loadDetailModal(${i})">
                         <div class="roomImg"></div>
@@ -355,15 +351,17 @@
     function loadDetailModal (i) {
         console.log('list', list);
         console.log('i', i);
-        let modal = document.getElementById('boardDetailModal');
 
         const data = {
-                        bord_category : list[i] && list[i].bord_category ? list[i].bord_category : '',
-                        title :  list[i] && list[i].title ? list[i].title : '',
-                        event_time: list[i] && list[i].event_time.split('T')[0]? list[i].event_time.split('T')[0] : '',
-                        content : list[i] && list[i].content ? list[i].content : '',
-                    }
+            bord_category : list[i] && list[i].bord_category ? list[i].bord_category : '',
+            content: list[i] && list[i].content ? list[i].content : '',
+            title :  list[i] && list[i].title ? list[i].title : '',
+            views : list[i] && list[i].views ? list[i].views : 0,
+            event_time : list[i] && list[i].event_time.split('T')[0]? list[i].event_time.split('T')[0] : '',
+        }
 
+        
+        let modal = document.getElementById('boardDetailModal');
         modal.style.display = 'block'
         modal.innerHTML = `
             <div class="board-modal-close" onclick="modalCloase()">
