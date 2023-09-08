@@ -98,7 +98,6 @@ body {
     border-radius: 30px;
 }
 
-
 /* 하단 섹션 (채팅방, 북마크, 일정) */
 .bottom-section {
     background-color: #fff;
@@ -139,33 +138,25 @@ body {
     justify-content: center;
 }
 
-/* 목록 숨김 상태 */
 .category ul {
     display: none;
 }
 
-/* 카테고리 버튼 클릭 시 목록 표시 */
 .category.active ul {
     display: block;
 }
 
-/* 목록 스타일 */
-ul {
-    list-style: none;
-    padding: 0;
-}
-
-ul li {
+.category ul li {
     font-size: 16px;
     margin: 5px 0;
 }
 
-ul li a {
+.category ul li a {
     text-decoration: none;
     color: #007bff;
     transition: color 0.3s;
 }
 
-ul li a:hover {
+.category ul li a:hover {
     color: #0056b3;
 }
