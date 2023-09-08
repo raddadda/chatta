@@ -125,6 +125,11 @@ const getSchedules = async (userId) => {
 
 const profile = async (req, res) => {
     try {
+        const getCheck = await Cauth.getAuthCheck(req,res);
+        if(!getCheck){
+            res.redirect('/')
+            return;
+        }
         const cookieValue = req.signedCookies.logined.id;
         const userId = await Cauth.stringToUuid(cookieValue);
 
