@@ -24,13 +24,14 @@
     var currentDirection = ''; // 현재의 방향을 나타내는 변수
     var lastScrollTop = 0; // 방향을 구하기 위해 사용되는 변수
     ( async function() {
+        
         getbaordPagenation();
         window.addEventListener('scroll', ()=>{
                 let scrollTop = window.scrollY;
                 let innerHeight = window.innerHeight;
                 let scrollHeight = document.body.offsetHeight;
             
-                if ( scrollTop + innerHeight+ innerHeight / 9 >=scrollHeight){
+                if ( scrollTop + innerHeight - 100 >= scrollHeight){
                     if(currentDirection != 'down'){
                         getbaordPagenation();
                         currentDirection = 'down';

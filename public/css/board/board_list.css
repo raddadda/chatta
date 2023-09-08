@@ -8,7 +8,14 @@
         justify-content: space-between;
         flex-wrap: wrap;
     }
-    
+    .wrap > .imgFlex1:hover{
+        background-color: rgb(1, 170, 255);
+        color: #ffffff;
+    }
+    .wrap > .imgFlex2:hover{
+        background-color: rgb(1, 170, 255);
+        color: #ffffff;
+    }
     .imgFlex1{
         display: flex;
         justify-content: space-between;
@@ -21,6 +28,7 @@
         margin-right: 2.5%;
         margin-bottom: 20px;    
     }
+    
     .imgFlex2{
         display: flex;
         justify-content: space-between;
@@ -90,7 +98,6 @@
     @media (max-width : 800px) {
         .wrap{
             display: block;
-            position: absolute;
             width: 100%;
             max-width: 100%;
         }
