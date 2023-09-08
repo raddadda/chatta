@@ -44,6 +44,8 @@
             </p>
             <p>생년월일: <%= user.birth %>
             </p>
+            <p>이메일: <%= user.email %>
+            </p>
         </div>
     </div>
 
@@ -57,47 +59,52 @@
     <div class="bottom-section">
         <!-- 채팅방 목록 -->
         <div class="category">
-            <button class="category-button" onclick="toggleCategory('ownerChatRoomsList')">내 채팅방</button>
-            <div id="ownerChatRoomsList">
+            <button class="category-button" onclick="toggleCategory('chatRoomsList')">내 채팅방</button>
+            <div id="chatRoomsList">
+                <!-- 내가 개설한 채팅방 목록 -->
                 <ul class="category-list">
                     <li class="category-title">내가 개설한 채팅방</li>
                     <% if (ownerChatRooms.length===0) { %>
                         <li class="empty-message">내가 개설한 방이 없어요</li>
-                    <% } else { %>
-                        <% ownerChatRooms.forEach(function(room) { %>
-                            <li>
-                                <a href="/chat/<%= room.id %>">
-                                    <%= room.name %> (<%= room.unreadMessages %> 안 읽은 메시지)
-                                    <% if (room.latestUnreadMessage) { %>
-                                        <span class="latest-message">
-                                            <%= room.latestUnreadMessage.message %>
-                                        </span>
+                        <% } else { %>
+                            <% ownerChatRooms.forEach(function(room) { %>
+                                <li>
+                                    <a href="/chat/<%= room.id %>">
+                                        <%= room.name %> (<%= room.unreadMessages %> 안 읽은 메시지)
+                                                <% if (room.latestUnreadMessage) { %>
+                                                    <span class="latest-message">
+                                                        <%= room.latestUnreadMessage.message %>
+                                                    </span>
+                                                    <% } %>
+                                    </a>
+                                </li>
+                                <% }); %>
                                     <% } %>
-                                </a>
-                            </li>
-                        <% }); %>
-                    <% } %>
                 </ul>
-            </div>
 
-            <div id="userChatRoomsList">
+                <!-- 내가 참여한 채팅방 목록 -->
                 <ul class="category-list">
                     <li class="category-title">내가 참여한 채팅방</li>
-                    <% userChatRooms.forEach(function(room) { %>
-                        <li>
-                            <a href="/chat/<%= room.id %>">
-                                <%= room.name %> (<%= room.unreadMessages %> 안 읽은 메시지)
-                                        <% if (room.latestUnreadMessage) { %>
-                                            <span class="latest-message">
-                                                <%= room.latestUnreadMessage.message %>
-                                            </span>
-                                            <% } %>
-                            </a>
-                        </li>
-                        <% }); %>
+                    <% if (userChatRooms.length===0) { %>
+                        <li class="empty-message">내가 참여한 방이 없어요</li>
+                        <% } else { %>
+                            <% userChatRooms.forEach(function(room) { %>
+                                <li>
+                                    <a href="/chat/<%= room.id %>">
+                                        <%= room.name %> (<%= room.unreadMessages %> 안 읽은 메시지)
+                                                <% if (room.latestUnreadMessage) { %>
+                                                    <span class="latest-message">
+                                                        <%= room.latestUnreadMessage.message %>
+                                                    </span>
+                                                    <% } %>
+                                    </a>
+                                </li>
+                                <% }); %>
+                                    <% } %>
                 </ul>
             </div>
         </div>
+
 
         <!-- 북마크한 게시물 목록 -->
         <div class="category">
@@ -124,7 +131,6 @@
         </div>
     </div>
 
-
     <script>
         // 프로필 수정 버튼 클릭 시 이벤트
         document.querySelector('.profile-edit-button').addEventListener('click', function () {
@@ -144,10 +150,30 @@
             button.addEventListener('click', function () {
                 // 다른 모든 카테고리를 닫고 현재 클릭한 카테고리만 열기
                 categoryButtons.forEach(function (btn) {
+                    // 이전에 열린 카테고리 닫기
                     btn.nextElementSibling.style.display = 'none';
                 });
-                this.nextElementSibling.style.display = 'block';
+
+                // 클릭한 버튼에 대응하는 카테고리 목록 열기
+                const targetId = this.getAttribute('data-target');
+                if (targetId) {
+                    const targetList = document.getElementById(targetId);
+                    if (targetList) {
+                        targetList.style.display = 'block';
+                    }
+                }
             });
+        });
+
+        // 내 채팅방 버튼 클릭 시 이벤트
+        document.querySelector('.category-button[data-category="chatRoomsList"]').addEventListener('click', function () {
+            // 채팅방 목록 div
+            const chatRoomsList = document.getElementById('chatRoomsList');
+
+            // 채팅방 목록을 표시
+            if (chatRoomsList) {
+                chatRoomsList.style.display = 'block';
+            }
         });
     </script>
 </body>
