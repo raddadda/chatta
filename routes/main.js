@@ -14,6 +14,7 @@ router.get('/profile', cprofile.profile);
 router.get('/profile/edit', cprofileEdit.profileUpdate);
 router.get('/profile/edit/pw', cprofileEdit.pwUpdate)
 router.get('/profile/edit/delete', cprofileEdit.profileDelete)
+router.get('/findpw', cprofileEdit.findPw)
 
 router.get('/chat',controller.chatMain);
 
@@ -41,6 +42,8 @@ router.post('/logout',clogin.userLogOut)
 router.post('/profile/edit', cprofileEdit.profileUpdatePost)
 router.post('/profile/edit/pw', cprofileEdit.pwUpdatePost)
 router.post('/profile/edit/delete', cprofileEdit.profileDeletePost)
+router.post('/findpw', cprofileEdit.findInfoPost )
+router.post('/mail', cprofileEdit.findPwPost)
 
 
 router.post('/bookmark',controller.bookmarkPost)

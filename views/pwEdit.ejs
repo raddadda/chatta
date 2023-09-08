@@ -20,7 +20,7 @@
     </form>
 
     <script>
-        function pwEdit () {
+        async function pwEdit () {
             const resultBox = document.querySelector('.result')
             const form = document.forms['pw-edit']
             const data = {
@@ -31,21 +31,20 @@
                 pw_edit : form.pw_edit.value,
                 pw_edit2 : form.pw_edit2.value,
             }
-            axios({
+            const res = await axios({
                 method : 'POST',
                 url : '/profile/edit/pw',
                 data,
-            }).then((res)=> {
-                if(res.data.result) {
-                    if(!confirm('변경하시겠습니까?')) {
-                        return;
-                    }
-                    alert('변경완료')
-                    document.location.href='/profile';
-                }else{
-                    resultBox.textContent = (`${res.data.message}`)
-                }
             })
+            if(res.data.result) {
+                if(!confirm('변경하시겠습니까?')) {
+                    return;
+                }
+                alert('변경완료')
+                document.location.href='/profile';
+            }else{
+                resultBox.textContent = (`${res.data.message}`)
+            }
         }
 
     </script>
