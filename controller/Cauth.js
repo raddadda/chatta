@@ -154,6 +154,9 @@ const loginCookieRes = async (id,nickname,auth,res)=>{
         console.log(error);
     }
 }
+// 로그인 쿠키 설정하는 함수, 매번 쓰는데 constant 매번 적기 귀찮아서 분리
+// id nickname auth 도 이 함수 안에서 데이터베이스 내부 값을 가져오는 함수를 구현할까 하다가
+// 다른 함수에서 사용하기 힘들어져서 수정 (여유 있으면 한번 더 수정 고려중)
 
 
 const signUpConst = async (login_pw)=>{
@@ -172,6 +175,8 @@ const signUpConst = async (login_pw)=>{
         console.log(error);
     }
 }
+// 회원가입 할 때 생성되는 인증 관련 랜덤값들 생성해서 반환하는 함수
+// 카카오 로그인에서도 이용하기 위해서 분리 (이 경우 hash에 넣는 pw는 토큰 값)
 
 
 const authCheck = async (id,auth)=>{
@@ -190,16 +195,21 @@ const authCheck = async (id,auth)=>{
                 },{
                     where:{user_id},
                 })
-                return {result:true,newAuth}
+                return {result:true,newAuth};
             }
-            return {result:false}
+            console.log('인증 정보가 일치하지 않음');
+            return {result:false};
         } else {
+            console.log('id값에 해당하는 유저 정보가 존재하지 않음');
             return {result:false};
         }
     } catch (error) {
         console.log(error);
     }
 }
+// 쿠키에 저장되어 있는 id와 auth값을 통해서 인증해보는 함수
+// 체크가 성공하면 원래 있던 인증 코드를 버리고 새로운 코드를 만들어 쿠키 새로 발급
+
 
 const getAuthCheck = async (req,res)=>{
     try {
@@ -209,18 +219,22 @@ const getAuthCheck = async (req,res)=>{
             const check = await authCheck(id,auth);
             if(check.result){
                 await loginCookieRes(id,nickname,check.newAuth,res)
+                return true;
             } else {
                 console.log('쿠키 정보 오류');
-                res.redirect('/');
+                return false;
             }
         } else {
             console.log('쿠키가 없음');
-            res.redirect('/');
+            return false;
         }
     } catch (error) {
         console.log(error);
     }
 }
+// 사이트가 열릴때 (get 요청으로 열때) 쿠키 내부의 인증 코드로 체크해서
+// 정상적으로 사이트를 이용하는 유저가 맞는지 확인하는 함수 
+
 
 const authCheckPost = async (req,res)=>{
     try {
