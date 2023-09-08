@@ -19,72 +19,98 @@
 <script>
 
     let list = [];
-    let page_id = 4;
+    let page_id = 0;
+
+    function runAction(direction) {
+        console.log(direction+' 실행 !!!!');
+    }
+    var currentDirection = ''; // 현재의 방향을 나타내는 변수
+    var lastScrollTop = 0; // 방향을 구하기 위해 사용되는 변수
 
     ( async function() {
-        
         asd();
         window.addEventListener('scroll', ()=>{
                 let scrollTop = window.scrollY;
                 let innerHeight = window.innerHeight;
                 let scrollHeight = document.body.offsetHeight;
             
-                console.log("window.innerHeight",window.innerHeight)  
-                console.log("window.scrollY",window.scrollY)   
-                console.log("scrollHeight",scrollHeight)   
-                if(scrollHeight==0){
-                    asd()
-                    offset+=3;
+
+                if(scrollTop+innerHeight+ innerHeight/9 >=scrollHeight){
+                    if(currentDirection != 'down'){
+                        asd();
+                        currentDirection = 'down';
+                        runAction('down');
+                    }
+                }else{
+                    if(currentDirection != 'up'){
+                        // asd()
+                        currentDirection = 'up';
+                        runAction('up');
+                    }
                 }
+                lastScrollTop = scrollTop;
         })
 
         }
     )()
-
     async function asd(){
-        const findAllData = await boradFindAll_pagination(page_id);
-            if (findAllData.length > 0) {
-                const wrap = document.querySelector("#wrap");
-                let boxhtml = ``;
-                for (let i=0; i<findAllData.length; i++){
-                    list.push(findAllData[i]);
-            
-                    const data = {
-                        bord_category : findAllData[i] && findAllData[i].bord_category ? findAllData[i].bord_category : '',
-                        title :  findAllData[i] && findAllData[i].title ? findAllData[i].title : '',
-                        views : findAllData[i] && findAllData[i].views ? findAllData[i].views : 0,
-                        createAt : findAllData[i] && findAllData[i].createdAt.split('T')[0]? findAllData[i].createdAt.split('T')[0] : '',
-                    }
-                    
-                    
-                    if(i%2==0){
-                        boxhtml += `
-                    <div class="imgFlex1" onclick="loadDetailModal(${i})">
-                        <div class="roomImg"></div>
-                        <div class="boardInfo">
-                            <div class="boxBordCategory">${data.bord_category}</div>
-                            <div class="boxTitle">${data.title}</div>
-                            <div class="boxCreateAt">${data.createAt}</div>
-                            <div class="boxViews">${data.views}</div>      
+
+        try {
+
+            const findAllData = await boradFindAll_pagination(page_id);
+                if (findAllData.length > 0) {
+                    const wrap = document.querySelector("#wrap");
+                    let boxhtml = ``;
+                    for (let i=0; i<findAllData.length; i++){
+                        list.push(findAllData[i]);
+                
+                        const data = {
+                            bord_category : findAllData[i] && findAllData[i].bord_category ? findAllData[i].bord_category : '',
+                            title :  findAllData[i] && findAllData[i].title ? findAllData[i].title : '',
+                            views : findAllData[i] && findAllData[i].views ? findAllData[i].views : 0,
+                            createAt : findAllData[i] && findAllData[i].createdAt.split('T')[0]? findAllData[i].createdAt.split('T')[0] : '',
+                        }
+                        
+                        
+                        if(i%2==0){
+                            boxhtml += `
+                        <div class="imgFlex1" onclick="loadDetailModal(${i})">
+                            <div class="roomImg"></div>
+                            <div class="boardInfo">
+                                <div class="boxBordCategory">${data.bord_category}</div>
+                                <div class="boxTitle">${data.title}</div>
+                                <div class="boxCreateAt">${data.createAt}</div>
+                                <div class="boxViews">${data.views}</div>      
+                            </div>
                         </div>
-                    </div>
-                    `;  
-                    } else{
-                        boxhtml += `
-                    <div class="imgFlex2" onclick="loadDetailModal(${i})">
-                        <div class="roomImg"></div>
-                        <div class="boardInfo">
-                            <div class="boxBordCategory">${data.bord_category}</div>
-                            <div class="boxTitle">${data.title}</div>
-                            <div class="boxCreateAt">${data.createAt}</div>
-                            <div class="boxViews">${data.views}</div>      
+                        `;  
+                        } else{
+                            boxhtml += `
+                        <div class="imgFlex2" onclick="loadDetailModal(${i})">
+                            <div class="roomImg"></div>
+                            <div class="boardInfo">
+                                <div class="boxBordCategory">${data.bord_category}</div>
+                                <div class="boxTitle">${data.title}</div>
+                                <div class="boxCreateAt">${data.createAt}</div>
+                                <div class="boxViews">${data.views}</div>      
+                            </div>
                         </div>
-                    </div>
-                    `;  
+                        `;  
+                        }
+                        if (findAllData.length === i + 1) {
+                            page_id = findAllData[i].id + 1;
+                        }
+
                     }
-                }
-            wrap.innerHTML += boxhtml;
+                wrap.innerHTML += boxhtml;
+                let loadingFetch = false;
+            }
+
+        } catch (e) {
+            let loadingFetch = false;
+
         }
+       
     }
 
     function loadDetailModal (index) {

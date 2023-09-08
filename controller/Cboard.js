@@ -133,7 +133,6 @@ const boarduser_findall = async(req,res)=>{
    
     try {
         const board = await Board.findAll({
-            attributes:['id', 'title', 'views', 'content', 'event_time', 'bord_category', 'createdAt', 'poster_id'],
             limit:3
         })
 
@@ -141,8 +140,10 @@ const boarduser_findall = async(req,res)=>{
             board.forEach(index => {
                 if (index.dataValues.poster_id === user_id) {
                     index.dataValues.poster_check = true;
+                    delete index.dataValues.poster_id;
                 } else {
                     index.dataValues.poster_check = false;
+                    delete index.dataValues.poster_id;
                 }
             });
             
@@ -162,19 +163,18 @@ const boarduser_findall_pagenation = async (req, res)=>{
     const user_id = await getUserId(req);
     
     let pagenation = {};
-    let boardRowlimit = 2; 
+    let boardRowlimit = 7; 
 
     if (req.body.page_id) {
-        pagenation.startid = {id :{ [Op.gt]: req.body.page_id}}
+        pagenation.startid = {id :{ [Op.gte]: req.body.page_id}}
 
     } else {
-        pagenation.startid = {id :{[Op.gt]: 1}}
+        pagenation.startid = {id :{[Op.gte]: 1}}
     }
 
 
     try {
         const board = await Board.findAll({
-            attributes:['id', 'title', 'views', 'content', 'event_time', 'bord_category', 'createdAt', 'poster_id'],
             where: pagenation.startid,
             limit : boardRowlimit
         })
