@@ -104,7 +104,7 @@ async function boradFindAll(offset){
 
 async function boradFindAll_pagination(page_id){
 
-    if (!page_id) return console.log('page_id이 없음');
+    if (page_id === undefined || page_id == null) return console.log('page_id이 없음');
     const res = await axios({
         method: "POST",
         url:"/post/findall/pagination",
