@@ -32,11 +32,21 @@ const main = (req,res)=>{
 
 
 
-const newMain = (req,res)=>{
+const newMain = async (req,res)=>{
+    const getCheck = await Cauth.getAuthCheck(req, res);
+    if (!getCheck) {
+        res.redirect('/')
+        return;
+    }
     res.render('new');
 }
 
-const chatMain = (req,res)=>{
+const chatMain = async (req,res)=>{
+    const getCheck = await Cauth.getAuthCheck(req, res);
+    if (!getCheck) {
+        res.redirect('/')
+        return;
+    }
     res.render('chat');
 }
 

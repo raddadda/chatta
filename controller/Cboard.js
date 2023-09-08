@@ -1,32 +1,48 @@
 const {
     Board,
-    Sequelize
+    Sequelize,
+    Chat_Room
 } = require('../models');
 
 const Op = Sequelize.Op;
 
-const { stringToUuid } = require('./Cauth')
+const Cauth = require('./Cauth');
 
 // res.cookies(signedCookies) id값 복호화
 const getUserId = async (req) => {
 
     if (req.signedCookies && req.signedCookies['logined'] && req.signedCookies['logined'].id) {
         console.log('cookie', req.signedCookies['logined'].id);
-        return uuid = await stringToUuid(req.signedCookies['logined'].id);
+        return uuid = await Cauth.stringToUuid(req.signedCookies['logined'].id);
     } else {
         return ''
     }
 }
 
-const boardList = (req, res)=>{
+const boardList = async (req, res)=>{
+    const getCheck = await Cauth.getAuthCheck(req, res);
+    if (!getCheck) {
+        res.redirect('/')
+        return;
+    }
     res.render('boardList');
 }
 
-const create_board = (req, res)=>{
+const create_board = async (req, res)=>{
+    const getCheck = await Cauth.getAuthCheck(req, res);
+    if (!getCheck) {
+        res.redirect('/')
+        return;
+    }
     res.render('postNew');
 }
 
-const edit_board = (req, res)=>{
+const edit_board = async (req, res)=>{
+    const getCheck = await Cauth.getAuthCheck(req, res);
+    if (!getCheck) {
+        res.redirect('/')
+        return;
+    }
     res.render('postEdit');
 }
 
@@ -34,7 +50,7 @@ const create_board_post = async (req,res)=>{
 
     const user_id = await getUserId(req);
 
-    const {title,content,event_time,bord_category} = req.body
+    const {title,content,event_time,category} = req.body
     // user_id는 쿠키를 생성해서 req.cookies로 가져와야 될거 같긴 한데
     // 백앤드로 관계형 잘 설정되는지만 보려고 일단은 req에 같이 넣음
     try {
@@ -43,13 +59,13 @@ const create_board_post = async (req,res)=>{
             poster_id : user_id,
             content,
             event_time,
-            bord_category
+            category,
         })
-       if(board){
-            res.json({result:true , title , content, event_time, bord_category});
-       }else{
+        if(board){
+            res.json({result:true , title , content, event_time, category});
+        } else {
             res.json({result:false});
-       }
+        }
     } catch(e){
         res.json({result:false});
         console.log(e);
@@ -59,7 +75,7 @@ const edit_board_post = async(req,res)=>{
 
     const user_id = await getUserId(req);
 
-    const {id, title,content,event_time,bord_category} = req.body
+    const {id, title,content,event_time,category} = req.body
 
     try{
         const board = await Board.update({
@@ -67,12 +83,12 @@ const edit_board_post = async(req,res)=>{
             poster_id : user_id,
             content,
             event_time,
-            bord_category
+            category
         },{
             where:{id}
         })
         if(board.dataValues){
-            res.json({result:true , title , content, event_time, bord_category});
+            res.json({result:true , title , content, event_time, category});
         }else{
             res.json({result:false});
         }
@@ -112,7 +128,7 @@ const boarduser_findone = async (req,res)=>{
 
     try {
         const board = await Board.findOne({
-            attributes:['id', 'title', 'views', 'content', 'event_time', 'bord_category', 'createdAt'],
+            attributes:['id', 'title', 'views', 'content', 'event_time', 'category', 'createdAt'],
             where: {id}
         })
         if (board.dataValues){

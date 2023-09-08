@@ -80,7 +80,12 @@ const profileDelete = async (req,res) => {
     }
 };
 
-const findPw = (req,res) => {
+const findPw = async (req,res) => {
+    const getCheck = await Cauth.getAuthCheck(req, res);
+    if (!getCheck) {
+        res.redirect('/')
+        return;
+    }
     res.render('findpw')
 }
 ////////////POST//////////////
