@@ -1,6 +1,9 @@
 const {
     Board,
+    Sequelize
 } = require('../models');
+
+const Op = Sequelize.Op;
 
 const { stringToUuid } = require('./Cauth')
 
@@ -138,6 +141,7 @@ const boarduser_findall = async(req,res)=>{
             board.forEach(index => {
                 if (index.dataValues.poster_id === user_id) {
                     index.dataValues.poster_check = true;
+                    
                 } else {
                     index.dataValues.poster_check = false;
                 }
@@ -145,6 +149,51 @@ const boarduser_findall = async(req,res)=>{
             
             res.json({result:true, board});
         }else{
+            res.json({result:false});
+        }
+    }catch(e){
+        res.json({result:false});
+        console.log(e);
+    }
+}
+
+
+const boarduser_findall_pagenation = async (req, res)=>{
+    
+    console.log('body', req.body);
+    const user_id = await getUserId(req);
+    
+    let pagenation = {};
+    let boardRowlimit = 2; 
+
+    if (req.body.page_id) {
+        pagenation.startid = {id :{ [Op.gt]: pagenation.startid}}
+
+    } else {
+        pagenation.startid = {id :{[Op.gt]: 1}}
+    }
+
+
+    try {
+        const board = await Board.findAll({
+            attributes:['id', 'title', 'views', 'content', 'event_time', 'bord_category', 'createdAt', 'poster_id'],
+            where: pagenation.startid,
+            limit : boardRowlimit
+        })
+
+        if (board){
+            board.forEach(index => {
+                if (index.dataValues.poster_id === user_id) {
+                    index.dataValues.poster_check = true;
+                    delete index.dataValues.poster_id;
+                } else {
+                    index.dataValues.poster_check = false;
+                    delete index.dataValues.poster_id;
+                }
+            });
+            
+            res.json({result:true, board});
+        } else{
             res.json({result:false});
         }
     }catch(e){
@@ -162,4 +211,5 @@ module.exports = {
     boardList,
     boarduser_findone,
     boarduser_findall,
+    boarduser_findall_pagenation
 }

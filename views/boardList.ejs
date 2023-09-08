@@ -18,10 +18,11 @@
 <script>
     
     let list = [];
+    let page_id = 2;
 
-    ( async function(){
+    (async function(){
 
-        const findAllData = await boradFindAll();
+        const findAllData = await boradFindAll_pagination(page_id);
 
         if (findAllData.length > 0) {
             const wrap = document.querySelector("#wrap");
@@ -35,6 +36,7 @@
                     views : findAllData[i] && findAllData[i].views ? findAllData[i].views : 0,
                     createAt : findAllData[i] && findAllData[i].createdAt.split('T')[0]? findAllData[i].createdAt.split('T')[0] : '',
                 }
+                
                 
                 if(i%2==0){
                     boxhtml += `
