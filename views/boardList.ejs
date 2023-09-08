@@ -21,31 +21,27 @@
     let list = [];
     let page_id = 0;
 
-    function runAction(direction) {
-        console.log(direction+' 실행 !!!!');
-    }
     var currentDirection = ''; // 현재의 방향을 나타내는 변수
     var lastScrollTop = 0; // 방향을 구하기 위해 사용되는 변수
-
     ( async function() {
-        asd();
+        getbaordPagenation();
         window.addEventListener('scroll', ()=>{
                 let scrollTop = window.scrollY;
                 let innerHeight = window.innerHeight;
                 let scrollHeight = document.body.offsetHeight;
             
-
-                if(scrollTop+innerHeight+ innerHeight/9 >=scrollHeight){
+                if ( scrollTop + innerHeight+ innerHeight / 9 >=scrollHeight){
                     if(currentDirection != 'down'){
-                        asd();
+                        getbaordPagenation();
                         currentDirection = 'down';
-                        runAction('down');
+                        console.log(currentDirection+' 실행 !!!!');
+                     
                     }
                 }else{
                     if(currentDirection != 'up'){
                         // asd()
                         currentDirection = 'up';
-                        runAction('up');
+                        console.log(currentDirection+' 실행 !!!!');
                     }
                 }
                 lastScrollTop = scrollTop;
@@ -53,10 +49,9 @@
 
         }
     )()
-    async function asd(){
+    async function getbaordPagenation(){
 
         try {
-
             const findAllData = await boradFindAll_pagination(page_id);
                 if (findAllData.length > 0) {
                     const wrap = document.querySelector("#wrap");
@@ -103,14 +98,10 @@
 
                     }
                 wrap.innerHTML += boxhtml;
-                let loadingFetch = false;
             }
 
         } catch (e) {
-            let loadingFetch = false;
-
         }
-       
     }
 
     function loadDetailModal (index) {
