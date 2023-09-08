@@ -35,7 +35,10 @@ const authKakao = async (req,res)=>{
         } else {
             const {profile,birthday,gender,email} = user.kakao_account
             const signConst = await Cauth.signUpConst(Authorization);
-            const birth = `1999-${birthday.slice(0,2)}-${birthday.slice(2,4)}`
+            let birth = null;
+            if (birthday){
+                birth = `1999-${birthday.slice(0,2)}-${birthday.slice(2,4)}`
+            }
             const {uuid} = await Clogin.signUpCreate(login_id,profile.nickname,gender,birth,email,Authorization,signConst)
             const id = await Cauth.uuidToString(uuid);
             const auth = await Cauth.authCodeIssue(uuid);

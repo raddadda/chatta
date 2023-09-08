@@ -30,10 +30,6 @@ const main = (req,res)=>{
     res.render('index',data);
 }
 
-const signUpKakaoMain = (req,res)=>{
-    console.log(req.params);
-    res.render('kakao');
-}
 
 
 const newMain = (req,res)=>{
@@ -176,7 +172,6 @@ const connection = (io,socket,loc)=>{
 module.exports = {
     main,
     newMain,
-    signUpKakaoMain,
     chatMain,
     connection,
     bookmarkPost,

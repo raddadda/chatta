@@ -10,6 +10,11 @@ const crypto = require('crypto')
 ///////////GET////////////
 const profileUpdate = async (req, res) => {
     try {
+        const getCheck = await Cauth.getAuthCheck(req,res);
+        if(!getCheck){
+            res.redirect('/')
+            return;
+        }
         const cookieValue = req.signedCookies.logined.id;
         console.log(cookieValue)
         const userId = await Cauth.stringToUuid(cookieValue);
@@ -29,6 +34,11 @@ const profileUpdate = async (req, res) => {
 
 const pwUpdate = async (req, res) => {
     try {
+        const getCheck = await Cauth.getAuthCheck(req,res);
+        if(!getCheck){
+            res.redirect('/')
+            return;
+        }
         const cookieValue = req.signedCookies.logined.id;
         console.log(cookieValue)
         const userId = await Cauth.stringToUuid(cookieValue);
@@ -48,6 +58,11 @@ const pwUpdate = async (req, res) => {
 
 const profileDelete = async (req,res) => {
     try {
+        const getCheck = await Cauth.getAuthCheck(req,res);
+        if(!getCheck){
+            res.redirect('/')
+            return;
+        }
         const cookieValue = req.signedCookies.logined.id;
         console.log(cookieValue)
         const userId = await Cauth.stringToUuid(cookieValue);
