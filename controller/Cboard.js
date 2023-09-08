@@ -125,13 +125,16 @@ const boarduser_findone = async (req,res)=>{
 }
 
 const boarduser_findall = async(req,res)=>{
-    
+    let limit=3;
+    // let offset =0;
+    const { offset } = req.body;
     const user_id = await getUserId(req);
-   
+
     try {
         const board = await Board.findAll({
             attributes:['id', 'title', 'views', 'content', 'event_time', 'bord_category', 'createdAt', 'poster_id'],
-            limit:3
+            limit:limit,
+            offset:offset,
         })
 
         if(board){
@@ -152,6 +155,35 @@ const boarduser_findall = async(req,res)=>{
         console.log(e);
     }
 }
+
+// const boarduser_findall = async(req,res)=>{
+    
+//     const user_id = await getUserId(req);
+   
+//     try {
+//         const board = await Board.findAll({
+//             attributes:['id', 'title', 'views', 'content', 'event_time', 'bord_category', 'createdAt', 'poster_id'],
+//             limit:3
+//         })
+
+//         if(board){
+//             board.forEach(index => {
+//                 if (index.dataValues.poster_id === user_id) {
+//                     index.dataValues.poster_check = true;
+//                 } else {
+//                     index.dataValues.poster_check = false;
+//                 }
+//             });
+            
+//             res.json({result:true, board});
+//         }else{
+//             res.json({result:false});
+//         }
+//     }catch(e){
+//         res.json({result:false});
+//         console.log(e);
+//     }
+// }
 
 module.exports = {
     create_board,

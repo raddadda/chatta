@@ -7,65 +7,141 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="../public/css/board/board_list.css">
     <link rel="stylesheet" href="../public/css/board/board_detail.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </head>
 <body>
     
-
+    <!-- <button id="view">더보기</button> -->
 <div class="wrap" id="wrap"> </div>
 <div class="board-detail-modal" id="boardDetailModal"></div>
 
 <script src="../public/js/board/board_CRUD.js"></script>
 <script>
+let offset=0;
+
+       
+ 
+let list = [];
+
+( async function(){
     
-    let list = [];
-
-    ( async function(){
-
-        const findAllData = await boradFindAll();
-
-        if (findAllData.length > 0) {
-            const wrap = document.querySelector("#wrap");
-            let boxhtml = ``;
-            for (let i=0; i<findAllData.length; i++){
-                list.push(findAllData[i]);
-        
-                const data = {
-                    bord_category : findAllData[i] && findAllData[i].bord_category ? findAllData[i].bord_category : '',
-                    title :  findAllData[i] && findAllData[i].title ? findAllData[i].title : '',
-                    views : findAllData[i] && findAllData[i].views ? findAllData[i].views : 0,
-                    createAt : findAllData[i] && findAllData[i].createdAt.split('T')[0]? findAllData[i].createdAt.split('T')[0] : '',
-                }
-                
-                if(i%2==0){
-                    boxhtml += `
-                <div class="imgFlex1" onclick="loadDetailModal(${i})">
-                    <div class="roomImg"></div>
-                    <div class="boardInfo">
-                        <div class="boxBordCategory">${data.bord_category}</div>
-                        <div class="boxTitle">${data.title}</div>
-                        <div class="boxCreateAt">${data.createAt}</div>
-                        <div class="boxViews">${data.views}</div>      
-                    </div>
-                </div>
-                `;  
-                } else{
-                    boxhtml += `
-                <div class="imgFlex2" onclick="loadDetailModal(${i})">
-                    <div class="roomImg"></div>
-                    <div class="boardInfo">
-                        <div class="boxBordCategory">${data.bord_category}</div>
-                        <div class="boxTitle">${data.title}</div>
-                        <div class="boxCreateAt">${data.createAt}</div>
-                        <div class="boxViews">${data.views}</div>      
-                    </div>
-                </div>
-                `;  
-                }
+    const findAllData = await boradFindAll(offset);
+ 
+    if (findAllData.length > 0) {
+        const wrap = document.querySelector("#wrap");
+        let boxhtml = ``;
+        for (let i=0; i<findAllData.length; i++){
+            list.push(findAllData[i]);
+    
+            const data = {
+                bord_category : findAllData[i] && findAllData[i].bord_category ? findAllData[i].bord_category : '',
+                title :  findAllData[i] && findAllData[i].title ? findAllData[i].title : '',
+                views : findAllData[i] && findAllData[i].views ? findAllData[i].views : 0,
+                createAt : findAllData[i] && findAllData[i].createdAt.split('T')[0]? findAllData[i].createdAt.split('T')[0] : '',
             }
-            wrap.innerHTML += boxhtml;
-        }
             
-    })()    
+            if(i%2==0){
+                boxhtml += `
+            <div class="imgFlex1" onclick="loadDetailModal(${i})">
+                <div class="roomImg"></div>
+                <div class="boardInfo">
+                    <div class="boxBordCategory">${data.bord_category}</div>
+                    <div class="boxTitle">${data.title}</div>
+                    <div class="boxCreateAt">${data.createAt}</div>
+                    <div class="boxViews">${data.views}</div>      
+                </div>
+            </div>
+            `;  
+            } else{
+                boxhtml += `
+            <div class="imgFlex2" onclick="loadDetailModal(${i})">
+                <div class="roomImg"></div>
+                <div class="boardInfo">
+                    <div class="boxBordCategory">${data.bord_category}</div>
+                    <div class="boxTitle">${data.title}</div>
+                    <div class="boxCreateAt">${data.createAt}</div>
+                    <div class="boxViews">${data.views}</div>      
+                </div>
+            </div>
+            `;  
+            }
+        }
+        wrap.innerHTML += boxhtml;
+    }
+    offset+=3;
+})()
+
+async function asd(){
+    //window.scrollBy(0,-50);
+
+   
+    const findAllData = await boradFindAll(offset);
+    
+    if (findAllData.length > 0) {
+        
+        const wrap = document.querySelector("#wrap");
+        let boxhtml = ``;
+        for (let i=0; i<findAllData.length; i++){
+            list.push(findAllData[i]);
+            
+            const data = {
+                bord_category : findAllData[i] && findAllData[i].bord_category ? findAllData[i].bord_category : '',
+                title :  findAllData[i] && findAllData[i].title ? findAllData[i].title : '',
+                views : findAllData[i] && findAllData[i].views ? findAllData[i].views : 0,
+                createAt : findAllData[i] && findAllData[i].createdAt.split('T')[0]? findAllData[i].createdAt.split('T')[0] : '',
+            }
+            
+            if(i%2==0){
+                boxhtml += `
+            <div class="imgFlex1" onclick="loadDetailModal(${i})">
+                <div class="roomImg"></div>
+                <div class="boardInfo">
+                    <div class="boxBordCategory">${data.bord_category}</div>
+                    <div class="boxTitle">${data.title}</div>
+                    <div class="boxCreateAt">${data.createAt}</div>
+                    <div class="boxViews">${data.views}</div>      
+                </div>
+            </div>
+            `;  
+            } else{
+                boxhtml += `
+            <div class="imgFlex2" onclick="loadDetailModal(${i})">
+                <div class="roomImg"></div>
+                <div class="boardInfo">
+                    <div class="boxBordCategory">${data.bord_category}</div>
+                    <div class="boxTitle">${data.title}</div>
+                    <div class="boxCreateAt">${data.createAt}</div>
+                    <div class="boxViews">${data.views}</div>      
+                </div>
+            </div>
+            `;  
+            }
+        }
+        wrap.innerHTML += boxhtml;
+    }
+        
+
+   
+}
+
+window.addEventListener('scroll',()=>{
+    let scrollTop = window.scrollY;
+    let innerHeight = window.innerHeight;
+    let scrollHeight = document.body.offsetHeight;
+  
+    console.log("window.innerHeight",window.innerHeight)  
+    console.log("window.scrollY",window.scrollY)   
+    console.log("scrollHeight",scrollHeight)   
+
+  
+    
+    if(scrollHeight==0){
+        asd()
+        offset+=3;
+    }
+})
+
+
 
     function loadDetailModal (index) {
 

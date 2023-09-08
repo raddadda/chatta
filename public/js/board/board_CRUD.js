@@ -84,10 +84,14 @@ async function boardEdit() {
 }
 
 //게시판 조회
-async function boradFindAll(){
+async function boradFindAll(offset){
+    console.log("offset 확인",offset);
     const res = await axios({
         method: "POST",
         url:"/post/findall",
+        data: {
+            offset:offset
+        }
     })
     
     if (res.data.result){
