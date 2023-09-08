@@ -101,3 +101,22 @@ async function boradFindAll(offset){
         return [];
     }
 }
+
+async function boradFindAll_pagination(page_id){
+
+    if (!page_id) return console.log('page_id이 없음');
+    const res = await axios({
+        method: "POST",
+        url:"/post/findall/pagination",
+        data: {
+            page_id
+        }
+    })
+    
+    if (res.data.result){
+        return res.data.board;
+    } else{
+        console.log('res',res);
+        return [];
+    }
+}

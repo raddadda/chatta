@@ -1,6 +1,9 @@
 const {
     Board,
+    Sequelize
 } = require('../models');
+
+const Op = Sequelize.Op;
 
 const { stringToUuid } = require('./Cauth')
 
@@ -125,16 +128,13 @@ const boarduser_findone = async (req,res)=>{
 }
 
 const boarduser_findall = async(req,res)=>{
-    let limit=3;
-    // let offset =0;
-    const { offset } = req.body;
+    
     const user_id = await getUserId(req);
-
+   
     try {
         const board = await Board.findAll({
             attributes:['id', 'title', 'views', 'content', 'event_time', 'bord_category', 'createdAt', 'poster_id'],
-            limit:limit,
-            offset:offset,
+            limit:3
         })
 
         if(board){
@@ -156,34 +156,50 @@ const boarduser_findall = async(req,res)=>{
     }
 }
 
-// const boarduser_findall = async(req,res)=>{
+const boarduser_findall_pagenation = async (req, res)=>{
     
-//     const user_id = await getUserId(req);
-   
-//     try {
-//         const board = await Board.findAll({
-//             attributes:['id', 'title', 'views', 'content', 'event_time', 'bord_category', 'createdAt', 'poster_id'],
-//             limit:3
-//         })
+    console.log('body', req.body);
+    const user_id = await getUserId(req);
+    
+    let pagenation = {};
+    let boardRowlimit = 2; 
 
-//         if(board){
-//             board.forEach(index => {
-//                 if (index.dataValues.poster_id === user_id) {
-//                     index.dataValues.poster_check = true;
-//                 } else {
-//                     index.dataValues.poster_check = false;
-//                 }
-//             });
+    if (req.body.page_id) {
+        pagenation.startid = {id :{ [Op.gt]: req.body.page_id}}
+
+    } else {
+        pagenation.startid = {id :{[Op.gt]: 1}}
+    }
+
+
+    try {
+        const board = await Board.findAll({
+            attributes:['id', 'title', 'views', 'content', 'event_time', 'bord_category', 'createdAt', 'poster_id'],
+            where: pagenation.startid,
+            limit : boardRowlimit
+        })
+
+        if (board){
+            board.forEach(index => {
+                if (index.dataValues.poster_id === user_id) {
+                    index.dataValues.poster_check = true;
+                    delete index.dataValues.poster_id;
+                } else {
+                    index.dataValues.poster_check = false;
+                    delete index.dataValues.poster_id;
+                }
+            });
             
-//             res.json({result:true, board});
-//         }else{
-//             res.json({result:false});
-//         }
-//     }catch(e){
-//         res.json({result:false});
-//         console.log(e);
-//     }
-// }
+            res.json({result:true, board});
+        } else{
+            res.json({result:false});
+        }
+    }catch(e){
+        res.json({result:false});
+        console.log(e);
+    }
+}
+
 
 module.exports = {
     create_board,
@@ -194,4 +210,5 @@ module.exports = {
     boardList,
     boarduser_findone,
     boarduser_findall,
+    boarduser_findall_pagenation
 }
