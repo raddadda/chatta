@@ -5,59 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>프로필 수정</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f0f0;
-        }
-
-        .header {
-            background-color: #007bff;
-            padding: 10px 0;
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .header-title {
-            color: #fff;
-            font-size: 29px;
-        }
-
-        /* 중앙 유저 정보 */
-        .user-info {
-
-        }
-
-        /* 프로필 사진 영역 */
-        .top-info {
-            display: flex;
-            justify-content: center;
-            height: 200px;
-        }
-
-        .center-info {
-
-        }
-
-        .center-top-info {
-            display: flex;
-            flex-wrap: wrap;
-        }
-
-        .center-bottom-info {
-
-        }
-    </style>
-</head>
+    <link rel="stylesheet" href="/public/css/profileEdit.css">
+    <script src="/public/js/profileEdit.js" defer></script>
+    </head>
 <body>
     <div class="header">
         <div class="header-content">
@@ -92,6 +42,7 @@
                     성별 : <input type="text" id="gender" value="<%= user.gender %>">
                     닉네임 : <input type="text" id="nickName" value="<%= user.nickname %>">
                     생년월일 : <input type="text" id="birth" value="<%= user.birth %>" readonly>
+                    email : <input type="email" id="email" value="<%= user.email %>">
                 </div>
 
                 <!-- 유저 정보 하단 영역 -->
@@ -104,30 +55,5 @@
             <button type="button" onclick="edit()">저장하기</button>
         </form>
     </div>
-
-    <script>
-        // 저장 버튼 함수 (POST)
-        function edit() {
-            const form = document.forms['edit-profile']
-            const data = {
-                id: form.id.value,
-                nick: form.nickName.value,
-            }
-
-            if(!confirm('저장할까요?')) {
-                return;
-            }
-            axios({
-                method: 'POST',
-                url : '/profile/edit',
-                data,
-            }).then((res)=> {
-                if(res.data.result) {
-                    document.location.reload();
-                }
-            })
-        }
-
-    </script>
 </body>
 </html>
