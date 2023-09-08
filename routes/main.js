@@ -4,7 +4,7 @@ const controller = require('../controller/Cmain.js');
 const cauth = require('../controller/Cauth.js')
 const clogin = require('../controller/Clogin.js');
 const cboard = require('../controller/Cboard.js');
-
+const ckakao = require('../controller/Ckakao.js');
 const cprofile = require('../controller/Cprofile.js');
 const cprofileEdit = require('../controller/CprofileEdit.js')
 
@@ -14,13 +14,15 @@ router.get('/profile', cprofile.profile);
 router.get('/profile/edit', cprofileEdit.profileUpdate);
 router.get('/profile/edit/pw', cprofileEdit.pwUpdate)
 router.get('/profile/edit/delete', cprofileEdit.profileDelete)
-
-router.get('/signup/kakao',clogin.signUpKakao)
-router.get('/oauth/kakao',clogin.authKakao);
-router.get('/kakao/leave',clogin.logoutKakao);
+router.get('/findpw', cprofileEdit.findPw)
 
 router.get('/chat',controller.chatMain);
 
+router.get('/signup/kakao',ckakao.signUpKakao)
+router.get('/oauth/kakao',ckakao.authKakao);
+router.get('/kakao/leave',ckakao.logoutKakao);
+
+router.post('/mail', cprofileEdit.findPwPost)
 //router.get('/new/:userid',controller.newMain);
 
 //boardlist
@@ -46,6 +48,8 @@ router.post('/logout',clogin.userLogOut)
 router.post('/profile/edit', cprofileEdit.profileUpdatePost)
 router.post('/profile/edit/pw', cprofileEdit.pwUpdatePost)
 router.post('/profile/edit/delete', cprofileEdit.profileDeletePost)
+router.post('/findpw', cprofileEdit.findInfoPost )
+router.post('/mail', cprofileEdit.findPwPost)
 
 
 router.post('/bookmark',controller.bookmarkPost)

@@ -19,6 +19,19 @@ function calculateAge(birthdate) {
     }
 }
 
+const getFriendCount = async (userId) => {
+    try {
+        const userFriendsCount = await Friend_List.count({ where: { user_id: userId } });
+        const friendFriendsCount = await Friend_List.count({ where: { friend_id: userId } });
+        const totalFriendCount = userFriendsCount + friendFriendsCount;
+
+        return totalFriendCount;
+    } catch (error) {
+        console.error('친구 수 계산 오류:', error);
+        throw error;
+    }
+};
+
 const getOwnerChatRooms = async (userId) => {
     try {
         // 사용자가 소유한 채팅방 목록
@@ -66,6 +79,24 @@ const calculateUnreadMessages = async (roomId, userId) => {
     }
 };
 
+const getLatestUnreadMessage = async (roomId, userId) => {
+    try {
+        const latestUnreadMessage = await Chat_Message.findOne({
+            where: {
+                room_id: roomId,
+                user_id: { [Op.ne]: userId },
+                isRead: false,
+            },
+            order: [['createdAt', 'DESC']],
+        });
+
+        return latestUnreadMessage;
+    } catch (error) {
+        console.error('가장 최신의 안 읽은 메시지 가져오기 오류:', error);
+        throw error;
+    }
+};
+
 const getBookmarkedBoards = async (userId) => {
     try {
         // 사용자가 북마크한 게시물 목록
@@ -94,11 +125,17 @@ const getSchedules = async (userId) => {
 
 const profile = async (req, res) => {
     try {
+        const getCheck = await Cauth.getAuthCheck(req,res);
+        if(!getCheck){
+            res.redirect('/')
+            return;
+        }
         const cookieValue = req.signedCookies.logined.id;
         const userId = await Cauth.stringToUuid(cookieValue);
 
         const user = await User.findOne({ where: { user_id: userId } });
-        const friendCount = await Friend_List.count({ where: { user_id: userId } });
+
+        const friendCount = await getFriendCount(userId);
 
         const ownerChatRooms = await getOwnerChatRooms(userId);
         const userChatRooms = await getUserChatRooms(userId);
@@ -106,6 +143,7 @@ const profile = async (req, res) => {
 
         for (const room of allChatRooms) {
             room.unreadMessages = await calculateUnreadMessages(room.id, userId);
+            room.latestUnreadMessage = await getLatestUnreadMessage(room.id, userId);
         };
 
         const bookmarkedBoards = await getBookmarkedBoards(userId);

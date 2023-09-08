@@ -6,143 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>사용자 프로필</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f0f0;
-        }
-
-        .header {
-            background-color: #007bff;
-            padding: 10px 0;
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .header-title {
-            color: #fff;
-            font-size: 24px;
-        }
-
-        /* 상단 프로필 수정 버튼 */
-        .profile-edit-button {
-            background-color: #fff;
-            color: #007bff;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        /* 중앙 사용자 정보 섹션 */
-        .user-info {
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-            display: flex;
-            align-items: center;
-            max-width: 1200px;
-            margin: 20px auto;
-        } 
-
-        /* 프로필 사진 */
-        .profile-picture img {
-            border-radius: 50%;
-            width: 150px;
-            height: 150px;
-            object-fit: cover;
-            margin-bottom: 10px;
-        }
-
-        /* 사용자 정보 */
-        .user-nickname {
-            text-align: left;
-            margin-top: 10px;
-        }
-
-        .user-nickname h1 {
-            font-size: 24px;
-            margin: 0;
-        }
-
-        .user-nickname p {
-            font-size: 16px;
-            margin: 5px 0;
-        }
-
-        /* 친구 수 및 버튼 */
-        .friend-info {
-            text-align: center;
-        }
-
-        .friend-count {
-            font-size: 16px;
-            margin: 0;
-        }
-
-        .friend-info button {
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
-        /* 하단 섹션 (채팅방, 북마크, 일정) */
-        .bottom-section {
-            background-color: #fff;
-            margin-top: 20px;
-            padding: 20px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-        }
-
-        /* 카테고리 버튼 */
-        .category-button {
-            background-color: transparent;
-            border: none;
-            color: #007bff;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-bottom: 10px;
-            padding: 0;
-            display: block;
-        }
-
-        /* 목록 스타일 */
-        ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        ul li {
-            font-size: 16px;
-            margin: 5px 0;
-        }
-
-        ul li a {
-            text-decoration: none;
-            color: #007bff;
-            transition: color 0.3s;
-        }
-
-        ul li a:hover {
-            color: #0056b3;
-        }
-
-        /* 추가적인 스타일링을 원하는 대로 적용할 수 있습니다. */
-    </style>
+    <link rel="stylesheet" href="/public/css/profile.css">
 </head>
 
 <body>
@@ -187,32 +51,91 @@
         <!-- 친구 수 및 버튼 -->
         <p class="friend-count">친구 수: <%= friendCount %>
         </p>
-        <button>게시물 작성</button>
+        <button><i class="fas fa-plus"></i> 게시물 작성</button>
     </div>
 
     <div class="bottom-section">
-        <!-- 하단 섹션 (채팅방, 북마크, 일정) -->
-        <button class="category-button">채팅방 목록</button>
-        <ul>
-            <!-- 채팅방 목록 아이템들 -->
-        </ul>
+        <!-- 채팅방 목록 -->
+        <div class="category">
+            <button class="category-button" onclick="toggleCategory('ownerChatRoomsList')">내 채팅방</button>
+            <div id="ownerChatRoomsList">
+                <ul class="category-list">
+                    <li class="category-title">내가 개설한 채팅방</li>
+                    <% if (ownerChatRooms.length===0) { %>
+                        <li class="empty-message">내가 개설한 방이 없어요</li>
+                    <% } else { %>
+                        <% ownerChatRooms.forEach(function(room) { %>
+                            <li>
+                                <a href="/chat/<%= room.id %>">
+                                    <%= room.name %> (<%= room.unreadMessages %> 안 읽은 메시지)
+                                    <% if (room.latestUnreadMessage) { %>
+                                        <span class="latest-message">
+                                            <%= room.latestUnreadMessage.message %>
+                                        </span>
+                                    <% } %>
+                                </a>
+                            </li>
+                        <% }); %>
+                    <% } %>
+                </ul>
+            </div>
 
-        <button class="category-button">북마크한 게시물 목록</button>
-        <ul>
-            <!-- 북마크한 게시물 목록 아이템들 -->
-        </ul>
+            <div id="userChatRoomsList">
+                <ul class="category-list">
+                    <li class="category-title">내가 참여한 채팅방</li>
+                    <% userChatRooms.forEach(function(room) { %>
+                        <li>
+                            <a href="/chat/<%= room.id %>">
+                                <%= room.name %> (<%= room.unreadMessages %> 안 읽은 메시지)
+                                        <% if (room.latestUnreadMessage) { %>
+                                            <span class="latest-message">
+                                                <%= room.latestUnreadMessage.message %>
+                                            </span>
+                                            <% } %>
+                            </a>
+                        </li>
+                        <% }); %>
+                </ul>
+            </div>
+        </div>
 
-        <button class="category-button">일정 목록</button>
-        <ul>
-            <!-- 일정 목록 아이템들 -->
-        </ul>
+        <!-- 북마크한 게시물 목록 -->
+        <div class="category">
+            <button class="category-button" onclick="toggleCategory(this)">북마크한 게시물</button>
+            <ul class="category-list">
+                <% bookmarkedBoards.forEach(function(board) { %>
+                    <li><a href="/board/<%= board.id %>">
+                            <%= board.title %>
+                        </a></li>
+                    <% }); %>
+            </ul>
+        </div>
+
+        <!-- 일정 목록 -->
+        <div class="category">
+            <button class="category-button" onclick="toggleCategory(this)">일정</button>
+            <ul class="category-list">
+                <% schedules.forEach(function(schedule) { %>
+                    <li>
+                        <%= schedule.title %>: <%= schedule.date %>
+                    </li>
+                    <% }); %>
+            </ul>
+        </div>
     </div>
+
 
     <script>
         // 프로필 수정 버튼 클릭 시 이벤트
         document.querySelector('.profile-edit-button').addEventListener('click', function () {
             // 프로필 수정 페이지로 이동 (URL을 수정 페이지의 경로로 변경)
             window.location.href = '/profile/edit';
+        });
+
+        // 게시물 작성 버튼 클릭 시 이벤트 처리
+        document.querySelector('.friend-info button').addEventListener('click', function () {
+            // 게시물 작성 페이지로 이동 (URL을 /new로 변경)
+            window.location.href = '/new';
         });
 
         // 카테고리 버튼 클릭 시 목록 펼치기/닫기 이벤트

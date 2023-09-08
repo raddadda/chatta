@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <h1>비밀번호 찾기</h1>
+    <form name="findPw-form">
+        아이디 : <input type="text" id="id" /><br />
+        이름 : <input type="text" id="name" /><br />
+        <button type="button" onclick="findPw()">확인</button>
+    </form>
+    <div class="result"></div>
+    
+    <script>
+        async function findPw() {
+            const resultBox = document.querySelector('.result')
+            const form = document.forms['findPw-form']
+            const data = {
+                login_id : form.id.value,
+                name : form.name.value,
+            }
+            const result = await axios({
+                method : "post",
+                url : "/findpw",
+                data,
+            })
+            if (result.data.result) {
+                alert(`${result.data.message}`)
+                document.location.href='/'
+            }else{
+                resultBox.textContent = `${result.data.message}`
+            }
+        }
+
+    </script>
+</body>
+</html>

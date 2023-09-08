@@ -27,6 +27,9 @@ const User = (sequelize) =>{
         birth:{
             type:DataTypes.DATEONLY,
         },
+        email:{
+            type:DataTypes.STRING(100),
+        },
         islogin:{
             type:DataTypes.BOOLEAN,
             defaultValue:true,
@@ -36,6 +39,9 @@ const User = (sequelize) =>{
         },
         auth_num:{
             type:DataTypes.INTEGER,
+        },
+        token:{
+            type:DataTypes.STRING(63),
         },
     },
     {

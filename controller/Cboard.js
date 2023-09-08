@@ -196,6 +196,7 @@ const boarduser_findall_pagenation = async (req, res)=>{
         }
     }catch(e){
         res.json({result:false});
+
         console.log(e);
     }
 }

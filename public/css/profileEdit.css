@@ -1,0 +1,50 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+}
+
+.header {
+    background-color: #007bff;
+    padding: 10px 0;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.header-title {
+    color: #fff;
+    font-size: 29px;
+}
+
+/* 중앙 유저 정보 */
+/* .user-info {
+
+} */
+
+/* 프로필 사진 영역 */
+.top-info {
+    display: flex;
+    justify-content: center;
+    height: 200px;
+}
+
+/* .center-info {
+
+} */
+
+.center-top-info {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* .center-bottom-info {
+
+} */

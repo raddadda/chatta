@@ -9,6 +9,7 @@ const nameSpace = ['/','/new'];
 
 /////////////////////////cookie//////////////////////////
 const loginCookie = 'logined'
+const kakaoLoginCookie = 'kakao_logined'
 const maxAge = 60*60*1000
 const httpOnly = true
 const signed = true
@@ -26,6 +27,7 @@ const auth = {keylen,digest,maxint,minint};
 module.exports = {
     nameSpace,
     loginCookie,
+    kakaoLoginCookie,
     cookieSetting,
     auth,
 };
