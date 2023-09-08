@@ -131,131 +131,8 @@
  
 </body>
 <script>
+    // ejs 문법으로 값을 받아와서 사용할 경우 + 확인용 코드
     let isLogin = JSON.parse('<%= isLogin %>')
-    const login_button_div = document.getElementById('login_button_div');
-    const after_login_div = document.getElementById('after_login_div');
-    const sign_up_div = document.getElementById('sign_up_div');
-    const sign_in_div = document.getElementById('sign_in_div');
-    loginAdj(isLogin);
-
-    async function authKaKao() {
-        document.location.href = "/signup/kakao";
-    }
-    
-    function logoutKaKao(){
-        document.location.href = "/kakao/leave";
-    }
-
-    // function kakaoTokenAuth(){
-    //     documnet.location.href = '/kakao/auth';
-    // }
-
-    function loginAdj(isLogin){
-        if(isLogin){
-            login_button_div.hidden = true;
-            after_login_div.hidden = false;
-        } else {
-            login_button_div.hidden = false;
-            after_login_div.hidden = true;
-        }
-    }
-
-    function signUpVisible(){
-        if(sign_up_div.hidden){
-            sign_up_div.hidden = false;
-        } else{
-            sign_up_div.hidden = true;
-        }
-    }
-    function signInVisible(){
-        if(sign_in_div.hidden){
-            sign_in_div.hidden = false;
-        } else{
-            sign_in_div.hidden = true;
-        }
-    }
-    const yearDropdown = document.getElementById('birth-year');
-    for (let year = new Date().getFullYear(); year >= 1900; year--) {
-        const option = document.createElement('option');
-        option.value = year;
-        option.text = year;
-        yearDropdown.appendChild(option);
-    }
-
-    const monthDropdown = document.getElementById('birth-month');
-    for (let month = 1; month <= 12; month++) {
-        const option = document.createElement('option');
-        option.value = month;
-        option.text = month;
-        monthDropdown.appendChild(option);
-    }
-
-    const dayDropdown = document.getElementById('birth-day');
-    for (let day = 1; day <= 31; day++) {
-        const option = document.createElement('option');
-        option.value = day;
-        option.text = day;
-        dayDropdown.appendChild(option);
-    }
-
-
-    async function userSignUp() {
-        const signUpForm = document.forms["signup-form"];
-        try {
-            const data = {
-                user_name: signUpForm.name.value,
-                login_id: signUpForm.userid.value,
-                login_pw: signUpForm.pw.value,
-                gender: signUpForm.gender.value,
-                birth: `${signUpForm.year.value}-${signUpForm.month.value}-${signUpForm.day.value}`,
-                email: signUpForm.email.value,
-            };
-            const res = await axios({
-                method: "post",
-                url: "/signup",
-                data,
-            });
-            alert(res.data.message);
-            if (res.data.result) {
-                sign_up_div.hidden = true;
-                sign_in_div.hidden = false;
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-
-    async function userSignin() {
-        const signInForm = document.forms["signin-form"];
-        try {
-            const data = {
-                login_id: signInForm.userid.value,
-                login_pw: signInForm.pw.value,
-            }
-            const res = await axios({
-                method: "post",
-                url: "/signin",
-                data,
-            })
-            alert(res.data.message);
-            if (res.data.result) {
-                document.location.assign('/profile');
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    }
-    async function userLogOut() {
-        const res = await axios({
-            method: "post",
-            url: "/logout",
-        })
-        console.log("res", res)
-        isLogin = false;
-        loginAdj(isLogin);
-    }
-
     async function cookieAuthCheck(){
         const res = await axios({
             method:'post',
@@ -264,15 +141,8 @@
         console.log("auth res",res);
     }
 </script>
-<script>
-    const socket1 = io();
-    const socket2 = io();
-    // 네임 스페이스 '/'의 경우에는 생략가능 (링크 개념이라)
-    // 이렇게 소켓을 여러개 가져와 쓸 수도 있는 것 같다
-    console.log("socket1", socket1);
-    console.log("socket2", socket2);
-    socket1.emit('userLog')
-</script>
+<script src="/public/js/index_login.js" defer></script>
+<script src="/public/js/index_socket.js" defer></script>
 
 <script>
     //프로필 수정 모달(구현중)///////

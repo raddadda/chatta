@@ -45,7 +45,7 @@ const User = (sequelize) =>{
             defaultValue:false,
         },
         token:{
-            type:DataTypes.STRING(56),
+            type:DataTypes.STRING(63),
         },
     },
     {

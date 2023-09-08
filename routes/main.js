@@ -4,7 +4,7 @@ const controller = require('../controller/Cmain.js');
 const cauth = require('../controller/Cauth.js')
 const clogin = require('../controller/Clogin.js');
 const cboard = require('../controller/Cboard.js');
-const ckakao = require('../controller/Ckakako.js');
+const ckakao = require('../controller/Ckakao.js');
 const cprofile = require('../controller/Cprofile.js');
 const cprofileEdit = require('../controller/CprofileEdit.js')
 
@@ -16,6 +16,10 @@ router.get('/profile/edit/pw', cprofileEdit.pwUpdate)
 router.get('/profile/edit/delete', cprofileEdit.profileDelete)
 
 router.get('/chat',controller.chatMain);
+
+router.get('/signup/kakao',ckakao.signUpKakao)
+router.get('/oauth/kakao',ckakao.authKakao);
+router.get('/kakao/leave',ckakao.logoutKakao);
 
 router.post('/mail', cprofileEdit.findPwPost)
 //router.get('/new/:userid',controller.newMain);
