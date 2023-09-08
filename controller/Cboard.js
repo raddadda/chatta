@@ -1,25 +1,45 @@
 const {
     Board,
+    Sequelize
 } = require('../models');
 
-const newMain = (req,res)=>{
-    res.render('new');
+const Op = Sequelize.Op;
+
+const { stringToUuid } = require('./Cauth')
+
+// res.cookies(signedCookies) id값 복호화
+const getUserId = async (req) => {
+
+    if (req.signedCookies && req.signedCookies['logined'] && req.signedCookies['logined'].id) {
+        console.log('cookie', req.signedCookies['logined'].id);
+        return uuid = await stringToUuid(req.signedCookies['logined'].id);
+    } else {
+        return ''
+    }
 }
 
-const newEdit = (req,res)=>{
-    res.render('postedit');
+const boardList = (req, res)=>{
+    res.render('boardList');
 }
 
+const create_board = (req, res)=>{
+    res.render('postNew');
+}
 
-const user_id = '296b63ea-6f1c-4f18-9f10-382f4a80e1cd';
+const edit_board = (req, res)=>{
+    res.render('postEdit');
+}
 
-const boardPost = async (req,res)=>{
+const create_board_post = async (req,res)=>{
+
+    const user_id = await getUserId(req);
+
     const {title,content,event_time,bord_category} = req.body
     // user_id는 쿠키를 생성해서 req.cookies로 가져와야 될거 같긴 한데
     // 백앤드로 관계형 잘 설정되는지만 보려고 일단은 req에 같이 넣음
     try {
         const board = await Board.create({
-            //title,
+            title,
             poster_id : user_id,
             content,
             event_time,
@@ -35,8 +55,12 @@ const boardPost = async (req,res)=>{
         console.log(e);
     }
 }
-const boardEdit = async(req,res)=>{
+const edit_board_post = async(req,res)=>{
+
+    const user_id = await getUserId(req);
+
     const {id, title,content,event_time,bord_category} = req.body
+
     try{
         const board = await Board.update({
             title,
@@ -58,14 +82,19 @@ const boardEdit = async(req,res)=>{
         console.log(e);
     }
 }
-const boardDelete = async (req, res) => {
+const delete_board = async (req, res) => {
+
+    const user_id = await getUserId(req);
+    if (user_id === '') return res.json({result:false});
 
     const { id } = req.body;
     
     try {
+
         const board = await Board.destroy({ where : { id }})
         if (board) {
             res.json({result:true});
+        
         } else {
             res.json({result:false});
         } 
@@ -77,12 +106,11 @@ const boardDelete = async (req, res) => {
 
 }
 
-const boarduser_findone = async(req,res)=>{
+const boarduser_findone = async (req,res)=>{
 
     const {id} = req.body;
 
     try {
-        
         const board = await Board.findOne({
             attributes:['id', 'title', 'views', 'content', 'event_time', 'bord_category', 'createdAt'],
             where: {id}
@@ -100,15 +128,26 @@ const boarduser_findone = async(req,res)=>{
 }
 
 const boarduser_findall = async(req,res)=>{
-    const {id} = req.body;
-    console.log("id",id);
-    try{
+    
+    const user_id = await getUserId(req);
+   
+    try {
         const board = await Board.findAll({
-            attributes:['id', 'title', 'views', 'content', 'event_time', 'bord_category', 'createdAt', 'poster_id'],
             limit:3
         })
+
         if(board){
-            res.json({result:true,board});
+            board.forEach(index => {
+                if (index.dataValues.poster_id === user_id) {
+                    index.dataValues.poster_check = true;
+                    delete index.dataValues.poster_id;
+                } else {
+                    index.dataValues.poster_check = false;
+                    delete index.dataValues.poster_id;
+                }
+            });
+            
+            res.json({result:true, board});
         }else{
             res.json({result:false});
         }
@@ -118,13 +157,59 @@ const boarduser_findall = async(req,res)=>{
     }
 }
 
+const boarduser_findall_pagenation = async (req, res)=>{
+    
+    console.log('body', req.body);
+    const user_id = await getUserId(req);
+    
+    let pagenation = {};
+    let boardRowlimit = 7; 
+
+    if (req.body.page_id) {
+        pagenation.startid = {id :{ [Op.gte]: req.body.page_id}}
+
+    } else {
+        pagenation.startid = {id :{[Op.gte]: 1}}
+    }
+
+
+    try {
+        const board = await Board.findAll({
+            where: pagenation.startid,
+            limit : boardRowlimit
+        })
+
+        if (board){
+            board.forEach(index => {
+                if (index.dataValues.poster_id === user_id) {
+                    index.dataValues.poster_check = true;
+                    delete index.dataValues.poster_id;
+                } else {
+                    index.dataValues.poster_check = false;
+                    delete index.dataValues.poster_id;
+                }
+            });
+            
+            res.json({result:true, board});
+        } else{
+            res.json({result:false});
+        }
+    }catch(e){
+        res.json({result:false});
+
+        console.log(e);
+    }
+}
+
 
 module.exports = {
-    newMain,
-    newEdit,
-    boardPost,
-    boardEdit,
+    create_board,
+    create_board_post,
+    edit_board,
+    edit_board_post,
+    delete_board,
+    boardList,
     boarduser_findone,
     boarduser_findall,
-    boardDelete
+    boarduser_findall_pagenation
 }

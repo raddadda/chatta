@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="../public/css/board/board_list.css">
+    <link rel="stylesheet" href="../public/css/board/board_detail.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
+<body>
+    
+    <!-- <button id="view">더보기</button> -->
+<div class="wrap" id="wrap"> </div>
+<div class="board-detail-modal" id="boardDetailModal"></div>
+
+<script src="../public/js/board/board_CRUD.js"></script>
+<script>
+
+    let list = [];
+    let page_id = 0;
+
+    var currentDirection = ''; // 현재의 방향을 나타내는 변수
+    var lastScrollTop = 0; // 방향을 구하기 위해 사용되는 변수
+    ( async function() {
+        getbaordPagenation();
+        window.addEventListener('scroll', ()=>{
+                let scrollTop = window.scrollY;
+                let innerHeight = window.innerHeight;
+                let scrollHeight = document.body.offsetHeight;
+            
+                if ( scrollTop + innerHeight+ innerHeight / 9 >=scrollHeight){
+                    if(currentDirection != 'down'){
+                        getbaordPagenation();
+                        currentDirection = 'down';
+                        console.log(currentDirection+' 실행 !!!!');
+                     
+                    }
+                }else{
+                    if(currentDirection != 'up'){
+                        // asd()
+                        currentDirection = 'up';
+                        console.log(currentDirection+' 실행 !!!!');
+                    }
+                }
+                lastScrollTop = scrollTop;
+        })
+
+        }
+    )()
+    async function getbaordPagenation(){
+
+        try {
+            const findAllData = await boradFindAll_pagination(page_id);
+                if (findAllData.length > 0) {
+                    const wrap = document.querySelector("#wrap");
+                    let boxhtml = ``;
+                    for (let i=0; i<findAllData.length; i++){
+                        list.push(findAllData[i]);
+                
+                        const data = {
+                            bord_category : findAllData[i] && findAllData[i].bord_category ? findAllData[i].bord_category : '',
+                            title :  findAllData[i] && findAllData[i].title ? findAllData[i].title : '',
+                            views : findAllData[i] && findAllData[i].views ? findAllData[i].views : 0,
+                            createAt : findAllData[i] && findAllData[i].createdAt.split('T')[0]? findAllData[i].createdAt.split('T')[0] : '',
+                        }
+                        
+                        
+                        if(i%2==0){
+                            boxhtml += `
+                        <div class="imgFlex1" onclick="loadDetailModal(${i})">
+                            <div class="roomImg"></div>
+                            <div class="boardInfo">
+                                <div class="boxBordCategory">${data.bord_category}</div>
+                                <div class="boxTitle">${data.title}</div>
+                                <div class="boxCreateAt">${data.createAt}</div>
+                                <div class="boxViews">${data.views}</div>      
+                            </div>
+                        </div>
+                        `;  
+                        } else{
+                            boxhtml += `
+                        <div class="imgFlex2" onclick="loadDetailModal(${i})">
+                            <div class="roomImg"></div>
+                            <div class="boardInfo">
+                                <div class="boxBordCategory">${data.bord_category}</div>
+                                <div class="boxTitle">${data.title}</div>
+                                <div class="boxCreateAt">${data.createAt}</div>
+                                <div class="boxViews">${data.views}</div>      
+                            </div>
+                        </div>
+                        `;  
+                        }
+                        if (findAllData.length === i + 1) {
+                            page_id = findAllData[i].id + 1;
+                        }
+
+                    }
+                wrap.innerHTML += boxhtml;
+            }
+
+        } catch (e) {
+        }
+    }
+
+    function loadDetailModal (index) {
+
+        const data = {
+            bord_category : list[index] && list[index].bord_category ? list[index].bord_category : '',
+            content: list[index] && list[index].content ? list[index].content : '',
+            title :  list[index] && list[index].title ? list[index].title : '',
+            views : list[index] && list[index].views ? list[index].views : 0,
+            event_time : list[index] && list[index].event_time.split('T')[0]? list[index].event_time.split('T')[0] : '',
+        }
+        
+        let modal = document.getElementById('boardDetailModal');
+        modal.style.display = 'block'
+        modal.innerHTML = `
+            <div class="board-modal-close" onclick="modalCloase()">
+                <img src= "https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/close.png"
+                    alt="close_img"
+                />
+            </div>
+            <div class="bd-image"></div>
+            <div class="board-detail-contents">
+                <div class="bd-info">
+                    <div class="bd-info_category"> ${data.bord_category}</div>
+                    <h2 class="bd-info_title">${data.title}</h2>
+                </div>
+                <div id="eventDetailSubInfo" class="bd-sub-content">
+                    <div class="txt-box">
+                        <h6>내용</h6>
+                        <p>${data.content}</p>
+                    </div>
+                    <div class="txt-box">
+                        <h6>흥보 시간</h6>
+                        <p>${data.event_time}</p>
+                    </div>
+
+                    <div class="txt-box">
+                        <h6>채팅방</h6>
+                        <p><button>입장하기</button><p>
+                    </div>
+
+                </div>
+            </div>
+        `
+    }
+
+    function modalCloase () {
+        document.getElementById('boardDetailModal').style.display = 'none';
+    }
+    // const socket = io('/new');
+    // // 네임 스페이스가 /new로 되어있는 소켓을 사용
+    // socket.emit('userLog')
+</script>
+</body>
+</html>

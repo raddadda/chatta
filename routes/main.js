@@ -14,6 +14,7 @@ router.get('/profile', cprofile.profile);
 router.get('/profile/edit', cprofileEdit.profileUpdate);
 router.get('/profile/edit/pw', cprofileEdit.pwUpdate)
 router.get('/profile/edit/delete', cprofileEdit.profileDelete)
+router.get('/findpw', cprofileEdit.findPw)
 
 router.get('/chat',controller.chatMain);
 
@@ -24,14 +25,20 @@ router.get('/kakao/leave',ckakao.logoutKakao);
 router.post('/mail', cprofileEdit.findPwPost)
 //router.get('/new/:userid',controller.newMain);
 
-router.get('/new',cboard.newMain);
-router.post('/new/post',cboard.boardPost);
-router.delete('/new/delete', cboard.boardDelete);
-router.post('/new/edit/post',cboard.boarduser_findone)
-router.post('/new/findall',cboard.boarduser_findall)
-
-router.get('/new/edit',cboard.newEdit);
-router.post('/new/edit',cboard.boardEdit);
+//boardlist
+router.get('/post',cboard.boardList);
+//boardCreate 생성
+router.get('/post/new',cboard.create_board);
+router.post('/post/new',cboard.create_board_post);
+//boardEdit 생성
+router.get('/post/edit',cboard.edit_board);
+router.post('/post/edit',cboard.edit_board_post);
+//boardDelete 삭제
+router.delete('/post/delete', cboard.delete_board);
+//board 조회
+router.post('/post/findone',cboard.boarduser_findone);
+router.post('/post/findall',cboard.boarduser_findall);
+router.post('/post/findall/pagination', cboard.boarduser_findall_pagenation);
 
 
 router.post('/signup',clogin.signUp)
@@ -41,6 +48,8 @@ router.post('/logout',clogin.userLogOut)
 router.post('/profile/edit', cprofileEdit.profileUpdatePost)
 router.post('/profile/edit/pw', cprofileEdit.pwUpdatePost)
 router.post('/profile/edit/delete', cprofileEdit.profileDeletePost)
+router.post('/findpw', cprofileEdit.findInfoPost )
+router.post('/mail', cprofileEdit.findPwPost)
 
 
 router.post('/bookmark',controller.bookmarkPost)

@@ -7,43 +7,9 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"></script>
+    <script src="/public/js/index_modal.js" defer></script>
     <title>Document</title>
-    <style>
-        /* 모달 백그라운드 */
-        .searchModal {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 10; /* Sit on top */
-            left: 0;
-            top: 0;
-            width: 100%; /* Full width */
-            height: 100%; /* Full height */
-            overflow: auto; /* Enable scroll if needed */
-            background-color: rgb(0,0,0); /* Fallback color */
-            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-        }
-     
-        /* 모달 컨텐츠박스 */
-        .search-modal-content {
-            background-color: #fefefe;
-            margin: 15% auto; /* 15% from the top and centered */
-            padding: 20px;
-            border: 1px solid #888;
-            width: 35%; /* Could be more or less, depending on screen size */
-        }
-        /* 모달 하단 버튼영역 div */
-        .modalBtnDiv {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            
-        }
-        /* div 안 모달 버튼 */
-        .modalCloseDiv {
-            width: 300px;
-            margin-top: 5px;
-        }
-    </style>
+    <link rel="stylesheet" href="/public/css/index_modal.css">
 </head>
 
 <body>
@@ -62,7 +28,7 @@
             <input type="text" name="name" placeholder="이름"/><br/>
             <input type="text" name="userid" placeholder="아이디"><br/>
             <input type="password" name="pw" placeholder="비밀번호"><br/>
-            <input type="email" name="email" placeholder="email"><br/>
+            <input type="email" name="email" placeholder="임시 비밀번호를 받을 email"><br/>
 
             <label for="gender">성별:</label>
             <select name="gender" id="gender">
@@ -88,6 +54,7 @@
         <form name="signin-form">
             <input type="text" name="userid" placeholder="아이디"><br/>
             <input type="password" name="pw" placeholder="비밀번호"><br/>
+            <a href="/findpw">비밀번호 찾기</a>
             <button type="button" onclick="userSignin()">로그인</button>
         </form>
     </div>
@@ -95,40 +62,7 @@
     <button onclick="authKaKao()">카톡!</button> <br/>
     <button onclick="logoutKaKao()">카톡 로그아웃</button> <br/>
     <br/>
-    <a href="/new">게시글 작성</a>
-
-    <!-- 프로필 수정 모달 시작 (구현중) -->
-    <div id="modal" class="searchModal">
-        <div class="search-modal-content">
-            <div class="page-header">
-                <h1>프로필 작성 안내</h1>
-            </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <h3>더 나은 서비스 제공을 위해 프로필을 작성해주세요.</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <hr>
-                <div class="modalBtnDiv">
-                <div class="modalCloseDiv" style="cursor:pointer;background-color:skyblue;text-align: center;padding-bottom: 10px;padding-top: 10px;" onClick="moveProfile();">
-                    <span class="modalCloseBtn" style="font-size: 13pt;">
-                        프로필 작성
-                    </span>
-                </div>
-                <div class="modalCloseDiv" style="cursor:pointer;background-color:#DDDDDD;text-align: center;padding-bottom: 10px;padding-top: 10px;" onClick="closeModal();">
-                    <span class="modalCloseBtn" style="font-size: 13pt;">
-                        닫기
-                    </span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- 프로필 수정 모달 끝 -->
- 
+    <a href="/post/new">게시글 작성</a>
 </body>
 <script>
     // ejs 문법으로 값을 받아와서 사용할 경우 + 확인용 코드
@@ -145,19 +79,7 @@
 <script src="/public/js/index_socket.js" defer></script>
 
 <script>
-    //프로필 수정 모달(구현중)///////
-    if(isLogin) {
-        jQuery(document).ready(function () {
-            // $("#modal").show(); ///////////현재 모달 틀만 구성, 카카오 로그인 쪽 해결되면 입력 받을 정보에 따라 수정 예정
-        });
-        function closeModal() {
-            $('.searchModal').hide();
-        };
-        function moveProfile() {
-            window.location.href="/profile/edit"
-        }
-    }
-    //프로필 수정 모달///////
+ 
 </script>
 
 </html>
