@@ -6,7 +6,7 @@ const profile = async (req, res) => {
     try {
         const getCheck = await Cauth.getAuthCheck(req, res);
         if (!getCheck) {
-            res.redirect('/')
+            res.redirect('/login')
             return;
         }
         const cookieValue = req.signedCookies.logined.id;

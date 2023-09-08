@@ -1,7 +1,5 @@
 //////////////////////////document////////////////////////////////////////
 
-const login_button_div = document.getElementById('login_button_div');
-const after_login_div = document.getElementById('after_login_div');
 const sign_up_div = document.getElementById('sign_up_div');
 const sign_in_div = document.getElementById('sign_in_div');
 const yearDropdown = document.getElementById('birth-year');
@@ -54,8 +52,7 @@ async function userSignUp() {
         });
         alert(res.data.message);
         if (res.data.result) {
-            sign_up_div.hidden = true;
-            sign_in_div.hidden = false;
+            signInVisible();
         }
     } catch (error) {
         console.log(error);
@@ -92,52 +89,16 @@ async function authKaKao() {
 }
 
 
-//////////////////////////log_out////////////////////////////////////////
-
-async function userLogOut() {
-    const res = await axios({
-        method: "post",
-        url: "/logout",
-    })
-    isLogin = false;
-    loginAdj(isLogin);
-}
-
-
-function logoutKaKao(){
-    document.location.href = "/kakao/leave";
-}
-
-
 //////////////////////////construct_edit////////////////////////////////////////
 
-loginAdj(isLogin);
-
-function loginAdj(isLogin){
-    if(isLogin){
-        login_button_div.hidden = true;
-        after_login_div.hidden = false;
-    } else {
-        login_button_div.hidden = false;
-        after_login_div.hidden = true;
-    }
-}
-
-
 function signUpVisible(){
-    if(sign_up_div.hidden){
-        sign_up_div.hidden = false;
-    } else{
-        sign_up_div.hidden = true;
-    }
+    sign_up_div.hidden = false;
+    sign_in_div.hidden = true;
 }
 
 
 function signInVisible(){
-    if(sign_in_div.hidden){
-        sign_in_div.hidden = false;
-    } else{
-        sign_in_div.hidden = true;
-    }
+    sign_up_div.hidden = true;
+    sign_in_div.hidden = false;
 }
 
