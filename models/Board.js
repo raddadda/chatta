@@ -28,7 +28,7 @@ const Board = (sequelize) =>{
             type:DataTypes.DATE,
             allowNull:false,
         },
-        bord_category:{
+        category:{
             type:DataTypes.STRING(20),
             allowNull:false,
         }
