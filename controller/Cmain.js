@@ -7,32 +7,26 @@ const {
     Chat_Room_Join,
     Chat_Message
 } = require('../models');
+const Cauth = require('./Cauth');
 
-
-const main = (req,res)=>{
-    console.log("cookie",req.signedCookies);
-    const {logined, kakao_logined} = req.signedCookies;
-    let data;
-    if (logined){
-        data = {
-            isLogin:true,
+const main = async (req,res)=>{
+    try {
+        const {logined} = req.signedCookies;
+        let data;
+        if (logined){
+            await Cauth.getAuthCheck(req,res);
+            data = {
+                isLogin:true,
+            }
+        } else {
+            data = {
+                isLogin:false,
+            }
         }
-    } else if (kakao_logined){
-        data = {
-            isLogin:true,
-        }
-    } else {
-        data = {
-            isLogin:false,
-        }
+        res.render('index',data);
+    } catch (error) {
+        console.log(error);
     }
-    console.log("data",data);
-    res.render('index',data);
-}
-
-const signUpKakaoMain = (req,res)=>{
-    console.log(req.params);
-    res.render('kakao');
 }
 
 
@@ -176,7 +170,6 @@ const connection = (io,socket,loc)=>{
 module.exports = {
     main,
     newMain,
-    signUpKakaoMain,
     chatMain,
     connection,
     bookmarkPost,
