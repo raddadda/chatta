@@ -1,6 +1,7 @@
 const { User, Friend_List, Chat_Room_Join, Chat_Room, Chat_Message, Board, Board_Bookmark } = require('../models');
 const constant = require('../common/constant');
 const Cauth = require('./Cauth');
+const { Op } = require('sequelize');
 
 const profile = async (req, res) => {
     try {
@@ -113,7 +114,7 @@ const calculateUnreadMessages = async (roomId, userId) => {
     try {
         // roomId와 userId를 사용하여 해당 채팅방의 안 읽은 메시지 수 계산
         const unreadMessages = await Chat_Message.count({
-            where: { room_id: roomId, user_id: { [Op.ne]: userId }, isRead: false },
+            where: { room_id: roomId, user_id: { [Op.ne]: userId }, is_read: false },
         });
 
         return unreadMessages;
@@ -129,7 +130,7 @@ const getLatestUnreadMessage = async (roomId, userId) => {
             where: {
                 room_id: roomId,
                 user_id: { [Op.ne]: userId },
-                isRead: false,
+                is_read: false,
             },
             order: [['createdAt', 'DESC']],
         });

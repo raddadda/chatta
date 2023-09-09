@@ -104,7 +104,7 @@ async function userLogOut() {
 }
 
 
-function logoutKaKao(){
+function logoutKaKao() {
     document.location.href = "/kakao/leave";
 }
 
@@ -113,8 +113,8 @@ function logoutKaKao(){
 
 loginAdj(isLogin);
 
-function loginAdj(isLogin){
-    if(isLogin){
+function loginAdj(isLogin) {
+    if (isLogin) {
         login_button_div.hidden = true;
         after_login_div.hidden = false;
     } else {
@@ -124,19 +124,19 @@ function loginAdj(isLogin){
 }
 
 
-function signUpVisible(){
-    if(sign_up_div.hidden){
+function signUpVisible() {
+    if (sign_up_div.hidden) {
         sign_up_div.hidden = false;
-    } else{
+    } else {
         sign_up_div.hidden = true;
     }
 }
 
 
-function signInVisible(){
-    if(sign_in_div.hidden){
+function signInVisible() {
+    if (sign_in_div.hidden) {
         sign_in_div.hidden = false;
-    } else{
+    } else {
         sign_in_div.hidden = true;
     }
 }

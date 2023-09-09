@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,8 @@
     <title>프로필 수정</title>
     <link rel="stylesheet" href="/public/css/profileEdit.css">
     <script src="/public/js/profileEdit.js" defer></script>
-    </head>
+</head>
+
 <body>
     <div class="header">
         <div class="header-content">
@@ -23,9 +25,9 @@
         <a href="/profile/edit/pw">비밀번호 변경</a>
         <!-- 회원탈퇴도 다른페이지로 분리 -->
         <a href="/profile/edit/delete">회원 탈퇴</a>
-    
+
         <form name="edit-profile">
-            <input type="hidden" id="id" value="<%= user.user_id %>"> 
+            <input type="hidden" id="id" value="<%= user.user_id %>">
             <!-- 상단 프로필 사진 영역 -->
             <div class="top-info">
                 <img src="" alt="프로필사진">
@@ -34,10 +36,10 @@
 
             <!-- 중앙 유저 정보 영역 -->
             <div class="center-info">
-                
+
                 <!-- 유저 정보 상단 영역 -->
                 <div class="center-top-info">
-                    이름 : <input type="text" id="userName" value="<%= user.user_name %>" readonly />   
+                    이름 : <input type="text" id="userName" value="<%= user.user_name %>" readonly />
                     아이디 : <input type="text" id="loginId" value="<%= user.login_id %>" readonly />
                     성별 : <input type="text" id="gender" value="<%= user.gender %>">
                     닉네임 : <input type="text" id="nickName" value="<%= user.nickname %>">
@@ -56,4 +58,5 @@
         </form>
     </div>
 </body>
+
 </html>
