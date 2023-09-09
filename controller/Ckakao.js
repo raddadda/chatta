@@ -110,7 +110,7 @@ const logoutKakao = async (req,res)=>{
                 res.clearCookie(constant.loginCookie);
             }
         }
-        res.redirect('/');
+        res.redirect('/login');
     } catch (error) {
         console.log(error);
     }

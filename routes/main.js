@@ -9,6 +9,7 @@ const cprofile = require('../controller/Cprofile.js');
 const cprofileEdit = require('../controller/CprofileEdit.js')
 
 router.get('/', controller.main);
+router.get('/login',controller.loginMain);
 router.get('/new', controller.newMain);
 router.get('/profile', cprofile.profile);
 router.get('/profile/edit', cprofileEdit.profileUpdate);

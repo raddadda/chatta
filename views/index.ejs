@@ -8,75 +8,19 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"></script>
     <script src="/public/js/index_modal.js" defer></script>
-    <title>Document</title>
     <link rel="stylesheet" href="/public/css/index_modal.css">
+    <title>Document</title>
 </head>
-
 <body>
-    <div id="login_button_div">
-        <button id='sign_up_visible_btn' onclick="signUpVisible()"> 회원가입 </button>
-        <button id='sign_in_visible_btn' onclick="signInVisible()"> 로그인 </button>
-    </div>
-    <div id="after_login_div">
-        <button onclick="cookieAuthCheck()">쿠키 인증 체크</button><br/>
-        <a href="/profile">프로필 페이지로 이동</a> <br/>
-        <button onclick="userLogOut()">로그아웃</button>
-    </div>
-    <div id="sign_up_div" hidden>
-        <div>회원가입</div>
-        <form name="signup-form">
-            <input type="text" name="name" placeholder="이름"/><br/>
-            <input type="text" name="userid" placeholder="아이디"><br/>
-            <input type="password" name="pw" placeholder="비밀번호"><br/>
-            <input type="email" name="email" placeholder="임시 비밀번호를 받을 email"><br/>
-
-            <label for="gender">성별:</label>
-            <select name="gender" id="gender">
-                <option value="남성">남성</option>
-                <option value="여성">여성</option>
-                <option value="기타">기타</option>
-            </select><br />
-
-            <label for="birth">생년월일:</label>
-            <select name="year" id="birth-year">
-            </select>
-            <select name="month" id="birth-month">
-            </select>
-            <select name="day" id="birth-day">
-            </select><br />
-
-            <button type="button" onclick="userSignUp()">회원가입</button>
-        </form>
-    </div>
-    <br/>
-    <div id="sign_in_div" hidden>
-        <div>로그인</div>
-        <form name="signin-form">
-            <input type="text" name="userid" placeholder="아이디"><br/>
-            <input type="password" name="pw" placeholder="비밀번호"><br/>
-            <a href="/findpw">비밀번호 찾기</a>
-            <button type="button" onclick="userSignin()">로그인</button>
-        </form>
-    </div>
-    <br/>
-    <button onclick="authKaKao()">카톡!</button> <br/>
+    <button onclick="cookieAuthCheck()">쿠키 인증 체크</button><br/>
+    <button onclick="userLogOut()">로그아웃</button><br/>
     <button onclick="logoutKaKao()">카톡 로그아웃</button> <br/>
-    <br/>
-    <a href="/post/new">게시글 작성</a>
-    <a href="/post">게시글 목록</a>
+    <a href="/profile">프로필 페이지로 이동</a> <br/>
+    <a href="/post/new">게시글 작성</a><br/>
+    <a href="/post">게시글 목록</a><br/>
 </body>
-<script>
-    // ejs 문법으로 값을 받아와서 사용할 경우 + 확인용 코드
-    let isLogin = JSON.parse('<%= isLogin %>')
-    async function cookieAuthCheck(){
-        const res = await axios({
-            method:'post',
-            url:'/auth'
-        })
-        console.log("auth res",res);
-    }
-</script>
-<script src="/public/js/index_login.js" defer></script>
+
+<script src="/public/js/index.js" defer></script>
 <script src="/public/js/index_socket.js" defer></script>
 
 <script>
