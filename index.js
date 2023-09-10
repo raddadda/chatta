@@ -1,7 +1,6 @@
 const http = require('http');
 const express = require('express');
 const cookieParser = require('cookie-parser');
-const session = require('express-session');
 const SocketIo = require('socket.io');
 const secret = require('./config/secret');
 
@@ -13,12 +12,6 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser(secret.cookieSecret));
-app.use(session({
-    secret: secret.sessionSecret,
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false }
-}))
 app.use("/public", express.static(__dirname + '/public'));
 
 
