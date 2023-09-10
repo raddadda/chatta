@@ -4,7 +4,7 @@ async function boardCreate() {
     if (boardForm.title.value === "") return alert('제목을 확인해주세요.');
     if (boardForm.content.value === "") return alert('내용을 확인해주세요.');
     if (boardForm.eventDate.value === "") return alert('흥보시간 확인해주세요.');
-    if (boardForm.category.value === "") return alert('카텔고리를 확인해주세요.');
+    if (boardForm.category.value === "") return alert('카테고리를 확인해주세요.');
 
     try {
         const data = {
@@ -84,13 +84,13 @@ async function boardDelete() {
 }
 
 //게시판 조회
-async function boradFindAll(offset) {
+async function boardFindAll(offset) {
     console.log("offset 확인", offset);
     const res = await axios({
         method: "POST",
         url: "/post/findall",
         data: {
-            offset: offset
+            offset,
         }
     })
 
@@ -102,7 +102,7 @@ async function boradFindAll(offset) {
     }
 }
 
-async function boradFindAll_pagination(page_id) {
+async function boardFindAll_pagination(page_id) {
 
     if (page_id === undefined || page_id == null) return console.log('page_id이 없음');
     const res = await axios({

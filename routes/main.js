@@ -6,7 +6,8 @@ const clogin = require('../controller/Clogin.js');
 const cboard = require('../controller/Cboard.js');
 const ckakao = require('../controller/Ckakao.js');
 const cprofile = require('../controller/Cprofile.js');
-const cprofileEdit = require('../controller/CprofileEdit.js')
+const cprofileEdit = require('../controller/CprofileEdit.js');
+const cchat = require('../controller/Cchat.js');
 
 router.get('/', controller.main);
 router.get('/login',controller.loginMain);
@@ -40,6 +41,8 @@ router.delete('/post/delete', cboard.delete_board);
 router.post('/post/findone',cboard.boarduser_findone);
 router.post('/post/findall',cboard.boarduser_findall);
 router.post('/post/findall/pagination', cboard.boarduser_findall_pagenation);
+
+router.post('/chat/join',cchat.chatRoomJoin)
 
 
 router.post('/signup',clogin.signUp)
