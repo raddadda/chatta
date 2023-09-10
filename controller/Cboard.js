@@ -22,7 +22,7 @@ const getUserId = async (req) => {
 const boardList = async (req, res)=>{
     const getCheck = await Cauth.getAuthCheck(req, res);
     if (!getCheck) {
-        res.redirect('/')
+        res.redirect('/login')
         return;
     }
     res.render('boardList');
@@ -31,7 +31,7 @@ const boardList = async (req, res)=>{
 const create_board = async (req, res)=>{
     const getCheck = await Cauth.getAuthCheck(req, res);
     if (!getCheck) {
-        res.redirect('/')
+        res.redirect('/login')
         return;
     }
     res.render('postNew');
@@ -40,7 +40,7 @@ const create_board = async (req, res)=>{
 const edit_board = async (req, res)=>{
     const getCheck = await Cauth.getAuthCheck(req, res);
     if (!getCheck) {
-        res.redirect('/')
+        res.redirect('/login')
         return;
     }
     res.render('postEdit');

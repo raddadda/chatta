@@ -7,27 +7,27 @@ const {
     Chat_Room_Join,
     Chat_Message
 } = require('../models');
+const Cauth = require('./Cauth');
 
+const main = async (req,res)=>{
+    const getCheck = await Cauth.getAuthCheck(req, res);
+        if (!getCheck) {
+            res.redirect('/login')
+            return;
+    }
+    res.render('index');
+}
 
-const main = (req,res)=>{
+const loginMain = async (req,res)=>{
     console.log("cookie",req.signedCookies);
-    const {logined, kakao_logined} = req.signedCookies;
-    let data;
+    const {logined} = req.signedCookies;
     if (logined){
-        data = {
-            isLogin:true,
-        }
-    } else if (kakao_logined){
-        data = {
-            isLogin:true,
-        }
-    } else {
-        data = {
-            isLogin:false,
+        const getCheck = await Cauth.getAuthCheck(req, res);
+        if (getCheck) {
+            res.redirect('/')
         }
     }
-    console.log("data",data);
-    res.render('index',data);
+    res.render('login');
 }
 
 
@@ -35,7 +35,7 @@ const main = (req,res)=>{
 const newMain = async (req,res)=>{
     const getCheck = await Cauth.getAuthCheck(req, res);
     if (!getCheck) {
-        res.redirect('/')
+        res.redirect('/login')
         return;
     }
     res.render('new');
@@ -44,7 +44,7 @@ const newMain = async (req,res)=>{
 const chatMain = async (req,res)=>{
     const getCheck = await Cauth.getAuthCheck(req, res);
     if (!getCheck) {
-        res.redirect('/')
+        res.redirect('/login')
         return;
     }
     res.render('chat');
@@ -169,6 +169,7 @@ const connection = (io,socket,loc)=>{
 
 module.exports = {
     main,
+    loginMain,
     newMain,
     chatMain,
     connection,
