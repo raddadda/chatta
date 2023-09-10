@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>회원 탈퇴</title>
 </head>
+
 <body>
     <h1>회원 탈퇴</h1>
     <p>아이디와 비밀번호를 다시 입력해주세요</p>
@@ -17,35 +19,36 @@
         비밀번호 : <input type="password" id="Cpw">
         <button type="button" onclick="deleteFunc()">탈퇴</button><br />
     </form>
-        <div class="result"></div>
+    <div class="result"></div>
 
     <script>
         function deleteFunc() {
             const resultBox = document.querySelector('.result')
             const form = document.forms['delete-form']
             const data = {
-                id : form.id.value,
-                login_id : form.login_id.value,
-                login_pw : form.login_pw.value,
-                Cid : form.Cid.value,
-                Cpw : form.Cpw.value,
+                id: form.id.value,
+                login_id: form.login_id.value,
+                login_pw: form.login_pw.value,
+                Cid: form.Cid.value,
+                Cpw: form.Cpw.value,
             }
             axios({
-                method : 'POST',
-                url : '/profile/edit/delete',
+                method: 'POST',
+                url: '/profile/edit/delete',
                 data,
-            }).then((res)=> {
-                if(res.data.result) {
-                    if(!confirm('탈퇴하시겠습니까?')) {
+            }).then((res) => {
+                if (res.data.result) {
+                    if (!confirm('탈퇴하시겠습니까?')) {
                         return;
                     }
                     alert('회원 탈퇴되었습니다.')
-                    document.location.href='/';
-                }else{
+                    document.location.href = '/';
+                } else {
                     resultBox.textContent = (`${res.data.message}`)
                 }
             })
         }
     </script>
 </body>
+
 </html>
