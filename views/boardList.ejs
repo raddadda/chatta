@@ -54,7 +54,7 @@
         async function getbaordPagenation() {
 
             try {
-                const findAllData = await boradFindAll_pagination(page_id);
+                const findAllData = await boardFindAll_pagination(page_id);
                 if (findAllData.length > 0) {
                     const wrap = document.querySelector("#wrap");
                     let boxhtml = ``;
@@ -115,8 +115,9 @@
                 views: list[index] && list[index].views ? list[index].views : 0,
                 event_time: list[index] && list[index].event_time.split('T')[0] ? list[index].event_time.split('T')[
                     0] : '',
+                board_id: list[index] ? list[index].id : 0,
             }
-
+            console.log("data",data);
             let modal = document.getElementById('boardDetailModal');
             modal.style.display = 'block'
             modal.innerHTML = `
@@ -143,7 +144,7 @@
 
                     <div class="txt-box">
                         <h6>채팅방</h6>
-                        <p><button>입장하기</button><p>
+                        <p><button onclick='chatRoomJoin(${data.board_id})'>입장하기</button><p>
                     </div>
 
                 </div>
@@ -157,6 +158,20 @@
         // const socket = io('/new');
         // // 네임 스페이스가 /new로 되어있는 소켓을 사용
         // socket.emit('userLog')
+
+        async function chatRoomJoin(board_id){
+            const res = await axios({
+                method: "post",
+                url: "/chat/join",
+                data: {
+                    room_id:board_id,
+                }
+            })
+            if (res.data.result) {
+                alert('채팅방에 참여했습니다')
+                document.location.assign('/chat')
+            }
+        }
     </script>
 </body>
 

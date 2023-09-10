@@ -2,17 +2,13 @@ const { DataTypes } = require('sequelize');
 
 const Chat_Room = (sequelize) => {
     return sequelize.define('chat_room', {
-        id: {
+        room_id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
-            autoIncrement: true,
         },
-        owner_id: {
+        poster_id: {
             type: DataTypes.UUID,
             allowNull: false,
-        },
-        board_id: {
-            type: DataTypes.INTEGER,
         },
         title: {
             type: DataTypes.STRING(20),
