@@ -1,106 +1,153 @@
 .board-detail-modal {
-    width: 65%; height: 650px; 
-    background-color: #eee; display: none;
-    position: fixed; top: 50px; left: 50%;
-    border-radius: 10px;  z-index: 100;
-    margin: auto; transform: translate(-50%, 0);
-}
-.board-detail-modal > .board-modal-close {
-    position: absolute; top: -30px; right: 2px;
-    width: 16px; height: 16px;
-    cursor: pointer;
-}
-.board-detail-modal > .board-modal-close > img {
-    width: 100%; height: 100%;
+    width: 65%;
+    height: 650px;
+    background-color: #eee;
+    display: none;
+    position: fixed;
+    top: 50px;
+    left: 50%;
+    border-radius: 10px;
+    z-index: 100;
+    margin: auto;
+    transform: translate(-50%, 0);
 }
 
-.board-detail-modal > .board-modal-close:hover {
+.board-detail-modal>.board-modal-close {
+    position: absolute;
+    top: -30px;
+    right: 2px;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.board-detail-modal>.board-modal-close>img {
+    width: 100%;
+    height: 100%;
+}
+
+.board-detail-modal>.board-modal-close:hover {
     animation: rotate 0.5s
 }
 
-.board-detail-modal > .bd-image {
-    width: 100%; height: 200px;
+.board-detail-modal>.bd-image {
+    width: 100%;
+    height: 200px;
     /* background-color: rgb(1, 1, 61); */
     background-image: url("https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/test_1280.jpg");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    border-top-left-radius: 10px; border-top-right-radius: 10px; 
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 
 
-.board-detail-modal > .board-detail-contents {
-    width: 96%; height: 450px; margin: auto;
+.board-detail-modal>.board-detail-contents {
+    width: 96%;
+    height: 450px;
+    margin: auto;
     margin-top: -30px;
 }
 
 
-.board-detail-modal > .board-detail-contents > .bd-info {
-    width: 100%; height: 125px; background-color: #fff;
-    border-radius: 9px; margin-bottom: 20px;
+.board-detail-modal>.board-detail-contents>.bd-info {
+    width: 100%;
+    height: 125px;
+    background-color: #fff;
+    border-radius: 9px;
+    margin-bottom: 20px;
 }
 
-.board-detail-modal > .board-detail-contents > .bd-info > .bd-info_category {
-    text-align: center; font-weight: bold; font-size: 1.2em; color: #ccc;
-    line-height: 1.2em; padding: 10px 0;
+.board-detail-modal>.board-detail-contents>.bd-info>.bd-info_category {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #ccc;
+    line-height: 1.2em;
+    padding: 10px 0;
 }
 
-.board-detail-modal > .board-detail-contents > .bd-info > .bd-info_title {
-    width: 90%;  margin: auto;  overflow:hidden; min-height: 35px;
-    vertical-align:top; text-overflow: ellipsis; word-break:break-all;
+.board-detail-modal>.board-detail-contents>.bd-info>.bd-info_title {
+    width: 90%;
+    margin: auto;
+    overflow: hidden;
+    min-height: 35px;
+    vertical-align: top;
+    text-overflow: ellipsis;
+    word-break: break-all;
     display: block;
     display: -webkit-box;
-    -webkit-box-orient:vertical;
-    -webkit-line-clamp:2
-    
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2
 }
 
-.board-detail-modal > .board-detail-contents >  .bd-sub-content {
-    width: 98%; margin: auto; height: 310px; overflow: auto; overflow-x: hidden;
+.board-detail-modal>.board-detail-contents>.bd-sub-content {
+    width: 98%;
+    margin: auto;
+    height: 310px;
+    overflow: auto;
+    overflow-x: hidden;
     text-align: left;
 }
 
-.board-detail-modal > .board-detail-contents >  .bd-sub-content::-webkit-scrollbar {
-    width: 8px;  /* 스크롤바의 너비 */
+.board-detail-modal>.board-detail-contents>.bd-sub-content::-webkit-scrollbar {
+    width: 8px;
+    /* 스크롤바의 너비 */
 }
 
-.board-detail-modal > .board-detail-contents >  .bd-sub-content::-webkit-scrollbar-thumb {
-    height: 30%; /* 스크롤바의 길이 */
-    background: #ccc; /* 스크롤바의 색상 */
+.board-detail-modal>.board-detail-contents>.bd-sub-content::-webkit-scrollbar-thumb {
+    height: 30%;
+    /* 스크롤바의 길이 */
+    background: #ccc;
+    /* 스크롤바의 색상 */
     border-radius: 10px;
 }
 
-.board-detail-modal > .board-detail-contents >  .bd-sub-content::-webkit-scrollbar-track {
-    background: rgba(33, 122, 244, .1);  /*스크롤바 뒷 배경 색상*/
+.board-detail-modal>.board-detail-contents>.bd-sub-content::-webkit-scrollbar-track {
+    background: rgba(33, 122, 244, .1);
+    /*스크롤바 뒷 배경 색상*/
 }
 
-.board-detail-modal > .board-detail-contents >  .bd-sub-content > h3 {
-    color: #333; font-size: 24px; line-height: 1.95;
+.board-detail-modal>.board-detail-contents>.bd-sub-content>h3 {
+    color: #333;
+    font-size: 24px;
+    line-height: 1.95;
 
 }
 
-.board-detail-modal > .board-detail-contents > .bd-sub-content > .txt-box {
-    color: #333; font-size: 24px; line-height: 1.95;
+.board-detail-modal>.board-detail-contents>.bd-sub-content>.txt-box {
+    color: #333;
+    font-size: 24px;
+    line-height: 1.95;
 }
 
-.board-detail-modal > .board-detail-contents > .bd-sub-content > .txt-box > h6 {
-    margin: 20px 0 0; font-weight: 600;
-    color: #333; font-size: 16px; line-height: 1.75;
+.board-detail-modal>.board-detail-contents>.bd-sub-content>.txt-box>h6 {
+    margin: 20px 0 0;
+    font-weight: 600;
+    color: #333;
+    font-size: 16px;
+    line-height: 1.75;
 }
 
-.board-detail-modal > .board-detail-contents > .bd-sub-content > .txt-box >  p {
-    color: #333; font-weight: 400;
-    word-wrap: break-word; white-space: pre-wrap;
-    font-size: 16px; line-height: 1.75; padding-right: 1em;
+.board-detail-modal>.board-detail-contents>.bd-sub-content>.txt-box>p {
+    color: #333;
+    font-weight: 400;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    font-size: 16px;
+    line-height: 1.75;
+    padding-right: 1em;
 }
 
 @media screen and (max-width:756px) {
     .board-detail-modal {
-        width: 90%; height: 600px;
+        width: 90%;
+        height: 600px;
     }
 
-    .board-detail-modal > .board-detail-contents >  .bd-sub-content {
-        height: 260px; 
+    .board-detail-modal>.board-detail-contents>.bd-sub-content {
+        height: 260px;
     }
 }
 
