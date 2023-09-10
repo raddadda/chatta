@@ -38,7 +38,7 @@ const newMain = async (req,res)=>{
         res.redirect('/login')
         return;
     }
-    res.render('new');
+    res.render('index');
 }
 
 const chatMain = async (req,res)=>{
