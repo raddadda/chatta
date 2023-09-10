@@ -3,9 +3,9 @@ const controller = require('../controller/Cmain');
 
 module.exports = (io) => {
     const nameSpace = constant.nameSpace;
-    nameSpace.forEach((name) => {
-        io.of(name).on('connection', (socket) => {
-            controller.connection(io, socket, name);
+    nameSpace.forEach((e) => {
+        io.of(e.name).on('connection', (socket) => {
+            e.func(io, socket);
         })
     })
 };
