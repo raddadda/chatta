@@ -78,6 +78,6 @@ router.post('/register',clogin.signUp)
 
 //로그인
 router.post('/login',clogin.signIn)
-//router.post('/logout',clogin.userLogOut)
+router.post('/logout',clogin.userLogOut)
 
 module.exports = router;
