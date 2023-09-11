@@ -5,15 +5,17 @@ const Csocket = require('../controller/Csocket')
 
 //////////////////////////socket/////////////////////////
 const nameSpace = [{
-    name:'/',
-    func:Csocket.rootSocket
+    name: '/',
+    category: 'sports',
+    func: Csocket.rootSocket
 },{
-    name:'/new',
-    func:Csocket.newSocket
-    
+    name: '/new',
+    category: null,
+    func: Csocket.newSocket
 },{
-    name:'/room',
-    func:Csocket.roomSocket
+    name: '/room',
+    category: null,
+    func: Csocket.roomSocket
 },
 ]
 

@@ -24,7 +24,14 @@ const myChatRoomList = async (req,res) => {
 }
 
 const chatRoomMain = async (req,res) => {
-    res.render('chatRoom')
+    const getCheck = await Cauth.getAuthCheck(req, res);
+    if (!getCheck) {
+        res.redirect('/login')
+        return;
+    }
+    const {room_id} = req.query
+    const { id, nickname } = req.signedCookies.logined
+    res.render('chatRoom',{ id, nickname, room_id });
 }
 
 module.exports = {
