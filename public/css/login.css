@@ -52,7 +52,7 @@ input[type='password'] {
 
 /* 로그인 버튼 스타일 */
 button.login {
-    background-color: #e50914;
+    background-color: rgb(123,142,169);
     color: #fff;
     padding: 10px;
     border: none;
@@ -73,20 +73,20 @@ button.Klogin {
     width: 100%;
     font-size: 18px;
     font-weight: bold;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 
 /* 로그인 상태 유지 스타일 */
-.remember-me {
+/* .remember-me {
     display: flex;
     align-items: center;
     margin : 5px
-}
+} */
 
-/* 가입 링크 스타일 */
+/* 비번찾기 링크 스타일 */
 a {
     text-decoration: none;
-    color: #e50914;
+    color: rgb(244, 115, 033);
     font-weight: bold;
 }
 
@@ -98,7 +98,19 @@ a {
     color: #000;
 }
 
-/* 비밀번호 재설정 링크 스타일 */
+/* hover */
 .signup a:hover {
     text-decoration: underline;
+}
+
+.findpw:hover {
+    text-decoration: underline;
+}
+
+button.login:hover {
+    background-color: rgb(71,87,111);
+}
+
+button.Klogin:hover {
+    background-color: #f1e202;
 }

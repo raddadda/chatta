@@ -9,36 +9,67 @@
     <link rel="stylesheet" href="/public/css/register.css">
 </head>
 <body>
-    <div id="sign_up_div">
-        <div>회원가입</div>
+    <div class="header">
+        <div class="header-content">
+            <div class="header-title">
+                <p></p>
+            </div>
+        </div>
+    </div>
         <form name="signup-form">
-            <input type="text" name="name" placeholder="이름"/><br/>
-            <input type="text" name="userid" placeholder="아이디"><br/>
-            <input type="password" name="pw" placeholder="비밀번호"><br/>
-            <input type="password" name="Cpw" placeholder="비밀번호 확인"><br/>
-            <input type="email" name="email" placeholder="임시 비밀번호를 받을 email"><br />
-            <!-- <button type="button" onclick="emailAuth()">인증</button>
-            <br/>
-            <div class="auth" id="auth" hidden>
-                <input type="text" name="auth" placeholder="인증코드" required>
-                <button type="button">확인</button>
-            </div>     -->
-            <label for="gender">성별:</label>
-            <select name="gender" id="gender">
-                <option value="남성">남성</option>
-                <option value="여성">여성</option>
-                <option value="기타">기타</option>
-            </select><br />
-
-            <label for="birth">생년월일:</label>
-            <select name="year" id="birth-year">
-            </select>
-            <select name="month" id="birth-month">
-            </select>
-            <select name="day" id="birth-day">
-            </select><br />
-
-            <button type="button" onclick="userSignUp()">회원가입</button>
+            <div class="user-info">
+                <p>회원가입</p>
+                <div class="info-set id">
+                    <label for="userid">아이디</label>
+                    <input type="text" name="userid" id="userid" placeholder="아이디"><br/>
+                </div>
+                <div class="info-set pw">
+                    <label for="pw">비밀번호</label>
+                    <input type="password" name="pw" id="pw" placeholder="비밀번호"><br/>
+                </div>
+                <div class="info-set Cpw">
+                    <label for="Cpw">비밀번호 확인</label>
+                    <input type="password" name="Cpw" id="Cpw" placeholder="비밀번호 확인"><br/>
+                </div>
+                <div class="info-set email">
+                    <label for="email">이메일</label>    
+                    <input type="email" name="email" id="email" placeholder="임시 비밀번호를 받을 email"><br />
+                </div>
+                <div class="info-set name">
+                    <label for="name">이름</label>
+                    <input type="text" name="name" id="name" placeholder="이름"/><br/>
+                </div>
+                <!-- <button type="button" onclick="emailAuth()">인증</button>
+                    <br/>
+                    <div class="auth" id="auth" hidden>
+                        <input type="text" name="auth" placeholder="인증코드" required>
+                        <button type="button">확인</button>
+                    </div>     -->
+                <div class="select-info">
+                    <div class="gender">
+                        <label for="gender">성별</label>
+                        <select name="gender" id="gender">
+                            <option value="남성">남성</option>
+                            <option value="여성">여성</option>
+                            <option value="기타">기타</option>
+                        </select><br />
+                    </div>
+                    <div class="birth">
+                        <label for="birth">생년월일</label>
+                        <div class="birth_select">
+                            <select name="year" id="birth-year">
+                            </select>
+                            <select name="month" id="birth-month">
+                            </select>
+                            <select name="day" id="birth-day">
+                            </select><br />
+                        </div>
+                    </div>    
+                </div>
+                <div class="btn">
+                    <button type="button" onclick="userSignUp()">회원가입</button>
+                </div>
+            </div>
         </form>
     </div>
 </body>

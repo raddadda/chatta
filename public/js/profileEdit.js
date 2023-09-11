@@ -1,24 +1,23 @@
 // 저장 버튼 함수 (POST)
-function edit() {
+async function edit() {
     const form = document.forms['edit-profile']
     const data = {
         id: form.id.value,
         nick: form.nickName.value,
         email: form.email.value,
     }
-
-    if (!confirm('저장할까요?')) {
+    if(!confirm('저장할까요?')) {
         return;
     }
-    axios({
+    const res = await axios({
         method: 'POST',
         url: '/profile/edit',
         data,
-    }).then((res) => {
-        if (res.data.result) {
-            document.location.href='/profile'
-        }
     })
+    if (res.data.result) {
+        alert(`${res.data.message}`)
+        document.location.href='/profile'
+    }
 }
 
 function cancel() {
