@@ -12,7 +12,8 @@
 <body>
     
     <!-- <button id="view">더보기</button> -->
-<div class="wrap" id="wrap"> </div>
+<div class="wrap" id="wrap"></div>
+
 <div class="board-detail-modal" id="boardDetailModal"></div>
 
 <script src="../public/js/board/board_CRUD.js"></script>
@@ -27,11 +28,13 @@
         
         getbaordPagenation();
         window.addEventListener('scroll', ()=>{
+            
                 let scrollTop = window.scrollY;
                 let innerHeight = window.innerHeight;
                 let scrollHeight = document.body.offsetHeight;
             
-                if ( scrollTop + innerHeight - 100 >= scrollHeight){
+                if ( scrollTop + innerHeight >= scrollHeight){
+                    console.log("스크롤");
                     if(currentDirection != 'down'){
                         getbaordPagenation();
                         currentDirection = 'down';
@@ -56,15 +59,17 @@
             const findAllData = await boradFindAll_pagination(page_id);
                 if (findAllData.length > 0) {
                     const wrap = document.querySelector("#wrap");
+                  
+
                     let boxhtml = ``;
                     for (let i=0; i<findAllData.length; i++){
                         list.push(findAllData[i]);
-                
                         const data = {
                             bord_category : findAllData[i] && findAllData[i].bord_category ? findAllData[i].bord_category : '',
                             title :  findAllData[i] && findAllData[i].title ? findAllData[i].title : '',
                             views : findAllData[i] && findAllData[i].views ? findAllData[i].views : 0,
                             createAt : findAllData[i] && findAllData[i].createdAt.split('T')[0]? findAllData[i].createdAt.split('T')[0] : '',
+                            createAt2: findAllData[i] && findAllData[i].createdAt.split('T')[1]? findAllData[i].createdAt.split('T')[1].split('.')[0] : ''
                         }
                         
                         
@@ -74,21 +79,22 @@
                             <div class="roomImg"></div>
                             <div class="boardInfo">
                                 <div class="boxBordCategory">${data.bord_category}</div>
-                                <div class="boxTitle">${data.title}</div>
-                                <div class="boxCreateAt">${data.createAt}</div>
-                                <div class="boxViews">${data.views}</div>      
+                                <div class="boxTitle">${data.title}</div><br>
+                                <div class="boxCreateAt">${data.createAt} ${data.createAt2}</div>
+                                <div class="boxViews"><img src="../public/view icon.png" style="width: 20px; position: relative; top: 5px" >${data.views}</div>      
                             </div>
                         </div>
                         `;  
                         } else{
+                            console.log("############",i);
                             boxhtml += `
                         <div class="imgFlex2" onclick="loadDetailModal(${i})">
                             <div class="roomImg"></div>
                             <div class="boardInfo">
                                 <div class="boxBordCategory">${data.bord_category}</div>
-                                <div class="boxTitle">${data.title}</div>
-                                <div class="boxCreateAt">${data.createAt}</div>
-                                <div class="boxViews">${data.views}</div>      
+                                <div class="boxTitle">${data.title}</div><br>
+                                <div class="boxCreateAt">${data.createAt} ${data.createAt2}</div>
+                                <div class="boxViews"><img src="../public/view icon.png" style="width: 20px; position: relative; top: 5px" >${data.views}</div>      
                             </div>
                         </div>
                         `;  

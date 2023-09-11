@@ -69,7 +69,7 @@ async function boardEdit() {
         method:"DELETE",
         url:"/post/delete",
         data: {
-            id: 5
+            id: 4
         }
     })
         if (deleteRes.result) {
@@ -119,4 +119,9 @@ async function boradFindAll_pagination(page_id){
         console.log('res',res);
         return [];
     }
+}
+
+
+function back(){
+    window.location.href='/';
 }
