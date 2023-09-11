@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <title>회원 탈퇴</title>
     <link rel="stylesheet" href="/public/css/profileDelete.css">
 </head>
+
 <body>
     <div class="header">
         <div class="header-content">
@@ -47,24 +49,24 @@
             const resultBox = document.querySelector('.result')
             const form = document.forms['delete-form']
             const data = {
-                id : form.id.value,
-                login_id : form.login_id.value,
-                login_pw : form.login_pw.value,
-                Cid : form.Cid.value,
-                Cpw : form.Cpw.value,
+                id: form.id.value,
+                login_id: form.login_id.value,
+                login_pw: form.login_pw.value,
+                Cid: form.Cid.value,
+                Cpw: form.Cpw.value,
             }
             axios({
-                method : 'POST',
-                url : '/profile/edit/delete',
+                method: 'POST',
+                url: '/profile/edit/delete',
                 data,
-            }).then((res)=> {
-                if(res.data.result) {
-                    if(!confirm('탈퇴하시겠습니까?')) {
+            }).then((res) => {
+                if (res.data.result) {
+                    if (!confirm('탈퇴하시겠습니까?')) {
                         return;
                     }
                     alert('회원 탈퇴되었습니다.')
-                    document.location.href='/';
-                }else{
+                    document.location.href = '/';
+                } else {
                     resultBox.textContent = (`${res.data.message}`)
                     resultBox.classList.add('show');
                 }
@@ -75,4 +77,5 @@
         }
     </script>
 </body>
+
 </html>

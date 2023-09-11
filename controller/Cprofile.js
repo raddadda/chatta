@@ -1,6 +1,7 @@
 const { User, Friend_List, Chat_Room_Join, Chat_Room, Chat_Message, Board, Board_Bookmark } = require('../models');
 const constant = require('../common/constant');
 const Cauth = require('./Cauth');
+const { Op } = require('sequelize');
 
 const profile = async (req, res) => {
     try {
@@ -16,9 +17,9 @@ const profile = async (req, res) => {
 
         const friendCount = await getFriendCount(userId);
 
-        const ownerChatRooms = await getOwnerChatRooms(userId);
+        const posterChatRooms = await getPosterChatRooms(userId);
         const userChatRooms = await getUserChatRooms(userId);
-        const allChatRooms = ownerChatRooms.concat(userChatRooms);
+        const allChatRooms = posterChatRooms.concat(userChatRooms);
 
         for (const room of allChatRooms) {
             room.unreadMessages = await calculateUnreadMessages(room.id, userId);
@@ -33,8 +34,8 @@ const profile = async (req, res) => {
             return res.status(404).render('404');
         }
 
-        console.log(user, age, friendCount, ownerChatRooms, userChatRooms, bookmarkedBoards, schedules)
-        res.render('profile', { user, age, friendCount, ownerChatRooms, userChatRooms, bookmarkedBoards, schedules });
+        console.log(user, age, friendCount, posterChatRooms, userChatRooms, bookmarkedBoards, schedules)
+        res.render('profile', { user, age, friendCount, posterChatRooms, userChatRooms, bookmarkedBoards, schedules });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: '내부 서버 오류' });
@@ -76,14 +77,14 @@ const getFriendCount = async (userId) => {
     }
 };
 
-const getOwnerChatRooms = async (userId) => {
+const getPosterChatRooms = async (userId) => {
     try {
         // 사용자가 소유한 채팅방 목록
-        const ownerChatRooms = await Chat_Room.findAll({
-            where: { owner_id: userId },
+        const posterChatRooms = await Chat_Room.findAll({
+            where: { poster_id: userId },
         });
 
-        return ownerChatRooms;
+        return posterChatRooms;
     } catch (error) {
         console.error('채팅방 가져오기 오류:', error);
         throw error;
@@ -113,7 +114,7 @@ const calculateUnreadMessages = async (roomId, userId) => {
     try {
         // roomId와 userId를 사용하여 해당 채팅방의 안 읽은 메시지 수 계산
         const unreadMessages = await Chat_Message.count({
-            where: { room_id: roomId, user_id: { [Op.ne]: userId }, isRead: false },
+            where: { room_id: roomId, user_id: { [Op.ne]: userId }, is_read: false },
         });
 
         return unreadMessages;
@@ -129,7 +130,7 @@ const getLatestUnreadMessage = async (roomId, userId) => {
             where: {
                 room_id: roomId,
                 user_id: { [Op.ne]: userId },
-                isRead: false,
+                is_read: false,
             },
             order: [['createdAt', 'DESC']],
         });

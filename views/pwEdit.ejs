@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <title>비밀번호 변경</title>
     <link rel="stylesheet" href="/public/css/pwEdit.css">
 </head>
+
 <body>
     <div class="header">
         <div class="header-content">
@@ -45,24 +47,24 @@
     </form>
 
     <script>
-        async function pwEdit () {
+        async function pwEdit() {
             const resultBox = document.querySelector('.result')
             const form = document.forms['pw-edit']
             const data = {
-                id : form.id.value,
-                login_id : form.login_id.value,
-                login_pw : form.login_pw.value,
-                Cpw : form.Cpw.value,
-                pw_edit : form.pw_edit.value,
-                pw_edit2 : form.pw_edit2.value,
+                id: form.id.value,
+                login_id: form.login_id.value,
+                login_pw: form.login_pw.value,
+                Cpw: form.Cpw.value,
+                pw_edit: form.pw_edit.value,
+                pw_edit2: form.pw_edit2.value,
             }
             const res = await axios({
-                method : 'POST',
-                url : '/profile/edit/pw',
+                method: 'POST',
+                url: '/profile/edit/pw',
                 data,
             })
-            if(res.data.result) {
-                if(!confirm('변경하시겠습니까?')) {
+            if (res.data.result) {
+                if (!confirm('변경하시겠습니까?')) {
                     return;
                 }
                 alert('변경완료')
@@ -75,6 +77,8 @@
         function cancel() {
             window.location.href='/profile/edit'
         }
+
     </script>
 </body>
+
 </html>

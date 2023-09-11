@@ -47,19 +47,25 @@ const edit_board = async (req, res)=>{
 }
 
 const create_board_post = async (req,res)=>{
-
+    try {
     const user_id = await getUserId(req);
 
     const {title,content,event_time,category} = req.body
     // user_id는 쿠키를 생성해서 req.cookies로 가져와야 될거 같긴 한데
     // 백앤드로 관계형 잘 설정되는지만 보려고 일단은 req에 같이 넣음
-    try {
         const board = await Board.create({
             title,
             poster_id : user_id,
             content,
             event_time,
             category,
+            chat_room : {
+                title,
+                poster_id : user_id,
+                category,
+            }
+        },{
+            include:Chat_Room,
         })
         if(board){
             res.json({result:true , title , content, event_time, category});
@@ -195,7 +201,7 @@ const boarduser_findall_pagenation = async (req, res)=>{
             limit : boardRowlimit
         })
 
-        if (board){
+        if (board) {
             board.forEach(index => {
                 if (index.dataValues.poster_id === user_id) {
                     index.dataValues.poster_check = true;
