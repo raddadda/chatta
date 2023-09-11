@@ -47,9 +47,8 @@ router.post('/post/findall/pagination', cboard.boarduser_findall_pagenation);
 router.post('/chat/join',cchat.chatRoomJoin)
 
 
-router.post('/signup',clogin.signUp)
-router.post('/signin',clogin.signIn)
-router.post('/logout',clogin.userLogOut)
+//router.post('/signup',clogin.signUp)
+
 
 router.post('/profile/edit', cprofileEdit.profileUpdatePost)
 router.post('/profile/edit/pw', cprofileEdit.pwUpdatePost)
@@ -72,5 +71,13 @@ router.post('/delete/friend',controller.deleteFriend)
 router.post('/delete/chatroom',controller.deleteChatRoom)
 router.post('/delete/chatroomjoin',controller.deleteChatRoomJoin)
 router.post('/delete/chatmessage',controller.deleteChatMessage)
+
+//회원가입(로그인과 분리)
+router.get('/register',clogin.register)
+router.post('/register',clogin.signUp)
+
+//로그인
+router.post('/login',clogin.signIn)
+//router.post('/logout',clogin.userLogOut)
 
 module.exports = router;

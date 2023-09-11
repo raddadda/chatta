@@ -16,7 +16,11 @@ function edit() {
         data,
     }).then((res) => {
         if (res.data.result) {
-            document.location.reload();
+            document.location.href='/profile'
         }
     })
+}
+
+function cancel() {
+    window.location.href='/profile'
 }
