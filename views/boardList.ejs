@@ -5,15 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="../public/css/header.css">
     <link rel="stylesheet" href="../public/css/board/board_list.css">
     <link rel="stylesheet" href="../public/css/board/board_detail.css">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
 </head>
 <body>
     
-    <!-- <button id="view">더보기</button> -->
+<!-- <button id="view">더보기</button> -->
+<header class="main-header">
+    <span class="header-logo">Chatta</span>
+    <ul class="header-menu">
+        <li><a href="/post/new">게시판 등록</a></li>
+    </ul>
+    <div class="header-profie">
+        <div class="profile"  onclick="toggleHeaderProfile()">
+            <img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/test_1280.jpg" alt="profile_image" />
+        </div>
+        <ul class="header-profile-tab">
+            <li id="mobileView"><a href="/post/new">게시판 등록</a> </li>
+            <li><a href="/profile/edit">프로필</a> </li>
+            <li><button type="button" onclick="">로그아웃</button></li>
+        </ul>
+    </div>
+</header>
+<script>
+    function toggleHeaderProfile () {
+        const headerProfile = document.querySelector('.main-header > .header-profie > .header-profile-tab');
+        if (window.getComputedStyle(headerProfile).display === 'none') {
+            headerProfile.style.display = 'block';
+        } else {
+            headerProfile.style.display = 'none';
+        }
+    }
 
-    
+</script>
 
 <div class="wrap" id="wrap"> </div>
 <div class="board-detail-modal" id="boardDetailModal"></div>
