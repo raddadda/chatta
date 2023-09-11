@@ -141,9 +141,10 @@
                 if (findAllData.length > 0) {
                     const wrap = document.querySelector("#wrap");
                   
-                    let date = new Date(`${findAllData[i].createdAt}`);
+                   
                     let boxhtml = ``;
                     for (let i=0; i<findAllData.length; i++){
+                        let date = new Date(`${findAllData[i].createdAt}`);
                         list.push(findAllData[i]);
                         const data = {
                             bord_category : findAllData[i] && findAllData[i].bord_category ? findAllData[i].bord_category : '',
@@ -151,9 +152,7 @@
                             views : findAllData[i] && findAllData[i].views ? findAllData[i].views : 0,
                             createAt: `${date.getFullYear()}-${(date.getMonth() + 1)>= 10 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1) }-${date.getDate() >= 10 ? date.getDate() : '0' + date.getDate()} ${date.getHours()}시`
                         }
-                        let date =new Date();
-                        data.createAt2 = `${date.getHours()}`;
-                        createAt2.get
+        
                         if(i%2==0){
                             boxhtml += `
                         <div class="imgFlex1" onclick="loadDetailModal(${i})">
@@ -174,7 +173,7 @@
                             <div class="boardInfo">
                                 <div class="boxBordCategory">${data.bord_category}</div>
                                 <div class="boxTitle">${data.title}</div><br>
-                                <div class="boxCreateAt">${data.createAt}}</div>
+                                <div class="boxCreateAt">${data.createAt}</div>
                                 <div class="boxViews"><img src="../public/view icon.png" style="width: 20px; position: relative; top: 5px" >${data.views}</div>      
                             </div>
                         </div>
