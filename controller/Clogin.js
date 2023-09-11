@@ -12,7 +12,8 @@ const signUp = async (req,res)=>{
             return;
         }
         const signConst = await Cauth.signUpConst (login_pw);
-        const {uuid} = await signUpCreate(login_id,user_name,gender,birth,email,null,signConst);
+        const birthday = new Date (birth);
+        const {uuid} = await signUpCreate(login_id,user_name,gender,birthday,email,null,signConst);
         res.json({result:true,message:`${login_id}님이 회원가입 하셨습니다`,uuid});
     } catch (error) {
         console.log(error);
