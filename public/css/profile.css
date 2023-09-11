@@ -114,13 +114,12 @@ body {
 .categories-container {
     display: flex;
     justify-content: space-around;
-    align-items: center;
+    align-items: flex-start; /* 목록을 위로 정렬하려면 flex-start를 사용합니다. */
+    flex-wrap: wrap; /* 필요할 경우 버튼과 목록이 여러 행에 걸쳐 표시됩니다. */
 }
 
-/* 카테고리 버튼 */
 .category-button {
-    width: 100%;
-    height: 100%;
+    width: auto; /* 버튼의 너비를 내용에 따라 자동으로 조정합니다. */
     background-color: transparent;
     border: none;
     color: gray;
@@ -129,7 +128,6 @@ body {
     cursor: pointer;
     margin-bottom: 10px;
     padding: 0;
-    display: block;
     text-align: center;
 }
 
