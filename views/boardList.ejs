@@ -24,7 +24,7 @@
             </div>
             <ul class="header-profile-tab">
                 <li id="mobileView"><a href="/post/new">게시판 등록</a> </li>
-                <li><a href="/profile/edit">프로필</a> </li>
+                <li><a href="/profile">프로필</a> </li>
                 <li><button type="button" onclick="">로그아웃</button></li>
             </ul>
         </div>
@@ -147,7 +147,7 @@
                         let date = new Date(`${findAllData[i].createdAt}`);
                         list.push(findAllData[i]);
                         const data = {
-                            bord_category : findAllData[i] && findAllData[i].bord_category ? findAllData[i].bord_category : '',
+                            category : findAllData[i] && findAllData[i].category ? findAllData[i].category : '',
                             title :  findAllData[i] && findAllData[i].title ? findAllData[i].title : '',
                             views : findAllData[i] && findAllData[i].views ? findAllData[i].views : 0,
                             createAt: `${date.getFullYear()}-${(date.getMonth() + 1)>= 10 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1) }-${date.getDate() >= 10 ? date.getDate() : '0' + date.getDate()} ${date.getHours()}시`
@@ -158,7 +158,7 @@
                         <div class="imgFlex1" onclick="loadDetailModal(${i})">
                             <div class="roomImg"></div>
                             <div class="boardInfo">
-                                <div class="boxBordCategory">${data.bord_category}</div>
+                                <div class="boxBordCategory">${data.category}</div>
                                 <div class="boxTitle">${data.title}</div><br>
                                 <div class="boxCreateAt">${data.createAt}</div>
                                 <div class="boxViews"><img src="../public/view icon.png" style="width: 20px; position: relative; top: 5px" >${data.views}</div>      
@@ -171,7 +171,7 @@
                         <div class="imgFlex2" onclick="loadDetailModal(${i})">
                             <div class="roomImg"></div>
                             <div class="boardInfo">
-                                <div class="boxBordCategory">${data.bord_category}</div>
+                                <div class="boxBordCategory">${data.category}</div>
                                 <div class="boxTitle">${data.title}</div><br>
                                 <div class="boxCreateAt">${data.createAt}</div>
                                 <div class="boxViews"><img src="../public/view icon.png" style="width: 20px; position: relative; top: 5px" >${data.views}</div>      
@@ -196,7 +196,7 @@
         const data = {
             id : list[index] && list[index].id ? list[index].id : 0,
             poster_check : list[index] && list[index].poster_check ? list[index].poster_check : false,
-            bord_category : list[index] && list[index].bord_category ? list[index].bord_category : '',
+            category : list[index] && list[index].category ? list[index].category : '',
             content: list[index] && list[index].content ? list[index].content : '',
             title :  list[index] && list[index].title ? list[index].title : '',
             views : list[index] && list[index].views ? list[index].views : 0,
@@ -215,7 +215,7 @@
             <div class="bd-image"></div>
             <div class="board-detail-contents">
                 <div class="bd-info">
-                    <div class="bd-info_category"> ${data.bord_category}</div>
+                    <div class="bd-info_category"> ${data.category}</div>
                     <h2 class="bd-info_title">${data.title}</h2>
                     <div class="bd-book_mark" onclick= "bookMarkToggle()">
                         ${getBookMarkSvg(data.book_mark)}
