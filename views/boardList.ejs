@@ -191,7 +191,7 @@
     }
 
     function loadDetailModal (index) {
-        console.log("list[index]",list[index]);
+        
         const data = {
             id : list[index] && list[index].id ? list[index].id : 0,
             poster_check : list[index] && list[index].poster_check ? list[index].poster_check : false,
@@ -200,9 +200,9 @@
             title :  list[index] && list[index].title ? list[index].title : '',
             views : list[index] && list[index].views ? list[index].views : 0,
             event_time : list[index] && list[index].event_time.split('T')[0]? list[index].event_time.split('T')[0] : '',
-            book_mark : list[index] && list[index].book_mark ? book_mark : false
+            book_mark : list[index] && list[index].book_mark ? list[index].book_mark : false
         }
-        
+        console.log("list[index]",data.list[index]);
         let modal = document.getElementById('boardDetailModal');
         modal.style.display = 'block'
         modal.innerHTML = `

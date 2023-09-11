@@ -207,7 +207,7 @@
     }
 
     function loadDetailModal (index) {
-
+        
         const data = {
             id : list[index] && list[index].id ? list[index].id : 0,
             poster_check : list[index] && list[index].poster_check ? list[index].poster_check : false,
@@ -216,9 +216,9 @@
             title :  list[index] && list[index].title ? list[index].title : '',
             views : list[index] && list[index].views ? list[index].views : 0,
             event_time : list[index] && list[index].event_time.split('T')[0]? list[index].event_time.split('T')[0] : '',
-            book_mark : false
+            book_mark : list[index] && list[index].book_mark ? list[index].book_mark : false
         }
-        
+        post_bookmark(data.id);
         let modal = document.getElementById('boardDetailModal');
         modal.style.display = 'block'
         modal.innerHTML = `
@@ -232,7 +232,7 @@
                 <div class="bd-info">
                     <div class="bd-info_category"> ${data.category}</div>
                     <h2 class="bd-info_title">${data.title}</h2>
-                    <div class="bd-book_mark" onclick= "bookMarkToggle()">
+                    <div class="bd-book_mark" onclick= "bookMarkToggle(${data.id},${data.book_mark})">
                         ${getBookMarkSvg(data.book_mark)}
                     </div>
                 </div>
@@ -248,7 +248,7 @@
 
                     <div class="txt-box">
                         <h6>채팅방</h6>
-                        <p><button onclick='chatRoomJoin(${data.board_id})'>입장하기</button><p>
+                        <p><button onclick='chatRoomJoin(${data.id})'>입장하기</button><p>
                     </div>
                     ${data.poster_check === true ? 
                         `<div class="button-box">
@@ -263,7 +263,15 @@
             </div>
         `
     }
-    
+    async function post_bookmark(id){
+
+        try{
+            const findOneData = await findone_board_bookmark(id);
+            console.log("findOneData",findOneData);
+        }catch(e){
+            console.log(e);
+        }
+    }
     function modalCloase () {
         document.getElementById('boardDetailModal').style.display = 'none';
     }

@@ -254,6 +254,28 @@ const delete_board_bookmark = async (req, res)=>{
             console.log(e);
         }
 }
+
+const findone_board_bookmark = async (req,res)=>{
+    const {id} = req.body;
+    console.log("######",id);
+    try {
+        const board = await Board_Bookmark.findOne({
+            // attributes:['id', 'title', 'views', 'content', 'event_time', 'category', 'createdAt'],
+            where: {id}
+        })
+      
+        if (board && board.dataValues){
+            res.json({result:true, board});
+        }else{
+            res.json({result:false});
+        }   
+      
+    } catch(e) {
+        res.json({result:false});
+        console.log(e);
+    }
+}
+
 module.exports = {
     create_board,
     create_board_post,
@@ -264,6 +286,7 @@ module.exports = {
     boarduser_findone,
     boarduser_findall,
     boarduser_findall_pagenation,
+    findone_board_bookmark,
     create_board_bookmark,
     delete_board_bookmark
 }

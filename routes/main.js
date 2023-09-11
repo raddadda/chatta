@@ -44,8 +44,10 @@ router.post('/post/findone',cboard.boarduser_findone);
 router.post('/post/findall',cboard.boarduser_findall);
 router.post('/post/findall/pagination', cboard.boarduser_findall_pagenation);
 
+router.post('/post/findonebookmark', cboard.findone_board_bookmark);
 router.post('/post/newbookmark',cboard.create_board_bookmark);
 router.post('/post/deletebookmark',cboard.delete_board_bookmark);
+
 
 router.post('/chat/join',cchat.chatRoomJoin)
 
