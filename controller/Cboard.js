@@ -167,7 +167,7 @@ const boarduser_findall = async(req,res)=>{
         }else{
             res.json({result:false});
         }
-    }catch(e){
+    } catch(e){
         res.json({result:false});
         console.log(e);
     }
@@ -217,38 +217,39 @@ const boarduser_findall_pagenation = async (req, res)=>{
 }
 
 const create_board_bookmark = async (req, res)=>{
-    // const getCheck = await Cauth.getAuthCheck(req, res);
+
     try {
-        const user_id = await getUserId(req);
-        const {book_chk,id} = req.body;
-        console.log("@@@user_id@@@@@",user_id);
-        console.log("@@@@@@@@",req.body.book_chk);
+            const user_id = await getUserId(req);
+            const { board_id, id } = req.body;
             const board = await Board_Bookmark.create({
                 user_id: user_id,
-                board_id:id
+                board_id:board_id
             })
-            console.log("board",board);
             if(board){
                 res.json({result:true});
             } else {
                 res.json({result:false});
             }
+
         } catch(e){
+
             res.json({result:false});
             console.log(e);
+
         }
 }
 const delete_board_bookmark = async (req, res)=>{
-    // const getCheck = await Cauth.getAuthCheck(req, res);
+
     try {
-        const user_id = await getUserId(req);
-        const {book_chk,id} = req.body
-            const board = await Board_Bookmark.destroy({ where : { id }})
-            if(board){
-                res.json({result:true});
-            } else {
-                res.json({result:false});
-            }
+        const { board_id } = req.body;
+        const board = await Board_Bookmark.destroy({ where : { board_id }});
+
+        if (board) {
+
+            res.json({result:true});
+        } else {
+            res.json({result:false});
+        }
         } catch(e){
             res.json({result:false});
             console.log(e);

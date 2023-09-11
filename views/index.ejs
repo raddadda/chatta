@@ -207,6 +207,9 @@
     }
 
     function loadDetailModal (index) {
+        console.log("list[index]",list[index]);
+
+        list[index].book_mark = false;
 
         const data = {
             id : list[index] && list[index].id ? list[index].id : 0,
@@ -216,7 +219,7 @@
             title :  list[index] && list[index].title ? list[index].title : '',
             views : list[index] && list[index].views ? list[index].views : 0,
             event_time : list[index] && list[index].event_time.split('T')[0]? list[index].event_time.split('T')[0] : '',
-            book_mark : false
+            book_mark : list[index] && list[index].book_mark ? book_mark : false
         }
         
         let modal = document.getElementById('boardDetailModal');
@@ -232,7 +235,7 @@
                 <div class="bd-info">
                     <div class="bd-info_category"> ${data.category}</div>
                     <h2 class="bd-info_title">${data.title}</h2>
-                    <div class="bd-book_mark" onclick= "bookMarkToggle()">
+                    <div class="bd-book_mark" onclick= "bookMarkToggle(${data.id},${data.book_mark})">
                         ${getBookMarkSvg(data.book_mark)}
                     </div>
                 </div>
@@ -248,7 +251,7 @@
 
                     <div class="txt-box">
                         <h6>채팅방</h6>
-                        <p><button onclick='chatRoomJoin(${data.board_id})'>입장하기</button><p>
+                        <p><button onclick='chatRoomJoin(${data.id})'>입장하기</button><p>
                     </div>
                     ${data.poster_check === true ? 
                         `<div class="button-box">
@@ -263,6 +266,43 @@
             </div>
         `
     }
+
+    async function bookMarkToggle (index) {
+
+
+        const bookmarkDom = document.querySelector('#boardDetailModal > .board-detail-contents >  .bd-info > .bd-book_mark > svg > g');
+
+        if (list[index].book_mark === true) { // 북마크 삭제 할 때
+
+            const result =  await bookMark_delete();
+
+            if (result) {
+                list[index].book_mark = false;
+                modalCloase();
+                loadDetailModal(index);
+                bookmarkDom.style.fill = '#eee';
+            } else {
+
+                alert('잠시 후에 사용해 주세요.');
+            } 
+           
+
+        } else if (list[index].book_mark === false) { // 북마크 생성할 때
+
+            const result =  await bookMark_create();
+
+            if (result) {
+                list[index].book_mark = true;
+                modalCloase();
+                loadDetailModal(index);
+                bookmarkDom.style.fill = '#f5cd00';
+            } else {
+
+                alert('잠시 후에 사용해 주세요.');
+            } 
+        }
+    }
+    
     
     function modalCloase () {
         document.getElementById('boardDetailModal').style.display = 'none';
@@ -282,7 +322,6 @@
         if (!confirm('정말로 삭제하시겠습니까?')) return;
         try {
             const deleteRes = await boardDelete(id);
-            console.log('deleteRes', deleteRes);
             if (deleteRes) {
                 alert('삭제가 되었습니다.');
                 window.location.reload();

@@ -216,7 +216,7 @@
                 <div class="bd-info">
                     <div class="bd-info_category"> ${data.category}</div>
                     <h2 class="bd-info_title">${data.title}</h2>
-                    <div class="bd-book_mark" onclick= "bookMarkToggle(${data.id},${data.book_mark})">
+                    <div class="bd-book_mark" onclick= "postBookMark(${data.id},${data.book_mark})">
                         ${getBookMarkSvg(data.book_mark)}
                     </div>
                 </div>
@@ -248,6 +248,17 @@
         `
     }
     
+    function postBookMark (id, book_mark) {
+        
+        try {
+
+
+        } catch(e) {
+
+        }
+
+    }
+
     function modalCloase () {
         document.getElementById('boardDetailModal').style.display = 'none';
     }
