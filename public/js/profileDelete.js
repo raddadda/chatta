@@ -8,15 +8,15 @@ async function deleteFunc() {
         Cid: form.Cid.value,
         Cpw: form.Cpw.value,
     }
+    if (!confirm('탈퇴하시겠습니까?')) {
+        return;
+    }
     const res = await axios({
         method: 'POST',
         url: '/profile/edit/delete',
         data,
     })
     if (res.data.result) {
-        if (!confirm('탈퇴하시겠습니까?')) {
-            return;
-        }
         alert('회원 탈퇴되었습니다.')
         document.location.href = '/';
     } else {

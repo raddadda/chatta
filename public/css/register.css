@@ -1,0 +1,78 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 전체 화면 가운데 정렬 */
+html, body {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f3f3f3;
+}
+
+/* 회원가입 폼 컨테이너 스타일 */
+.user-info {
+    text-align: center;
+    background-color: #fff;
+    padding: 25px 40px 25px 40px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+/* 회원가입 폼 타이틀 스타일 */
+.user-info p {
+    font-size: 24px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+/* 라벨 스타일 */
+label {
+    font-weight: bold;
+}
+
+/* 입력 필드 스타일 */
+.user-info input{
+    width: 100%;
+    padding: 10px;
+    margin : 5px 0 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.user-info select {
+    width: 100%;
+    padding: 10px;
+    margin : 5px 0 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* 회원가입 버튼 스타일 */
+.user-info button {
+    background-color: rgb(123,142,169);
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.user-info button:hover {
+    background-color: rgb(71,87,111);
+}
+/* 생년월일 스타일 */
+
+.birth_select {
+    width: 100%;
+    display: flex;
+    justify-content: space-around
+}
+
