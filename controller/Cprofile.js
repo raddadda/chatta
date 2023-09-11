@@ -17,9 +17,9 @@ const profile = async (req, res) => {
 
         const friendCount = await getFriendCount(userId);
 
-        const ownerChatRooms = await getOwnerChatRooms(userId);
+        const posterChatRooms = await getPosterChatRooms(userId);
         const userChatRooms = await getUserChatRooms(userId);
-        const allChatRooms = ownerChatRooms.concat(userChatRooms);
+        const allChatRooms = posterChatRooms.concat(userChatRooms);
 
         for (const room of allChatRooms) {
             room.unreadMessages = await calculateUnreadMessages(room.id, userId);
@@ -34,8 +34,8 @@ const profile = async (req, res) => {
             return res.status(404).render('404');
         }
 
-        console.log(user, age, friendCount, ownerChatRooms, userChatRooms, bookmarkedBoards, schedules)
-        res.render('profile', { user, age, friendCount, ownerChatRooms, userChatRooms, bookmarkedBoards, schedules });
+        console.log(user, age, friendCount, posterChatRooms, userChatRooms, bookmarkedBoards, schedules)
+        res.render('profile', { user, age, friendCount, posterChatRooms, userChatRooms, bookmarkedBoards, schedules });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: '내부 서버 오류' });
@@ -77,14 +77,14 @@ const getFriendCount = async (userId) => {
     }
 };
 
-const getOwnerChatRooms = async (userId) => {
+const getPosterChatRooms = async (userId) => {
     try {
         // 사용자가 소유한 채팅방 목록
-        const ownerChatRooms = await Chat_Room.findAll({
-            where: { owner_id: userId },
+        const posterChatRooms = await Chat_Room.findAll({
+            where: { poster_id: userId },
         });
 
-        return ownerChatRooms;
+        return posterChatRooms;
     } catch (error) {
         console.error('채팅방 가져오기 오류:', error);
         throw error;

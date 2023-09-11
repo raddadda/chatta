@@ -47,7 +47,8 @@ const chatMain = async (req,res)=>{
         res.redirect('/login')
         return;
     }
-    res.render('chat');
+    const { id, nickname } = req.signedCookies.logined
+    res.render('chatRoom',{ id, nickname });
 }
 
 const bookmarkPost = async (req,res)=>{
@@ -73,7 +74,7 @@ const friendListPost = async (req,res)=>{
 const chatRoomPost = async (req,res)=>{
     const {user_id,board_id,title,category}=req.body;
     const chatroom = await Chat_Room.create({
-        owner_id:user_id,
+        poster_id:user_id,
         board_id,
         title,
         category,
@@ -158,13 +159,6 @@ const deleteChatMessage = async (req,res)=>{
 }
 
 
-
-const connection = (io,socket,loc)=>{
-    socket.on('userLog',()=>{
-        console.log(`${loc}접속`)
-    })
-}
-
 // 새로운 함수를 정의하는게 아닌 이 안에 모두 동작 함수를 넣어야함
 
 module.exports = {
@@ -172,7 +166,6 @@ module.exports = {
     loginMain,
     newMain,
     chatMain,
-    connection,
     bookmarkPost,
     chatRoomPost,
     chatRoomJoinPost,

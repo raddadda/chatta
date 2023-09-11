@@ -10,6 +10,10 @@ const nameSpace = [{
 },{
     name:'/new',
     func:Csocket.newSocket
+    
+},{
+    name:'/room',
+    func:Csocket.roomSocket
 },
 ]
 
