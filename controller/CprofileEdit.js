@@ -12,7 +12,7 @@ const profileUpdate = async (req, res) => {
     try {
         const getCheck = await Cauth.getAuthCheck(req,res);
         if(!getCheck){
-            res.redirect('/')
+            res.redirect('/login')
             return;
         }
         const cookieValue = req.signedCookies.logined.id;
@@ -36,7 +36,7 @@ const pwUpdate = async (req, res) => {
     try {
         const getCheck = await Cauth.getAuthCheck(req,res);
         if(!getCheck){
-            res.redirect('/')
+            res.redirect('/login')
             return;
         }
         const cookieValue = req.signedCookies.logined.id;
@@ -60,7 +60,7 @@ const profileDelete = async (req,res) => {
     try {
         const getCheck = await Cauth.getAuthCheck(req,res);
         if(!getCheck){
-            res.redirect('/')
+            res.redirect('/login')
             return;
         }
         const cookieValue = req.signedCookies.logined.id;
@@ -80,7 +80,7 @@ const profileDelete = async (req,res) => {
     }
 };
 
-const findPw = (req,res) => {
+const findPw = async (req,res) => {
     res.render('findpw')
 }
 ////////////POST//////////////

@@ -37,14 +37,14 @@ const authKakao = async (req,res)=>{
             const signConst = await Cauth.signUpConst(Authorization);
             let birth = null;
             if (birthday){
-                birth = `1999-${birthday.slice(0,2)}-${birthday.slice(2,4)}`
+                birth = new Date (`1999-${birthday.slice(0,2)}-${birthday.slice(2,4)}`)
             }
             const {uuid} = await Clogin.signUpCreate(login_id,profile.nickname,gender,birth,email,Authorization,signConst)
             const id = await Cauth.uuidToString(uuid);
             const auth = await Cauth.authCodeIssue(uuid);
             await Cauth.loginCookieRes(id,profile.nickname,auth,res)
         }
-        res.redirect('/');
+        res.redirect('/profile');
     } catch (error) {
         console.log(error)   
     }
@@ -110,7 +110,7 @@ const logoutKakao = async (req,res)=>{
                 res.clearCookie(constant.loginCookie);
             }
         }
-        res.redirect('/');
+        res.redirect('/login');
     } catch (error) {
         console.log(error);
     }

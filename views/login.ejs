@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"></script>
+    <title>Document</title>
+    <link rel="stylesheet" href="/public/css/login.css">
+</head>
+<body>
+    <div class="login-container">
+        <img src="" alt="로고" class="logo">
+        <form name="signin-form" class="signin-form">
+            <h2>로그인</h2>
+            <input type="text" id="userid" placeholder="아이디" >
+            <input type="password" id="pw" placeholder="비밀번호" >
+            <button type="button" onclick="userSignin()" class="login">로그인</button>
+            <button onclick="authKaKao()" class="Klogin">카카오톡으로 로그인</button> <br/>
+            <div class="remember-me">
+                <input type="checkbox" id="remember" checked>
+                <label for="remember">로그인 상태 유지</label>
+            </div>
+            <a href="/findpw">비밀번호를 잊으셨나요?</a>
+            <div class="signup">
+                <span>처음 오셨나요? </span>
+                <a href="/register">지금 가입하세요.</a>
+            </div>
+        </form>
+    </div>
+</body>
+<script>
+</script>
+<script src="/public/js/login.js" defer></script>
+</html>

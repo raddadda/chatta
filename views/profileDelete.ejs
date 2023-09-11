@@ -1,51 +1,49 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/public/js/profileDelete.js" defer></script>
     <title>회원 탈퇴</title>
+    <link rel="stylesheet" href="/public/css/profileDelete.css">
 </head>
+
 <body>
-    <h1>회원 탈퇴</h1>
+    <div class="header">
+        <div class="header-content">
+            <div class="header-title">
+                회원 탈퇴
+            </div>
+        </div>
+    </div>
     <p>아이디와 비밀번호를 다시 입력해주세요</p>
+    <p>회원 탈퇴 시 복구할 수 없습니다</p>
     <form name="delete-form">
         <input type="hidden" id=id value="<%= user.user_id %>">
         <input type="hidden" id="login_id" value="<%= user.login_id %>">
         <input type="hidden" id="login_pw" value="<%= user.login_pw %>">
-        아이디 : <input type="text" id="Cid"><br />
-        비밀번호 : <input type="password" id="Cpw">
-        <button type="button" onclick="deleteFunc()">탈퇴</button><br />
-    </form>
+        <div class="user-info">
+            <div class="Cid">
+                <label for="Cid">아이디</label>
+                <input type="text" id="Cid"><br />
+            </div>
+            <div class="Cpw">    
+                <label for="Cpw">비밀번호</label>
+                <input type="password" id="Cpw">
+            </div>
+            <div class="btn">
+                <div class="destroy_btn">
+                    <button type="button" onclick="deleteFunc()">탈퇴</button>
+                </div>
+                <div class="cancel_btn">
+                    <button type="button" onclick="cancel()">취소</button>
+                </div>
+            </div>
+        </form>
         <div class="result"></div>
-
-    <script>
-        function deleteFunc() {
-            const resultBox = document.querySelector('.result')
-            const form = document.forms['delete-form']
-            const data = {
-                id : form.id.value,
-                login_id : form.login_id.value,
-                login_pw : form.login_pw.value,
-                Cid : form.Cid.value,
-                Cpw : form.Cpw.value,
-            }
-            axios({
-                method : 'POST',
-                url : '/profile/edit/delete',
-                data,
-            }).then((res)=> {
-                if(res.data.result) {
-                    if(!confirm('탈퇴하시겠습니까?')) {
-                        return;
-                    }
-                    alert('회원 탈퇴되었습니다.')
-                    document.location.href='/';
-                }else{
-                    resultBox.textContent = (`${res.data.message}`)
-                }
-            })
-        }
-    </script>
+    </div>
 </body>
+
 </html>

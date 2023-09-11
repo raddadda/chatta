@@ -57,125 +57,107 @@
     </div>
 
     <div class="bottom-section">
-        <!-- 채팅방 목록 -->
-        <div class="category">
-            <button class="category-button" onclick="toggleCategory('chatRoomsList')">내 채팅방</button>
-            <div id="chatRoomsList">
-                <!-- 내가 개설한 채팅방 목록 -->
-                <ul class="category-list">
-                    <li class="category-title">내가 개설한 채팅방</li>
-                    <% if (ownerChatRooms.length===0) { %>
-                        <li class="empty-message">내가 개설한 방이 없어요</li>
-                        <% } else { %>
-                            <% ownerChatRooms.forEach(function(room) { %>
-                                <li>
-                                    <a href="/chat/<%= room.id %>">
-                                        <%= room.name %> (<%= room.unreadMessages %> 안 읽은 메시지)
-                                                <% if (room.latestUnreadMessage) { %>
-                                                    <span class="latest-message">
-                                                        <%= room.latestUnreadMessage.message %>
-                                                    </span>
-                                                    <% } %>
-                                    </a>
-                                </li>
-                                <% }); %>
-                                    <% } %>
-                </ul>
+        <div class="categories-container">
+            <!-- 채팅방 버튼 -->
+            <div class="category">
+                <button class="category-button" id="chatButton">내 채팅방</button>
+            </div>
+            <!-- 북마크한 게시물 버튼 -->
+            <div class="category">
+                <button class="category-button" id="bookmarkButton">북마크한 게시물</button>
+            </div>
+            <!-- 일정 버튼 -->
+            <div class="category">
+                <button class="category-button" id="scheduleButton">일정</button>
+            </div>
+        </div>
 
+        <!-- 카테고리에 따른 목록 -->
+        <div class="list-container" id="chatList">
+            <!-- 채팅방 목록 -->
+            <div class="category-list">
+                <ul>
+                    <li class="category-title">내가 개설한 채팅방</li>
+                    <% if (posterChatRooms.length === 0) { %>
+                    <li class="empty-message">내가 개설한 방이 없어요</li>
+                    <% } else { %>
+                    <% posterChatRooms.forEach(function(room) { %>
+                    <li>
+                        <a href="/chat?<%= room.room_id %>">
+                            <%= room.title %> (<%= room.unreadMessages %> 안 읽은 메시지)
+                            <% if (room.latestUnreadMessage) { %>
+                            <span class="latest-message">
+                                <%= room.latestUnreadMessage.message %>
+                            </span>
+                            <% } %>
+                        </a>
+                    </li>
+                    <% }); %>
+                    <% } %>
+                </ul>
                 <!-- 내가 참여한 채팅방 목록 -->
-                <ul class="category-list">
+                <ul>
                     <li class="category-title">내가 참여한 채팅방</li>
-                    <% if (userChatRooms.length===0) { %>
-                        <li class="empty-message">내가 참여한 방이 없어요</li>
-                        <% } else { %>
-                            <% userChatRooms.forEach(function(room) { %>
-                                <li>
-                                    <a href="/chat/<%= room.id %>">
-                                        <%= room.name %> (<%= room.unreadMessages %> 안 읽은 메시지)
-                                                <% if (room.latestUnreadMessage) { %>
-                                                    <span class="latest-message">
-                                                        <%= room.latestUnreadMessage.message %>
-                                                    </span>
-                                                    <% } %>
-                                    </a>
-                                </li>
-                                <% }); %>
-                                    <% } %>
+                    <!-- 내가 참여한 채팅방 목록 내용... -->
+                    <% if (userChatRooms.length === 0) { %>
+                    <li class="empty-message">내가 참여한 방이 없어요</li>
+                    <% } else { %>
+                    <% userChatRooms.forEach(function(room) { %>
+                    <li>
+                        <a href="/chat?<%= room.room_id %>">
+                            <%= room.title %> (<%= room.unreadMessages %> 안 읽은 메시지)
+                            <% if (room.latestUnreadMessage) { %>
+                            <span class="latest-message">
+                                <%= room.latestUnreadMessage.message %>
+                            </span>
+                            <% } %>
+                        </a>
+                    </li>
+                    <% }); %>
+                    <% } %>
                 </ul>
             </div>
         </div>
 
-
-        <!-- 북마크한 게시물 목록 -->
-        <div class="category">
-            <button class="category-button" onclick="toggleCategory(this)">북마크한 게시물</button>
-            <ul class="category-list">
-                <% bookmarkedBoards.forEach(function(board) { %>
+        <div class="list-container" id="bookmarkList">
+            <!-- 북마크한 게시물 목록 -->
+            <div class="category-list">
+                <ul>
+                    <% if (bookmarkedBoards.length === 0) { %>
+                    <li>북마크한 게시물이 없어요</li>
+                    <% } else { %>
+                    <% bookmarkedBoards.forEach(function(board) { %>
+                    <% if (board && board.id) { %>
                     <li><a href="/board/<%= board.id %>">
                             <%= board.title %>
                         </a></li>
+                    <% } %>
                     <% }); %>
-            </ul>
+                    <% } %>
+                </ul>
+            </div>
         </div>
 
         <!-- 일정 목록 -->
-        <div class="category">
-            <button class="category-button" onclick="toggleCategory(this)">일정</button>
-            <ul class="category-list">
-                <% schedules.forEach(function(schedule) { %>
+        <div class="list-container" id="scheduleList">
+            <div class="category-list">
+                <ul>
+                    <% if (schedules.length === 0) { %>
+                    <li>저장된 일정이 없어요</li>
+                    <% } else { %>
+                    <% schedules.forEach(function(schedule) { %>
                     <li>
                         <%= schedule.title %>: <%= schedule.date %>
                     </li>
                     <% }); %>
-            </ul>
+                    <% } %>
+                </ul>
+            </div>
         </div>
     </div>
+    </div>
 
-    <script>
-        // 프로필 수정 버튼 클릭 시 이벤트
-        document.querySelector('.profile-edit-button').addEventListener('click', function () {
-            // 프로필 수정 페이지로 이동 (URL을 수정 페이지의 경로로 변경)
-            window.location.href = '/profile/edit';
-        });
-
-        // 게시물 작성 버튼 클릭 시 이벤트 처리
-        document.querySelector('.friend-info button').addEventListener('click', function () {
-            // 게시물 작성 페이지로 이동 (URL을 /new로 변경)
-            window.location.href = '/new';
-        });
-
-        // 카테고리 버튼 클릭 시 목록 펼치기/닫기 이벤트
-        const categoryButtons = document.querySelectorAll('.category-button');
-        categoryButtons.forEach(function (button) {
-            button.addEventListener('click', function () {
-                // 다른 모든 카테고리를 닫고 현재 클릭한 카테고리만 열기
-                categoryButtons.forEach(function (btn) {
-                    // 이전에 열린 카테고리 닫기
-                    btn.nextElementSibling.style.display = 'none';
-                });
-
-                // 클릭한 버튼에 대응하는 카테고리 목록 열기
-                const targetId = this.getAttribute('data-target');
-                if (targetId) {
-                    const targetList = document.getElementById(targetId);
-                    if (targetList) {
-                        targetList.style.display = 'block';
-                    }
-                }
-            });
-        });
-
-        // 내 채팅방 버튼 클릭 시 이벤트
-        document.querySelector('.category-button[data-category="chatRoomsList"]').addEventListener('click', function () {
-            // 채팅방 목록 div
-            const chatRoomsList = document.getElementById('chatRoomsList');
-
-            // 채팅방 목록을 표시
-            if (chatRoomsList) {
-                chatRoomsList.style.display = 'block';
-            }
-        });
-    </script>
+    <script src="/public/js/profile.js"></script>
 </body>
 
 </html>

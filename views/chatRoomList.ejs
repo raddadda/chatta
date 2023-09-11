@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <h1><%= nickname %> 님 채팅방</h1>
+    <ul id="lists"></ul>
+</body>
+<script>
+    const user_id = '<%= id %>'
+    const nickname = '<%= nickname %>'
+    const listUl = document.querySelector("#lists");
+    async function myChatRoomList(){
+        const myChatRoom = await axios({
+            method: "post",
+            url: "/load/roomlist",
+            data:{user_id}
+        })
+        console.log('mychatroom',myChatRoom);
+        let list = myChatRoom.data.roomInfoList;
+        console.log('list',list);
+        list.forEach(chatRoom => {
+            const li = document.createElement('li');
+            console.log('chat',chatRoom);
+            for (e in chatRoom){
+                console.log('e',e)
+                const div = document.createElement('div');
+                div.innerHTML = e + ' : ' + chatRoom[`${e}`];
+                li.appendChild(div);
+            }          
+            li.ondblclick = () => {
+                window.open(`/chat_room?room_id=${chatRoom.room_id}`)
+            }
+            listUl.appendChild(li);
+        });
+        console.log(list);
+    }
+    myChatRoomList()
+</script>
+</html>

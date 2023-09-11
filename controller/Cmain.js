@@ -7,37 +7,48 @@ const {
     Chat_Room_Join,
     Chat_Message
 } = require('../models');
+const Cauth = require('./Cauth');
 
+const main = async (req,res)=>{
+    const getCheck = await Cauth.getAuthCheck(req, res);
+        if (!getCheck) {
+            res.redirect('/login')
+            return;
+    }
+    res.render('index');
+}
 
-const main = (req,res)=>{
+const loginMain = async (req,res)=>{
     console.log("cookie",req.signedCookies);
-    const {logined, kakao_logined} = req.signedCookies;
-    let data;
+    const {logined} = req.signedCookies;
     if (logined){
-        data = {
-            isLogin:true,
-        }
-    } else if (kakao_logined){
-        data = {
-            isLogin:true,
-        }
-    } else {
-        data = {
-            isLogin:false,
+        const getCheck = await Cauth.getAuthCheck(req, res);
+        if (getCheck) {
+            res.redirect('/')
         }
     }
-    console.log("data",data);
-    res.render('index',data);
+    res.render('login');
 }
 
 
 
-const newMain = (req,res)=>{
-    res.render('new');
+const newMain = async (req,res)=>{
+    const getCheck = await Cauth.getAuthCheck(req, res);
+    if (!getCheck) {
+        res.redirect('/login')
+        return;
+    }
+    res.render('index');
 }
 
-const chatMain = (req,res)=>{
-    res.render('chat');
+const myChatMain = async (req,res)=>{
+    const getCheck = await Cauth.getAuthCheck(req, res);
+    if (!getCheck) {
+        res.redirect('/login')
+        return;
+    }
+    const { id, nickname } = req.signedCookies.logined
+    res.render('chatRoomList',{ id, nickname });
 }
 
 const bookmarkPost = async (req,res)=>{
@@ -63,7 +74,7 @@ const friendListPost = async (req,res)=>{
 const chatRoomPost = async (req,res)=>{
     const {user_id,board_id,title,category}=req.body;
     const chatroom = await Chat_Room.create({
-        owner_id:user_id,
+        poster_id:user_id,
         board_id,
         title,
         category,
@@ -148,20 +159,13 @@ const deleteChatMessage = async (req,res)=>{
 }
 
 
-
-const connection = (io,socket,loc)=>{
-    socket.on('userLog',()=>{
-        console.log(`${loc}접속`)
-    })
-}
-
 // 새로운 함수를 정의하는게 아닌 이 안에 모두 동작 함수를 넣어야함
 
 module.exports = {
     main,
+    loginMain,
     newMain,
-    chatMain,
-    connection,
+    myChatMain,
     bookmarkPost,
     chatRoomPost,
     chatRoomJoinPost,

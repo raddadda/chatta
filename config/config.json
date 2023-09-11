@@ -1,7 +1,7 @@
 {
   "development": {
-    "username": "newuser",
-    "password": "2230",
+    "username": "aymrm",
+    "password": "1234",
     "database": "kdt9",
     "host": "127.0.0.1",
     "dialect": "mysql"
@@ -14,10 +14,10 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
+    "username": "admin",
+    "password": "inter!0719",
+    "database": "kdt9",
+    "host": "kdt-test-seunggi.cj9qsrvx7lmq.ap-northeast-2.rds.amazonaws.com",
     "dialect": "mysql"
   }
 }
