@@ -3,17 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="/socket.io/socket.io.js"></script>
     <title>Document</title>
 </head>
 <body>
-    <h1><%= nickname %> 님 채팅방</h1>
+    <h1>채팅방</h1>
 </body>
-<script>
-    const socket = io('/room');
-    const user_id = '<%= id %>'
-    const nickname = '<%= nickname %>'
-</script>
-<script src="/public/js/socket/system_socket.js" defer></script>
-<script src="/public/js/socket/room_socket.js" defer></script>
 </html>

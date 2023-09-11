@@ -41,14 +41,14 @@ const newMain = async (req,res)=>{
     res.render('index');
 }
 
-const chatMain = async (req,res)=>{
+const myChatMain = async (req,res)=>{
     const getCheck = await Cauth.getAuthCheck(req, res);
     if (!getCheck) {
         res.redirect('/login')
         return;
     }
     const { id, nickname } = req.signedCookies.logined
-    res.render('chatRoom',{ id, nickname });
+    res.render('chatRoomList',{ id, nickname });
 }
 
 const bookmarkPost = async (req,res)=>{
@@ -165,7 +165,7 @@ module.exports = {
     main,
     loginMain,
     newMain,
-    chatMain,
+    myChatMain,
     bookmarkPost,
     chatRoomPost,
     chatRoomJoinPost,
