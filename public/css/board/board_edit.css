@@ -1,0 +1,114 @@
+h1{
+    color:  rgb(255, 255, 255);
+    text-align: center;
+}
+body{
+    margin: 0;
+    background-color: rgb(71,87,111);
+}
+label{
+    color: rgb(255, 255, 255);
+}
+.board-form{
+    background-color: rgb(71,87,111);
+  
+    display: block;
+   margin-left: 5%;
+   margin-right: 5%;
+    margin-bottom: 5%;
+}
+.board-form #title {
+  
+    text-align: center;
+
+    width: 100%;
+    height: 40px;
+
+    border: solid rgb(244, 115, 033) 3px;
+    border-radius: 10px;
+    background-color:  rgb(255, 255, 255);
+
+}
+#content {
+
+    background-color: rgb(255, 255, 255);
+    border: solid rgb(244, 115, 033) 3px;
+    border-radius: 10px;
+
+    width: 100%;
+    resize: none;
+
+}
+#eventDate{
+    height: 40px;
+    background-color:rgb(255, 255, 255);
+    border: solid rgb(244, 115, 033)  3px;
+    border-radius: 10px;
+}
+#category{
+    margin-bottom: 40px;
+    height: 40px;
+    background-color: rgb(255, 255, 255);
+    border: solid rgb(244, 115, 033) 3px;
+    border-radius: 10px;
+}
+#boardCreateButton{
+    margin-bottom: 40px;
+    height: 40px;
+    background-color:rgb(255, 255, 255);
+    border: solid rgb(244, 115, 033) 3px;
+    border-radius: 10px;
+    color: rgb(244, 115, 033);
+}
+#boardCreateButton:hover{
+
+    background-color:rgb(244, 115, 033);
+    border: solid rgb(244, 115, 033) 3px;
+
+    color: rgb(255, 255, 255);
+}
+#backButton{
+    height: 40px;
+    background-color:rgb(255, 255, 255);
+    border: solid rgb(244, 115, 033) 3px;
+    border-radius: 10px;
+    color: rgb(244, 115, 033)
+}
+#backButton:hover{
+
+    background-color:rgb(244, 115, 033);
+    border: solid rgb(244, 115, 033) 3px;
+
+    color: rgb(255, 255, 255);
+}
+.left-form{
+    margin:0 auto;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+   
+}
+.right-form{
+    margin:0 auto;
+    /* margin-right: 50px; */
+    display: flex;
+    width: 100%;
+    margin-top: 40px;
+    flex-direction: column;
+}
+@media (max-width : 800px) {
+    .left-form{
+
+        width: 100%;
+
+    }
+    .right-form{
+        margin-top: 40px;
+
+        width: 100%;
+    }
+    .board-form{
+        display: block;
+
+    }
+}

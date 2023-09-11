@@ -5,24 +5,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="../public/css/board/board_edit.css">
     <title>게시판 수정 페이지</title>
 </head>
 
 <body>
-    <h1>수정 페이지</h1>
-    <form name="board-form">
-        <label for="title">게시글 제목 : </label>
-        <input type="text" id="title" name="title" placeholder="제목을 입력해주세요."><br />
-        <label for="content"> 내용 : </label>
-        <input type="text" id="content" name="content" placeholder="내용을 입력해주세요."><br />
-        <label for="eventDate"> 홍보시간 : </label>
-        <input type="date" id="eventDate" name="eventDate" placeholder="날짜를 입력해주세요."><br />
-        <label for="category"> 카테고리 : </label>
-        <input type="text" id="category" name="category" placeholder="카테고리를 입력해주세요."><br />
-        <button type="button" onclick="boardEdit()">게시판 수정</button>
-        <button type="button" onclick="boardDelete()">게시판 삭제</button>
-    </form>
-
+    <div class="board-body">
+        <h1>수정 페이지</h1>
+        <form class="board-form" name="board-form">
+            <div class="left-form">
+                <label for="title"></label>
+            <input type="text" id="title" name="title" placeholder="제목을 입력해주세요."><br/>
+            <label for="content"> </label>
+            <textarea  cols="50" rows="30" type="text" id="content" name="content" placeholder="내용을 입력해주세요."></textarea>
+            </div>
+            <div class="right-form">
+                <label for="eventDate">홍보시간</label>
+                <input type="datetime-local" id="eventDate" name="eventDate" placeholder="홍보시간을 입력해주세요."><br/>
+                <label for="category">카테고리</label>
+                <!-- <input type="text" id="category" name="category" placeholder="카테고리를 입력해주세요."><br/> -->
+                <select name="category" id="category">
+                    <option value="sports">sports</option>
+                    <option value="e-sports">e-sports</option>
+                </select>
+                <button id="boardEditButton" type="button" onclick="boardEdit()">게시판 수정</button><br/>
+                <button id="boardDeleteButton" type="button" onclick="boardDelete()">게시판 삭제</button>
+                <button id="backButton" type="button" onclick="back()">뒤로가기</button>
+            </div>
+        </form>
+    </div>
     <script src="../public/js/board/board_CRUD.js"></script>
 </body>
 
