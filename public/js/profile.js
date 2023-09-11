@@ -1,4 +1,3 @@
-console.log('button', document.querySelector('.profile-edit-button'));
 // 프로필 수정 버튼 클릭 시 이벤트
 document.querySelector('.profile-edit-button').addEventListener('click', function () {
     window.location.href = '/profile/edit';
@@ -10,30 +9,36 @@ document.querySelector('.friend-info button').addEventListener('click', function
 });
 
 // 카테고리 버튼 클릭 시 목록 토글 이벤트
-const categoryButtons = document.querySelectorAll('.category-button');
-categoryButtons.forEach(function (button) {
-    button.addEventListener('click', function () {
-        toggleCategory(this);
-    });
+document.getElementById('chatButton').addEventListener('click', function () {
+    toggleList('chatList', this);
 });
 
-// 초기에 모든 카테고리 목록을 숨김
-const categoryLists = document.querySelectorAll('.category-list');
-categoryLists.forEach(function (list) {
-    list.style.display = 'none';
+document.getElementById('bookmarkButton').addEventListener('click', function () {
+    toggleList('bookmarkList', this);
 });
 
-// 카테고리 목록을 토글하는 함수
-function toggleCategory(button) {
-    // data-target 속성을 통해 목록의 ID를 가져옴
-    const targetList = button.nextElementSibling;
+document.getElementById('scheduleButton').addEventListener('click', function () {
+    toggleList('scheduleList', this);
+});
 
-    // 목록 표시 여부를 토글
-    if (targetList.style.display === 'block') {
-        targetList.style.display = 'none';
+// 초기에 모든 목록을 숨김
+const listContainers = document.querySelectorAll('.list-container');
+listContainers.forEach(function (container) {
+    container.style.display = 'none';
+});
+
+// 목록을 토글하는 함수
+function toggleList(listId, button) {
+    const listContainer = document.getElementById(listId);
+    if (listContainer.style.display === 'block') {
+        listContainer.style.display = 'none';
         button.style.color = 'gray';
     } else {
-        targetList.style.display = 'block';
+        // 모든 목록 숨기고 선택한 목록만 보여줌
+        listContainers.forEach(function (container) {
+            container.style.display = 'none';
+        });
+        listContainer.style.display = 'block';
         button.style.color = 'black';
     }
 }

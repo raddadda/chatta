@@ -103,9 +103,8 @@ body {
     border-radius: 30px;
 }
 
-/* 하단 섹션 (채팅방, 북마크, 일정) */
+/* 하단 섹션 (카테고리, 목록 등) 스타일 */
 .bottom-section {
-    position: relative;
     background-color: #fff;
     padding: 20px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
@@ -114,43 +113,70 @@ body {
 .categories-container {
     display: flex;
     justify-content: space-around;
-    align-items: flex-start; /* 목록을 위로 정렬하려면 flex-start를 사용합니다. */
-    flex-wrap: wrap; /* 필요할 경우 버튼과 목록이 여러 행에 걸쳐 표시됩니다. */
+    align-items: center;
+    flex-wrap: wrap;
 }
 
+/* 카테고리 버튼 */
 .category-button {
-    width: auto; /* 버튼의 너비를 내용에 따라 자동으로 조정합니다. */
+    width: 100%;
     background-color: transparent;
     border: none;
     color: gray;
     font-size: 18px;
     font-weight: bold;
     cursor: pointer;
-    margin-bottom: 10px;
-    padding: 0;
+    padding: 15px 0;
+    margin-bottom: 20px;
+    display: block;
     text-align: center;
 }
 
+/* 활성화된 버튼의 스타일 */
 .category-button.active {
     color: black;
-}
-
-.category {
-    display: block;
-    margin-bottom: 20px;
-    flex: 1;
-}
-
-.category ul {
     background-color: #fff;
-    list-style-type: none;
-    padding: 0;
 }
+
+/* 카테고리 목록 컨테이너 */
+.list-container {
+    display: none;
+    padding: 20px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    text-align: center;
+}
+
+/* 카테고리 목록 스타일 */
 .category-list ul {
     list-style-type: none;
     padding: 0;
 }
 
+/* 카테고리 목록 스타일 (예: 내 채팅방) */
+#chatList .category-list,
+#bookmarkList .category-list,
+#scheduleList .category-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#chatList .category-title,
+#bookmarkList .category-title,
+#scheduleList .category-title {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+#chatList .empty-message,
+#bookmarkList .empty-message,
+#scheduleList .empty-message {
+    color: gray;
+}
+
+/* 카테고리 목록 아이템 스타일 (예: 내 채팅방 목록 아이템) */
 .category-list li {
     font-size: 16px;
     margin: 5px 0;
@@ -165,3 +191,7 @@ body {
 .category-list li a:hover {
     color: #0056b3;
 }
+
+/* 반응형: full 화면에서는 헤더에 프로필 편집 버튼 -> 텍스트로
+max-width 수정
+모바일 화면에서는 프사닉네임과 정보 세로로 배치(column) */

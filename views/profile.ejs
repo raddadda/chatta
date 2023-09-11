@@ -58,10 +58,24 @@
 
     <div class="bottom-section">
         <div class="categories-container">
+            <!-- 채팅방 버튼 -->
+            <div class="category">
+                <button class="category-button" id="chatButton">내 채팅방</button>
+            </div>
+            <!-- 북마크한 게시물 버튼 -->
+            <div class="category">
+                <button class="category-button" id="bookmarkButton">북마크한 게시물</button>
+            </div>
+            <!-- 일정 버튼 -->
+            <div class="category">
+                <button class="category-button" id="scheduleButton">일정</button>
+            </div>
+        </div>
+
+        <!-- 카테고리에 따른 목록 -->
+        <div class="list-container" id="chatList">
             <!-- 채팅방 목록 -->
-            <button class="category-button">내 채팅방</button>
-            <div id="chatRoomsList" class="category-list">
-                <!-- 내가 개설한 채팅방 목록 -->
+            <div class="category-list">
                 <ul>
                     <li class="category-title">내가 개설한 채팅방</li>
                     <% if (posterChatRooms.length === 0) { %>
@@ -69,7 +83,7 @@
                     <% } else { %>
                     <% posterChatRooms.forEach(function(room) { %>
                     <li>
-                        <a href="/chat/<%= room.id %>">
+                        <a href="/chat?<%= room.room_id %>">
                             <%= room.title %> (<%= room.unreadMessages %> 안 읽은 메시지)
                             <% if (room.latestUnreadMessage) { %>
                             <span class="latest-message">
@@ -90,7 +104,7 @@
                     <% } else { %>
                     <% userChatRooms.forEach(function(room) { %>
                     <li>
-                        <a href="/chat/<%= room.id %>">
+                        <a href="/chat?<%= room.room_id %>">
                             <%= room.title %> (<%= room.unreadMessages %> 안 읽은 메시지)
                             <% if (room.latestUnreadMessage) { %>
                             <span class="latest-message">
@@ -103,11 +117,11 @@
                     <% } %>
                 </ul>
             </div>
+        </div>
 
+        <div class="list-container" id="bookmarkList">
             <!-- 북마크한 게시물 목록 -->
-            <button class="category-button">북마크한 게시물</button>
-            <div id="bookmarkedBoardsList" class="category-list">
-                <!-- 북마크한 게시물 목록 내용... -->
+            <div class="category-list">
                 <ul>
                     <% if (bookmarkedBoards.length === 0) { %>
                     <li>북마크한 게시물이 없어요</li>
@@ -122,21 +136,27 @@
                     <% } %>
                 </ul>
             </div>
+        </div>
 
-            <!-- 일정 목록 -->
-            <button class="category-button">일정</button>
-            <div id="schedulesList" class="category-list">
-                <!-- 일정 목록 내용... -->
+        <!-- 일정 목록 -->
+        <div class="list-container" id="scheduleList">
+            <div class="category-list">
                 <ul>
+                    <% if (schedules.length === 0) { %>
+                    <li>저장된 일정이 없어요</li>
+                    <% } else { %>
                     <% schedules.forEach(function(schedule) { %>
                     <li>
                         <%= schedule.title %>: <%= schedule.date %>
                     </li>
                     <% }); %>
+                    <% } %>
                 </ul>
             </div>
         </div>
     </div>
+    </div>
+
     <script src="/public/js/profile.js"></script>
 </body>
 

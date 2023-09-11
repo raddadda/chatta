@@ -22,9 +22,10 @@ const profile = async (req, res) => {
         const allChatRooms = posterChatRooms.concat(userChatRooms);
 
         for (const room of allChatRooms) {
-            room.unreadMessages = await calculateUnreadMessages(room.id, userId);
-            room.latestUnreadMessage = await getLatestUnreadMessage(room.id, userId);
+            room.unreadMessages = await calculateUnreadMessages(room.room_id, userId);
+            room.latestUnreadMessage = await getLatestUnreadMessage(room.room_id, userId);
         };
+        console.log(allChatRooms)
 
         const bookmarkedBoards = await getBookmarkedBoards(userId);
         const schedules = await getSchedules(userId);
