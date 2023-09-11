@@ -1,7 +1,8 @@
 const {
     Board,
     Sequelize,
-    Chat_Room
+    Chat_Room,
+    Board_Bookmark
 } = require('../models');
 
 const Op = Sequelize.Op;
@@ -223,7 +224,44 @@ const boarduser_findall_pagenation = async (req, res)=>{
     }
 }
 
-
+const create_board_bookmark = async (req, res)=>{
+    // const getCheck = await Cauth.getAuthCheck(req, res);
+    try {
+        const user_id = await getUserId(req);
+        const {book_chk,id} = req.body;
+        console.log("@@@user_id@@@@@",user_id);
+        console.log("@@@@@@@@",req.body.book_chk);
+            const board = await Board_Bookmark.create({
+                user_id: user_id,
+                board_id:id
+            })
+            console.log("board",board);
+            if(board){
+                res.json({result:true});
+            } else {
+                res.json({result:false});
+            }
+        } catch(e){
+            res.json({result:false});
+            console.log(e);
+        }
+}
+const delete_board_bookmark = async (req, res)=>{
+    // const getCheck = await Cauth.getAuthCheck(req, res);
+    try {
+        const user_id = await getUserId(req);
+        const {book_chk,id} = req.body
+            const board = await Board_Bookmark.destroy({ where : { id }})
+            if(board){
+                res.json({result:true});
+            } else {
+                res.json({result:false});
+            }
+        } catch(e){
+            res.json({result:false});
+            console.log(e);
+        }
+}
 module.exports = {
     create_board,
     create_board_post,
@@ -233,5 +271,7 @@ module.exports = {
     boardList,
     boarduser_findone,
     boarduser_findall,
-    boarduser_findall_pagenation
+    boarduser_findall_pagenation,
+    create_board_bookmark,
+    delete_board_bookmark
 }
