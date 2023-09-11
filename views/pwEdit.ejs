@@ -6,19 +6,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>비밀번호 변경</title>
+    <link rel="stylesheet" href="/public/css/pwEdit.css">
 </head>
 
 <body>
-    <h1>비밀번호 확인 및 변경</h1>
+    <div class="header">
+        <div class="header-content">
+            <div class="header-title">
+                비밀번호 변경
+            </div>
+        </div>
+    </div>
     <form name="pw-edit">
         <input type="hidden" id=id value="<%= user.user_id %>">
         <input type="hidden" id="login_id" value="<%= user.login_id %>">
         <input type="hidden" id="login_pw" value="<%= user.login_pw %>">
-        현재 비밀번호 : <input type="password" id="Cpw"><br />
-        변경할 비밀번호 : <input type="password" id="pw_edit"><br />
-        비밀번호 확인 : <input type="password" id="pw_edit2">
-        <button type="button" onclick="pwEdit()">변경</button>
-        <div class="result"></div>
+        <div class="center-info">
+            <div class="Cpw">
+                <label for="Cpw">현재 비밀번호</label>
+                <input type="password" id="Cpw"><br />
+            </div>
+            <div class="pw_edit">
+                <label for="pw_edit">변경할 비밀번호</label>
+                <input type="password" id="pw_edit"><br />
+            </div>
+            <div class="pw_edit2">
+                <label for="pw_edit2">비밀번호 확인</label>
+                <input type="password" id="pw_edit2">
+            </div>
+            <div class="btn">
+                <div class="edit_btn">
+                    <button type="button" onclick="pwEdit()">변경</button>
+                </div>
+                <div class="cancel_btn">
+                    <button type="button" onclick="cancel()">취소</button>
+                </div>
+            </div>
+            <div class="result"></div>
+        </div>
     </form>
 
     <script>
@@ -43,11 +68,16 @@
                     return;
                 }
                 alert('변경완료')
-                document.location.href = '/profile';
-            } else {
+                document.location.href='/profile';
+            }else if(res.data.result === false) {
                 resultBox.textContent = (`${res.data.message}`)
+                resultBox.classList.add('show');
             }
         }
+        function cancel() {
+            window.location.href='/profile/edit'
+        }
+
     </script>
 </body>
 
