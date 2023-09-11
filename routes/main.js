@@ -34,8 +34,8 @@ router.get('/post',cboard.boardList);
 //boardCreate 생성
 router.get('/post/new',cboard.create_board);
 router.post('/post/new',cboard.create_board_post);
-//boardEdit 생성
-router.get('/post/edit',cboard.edit_board);
+//boardEdit 
+router.get('/post/edit/:id',cboard.edit_board);
 router.post('/post/edit',cboard.edit_board_post);
 //boardDelete 삭제
 router.delete('/post/delete', cboard.delete_board);

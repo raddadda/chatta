@@ -4,7 +4,7 @@ async function boardCreate(){
     if ( boardForm.title.value === "" ) return alert('제목을 확인해주세요.');
     if ( boardForm.content.value === "" ) return alert('내용을 확인해주세요.');
     if ( boardForm.eventDate.value === "" ) return alert('흥보시간 확인해주세요.');
-    if ( boardForm.category.value === "" ) return alert('카텔고리를 확인해주세요.');
+    if ( boardForm.category.value === "" ) return alert('카테고리를 확인해주세요.');
     
     try {
         const data = {
@@ -33,17 +33,10 @@ async function boardCreate(){
 }
 
 //게시판 수정
-async function boardEdit() {
+async function boardEdit(data) {
 
-    const boardForm = document.forms["board-form"];
     try {
-        const data = {
-            id : 5,
-            title:boardForm.title.value,
-            content:boardForm.content.value,
-            event_time:boardForm.eventDate.value,
-            category:boardForm.category.value
-        }
+        const data = {...data}
         const res = await axios({
             method:"post",
             url:"/post/edit",
@@ -51,14 +44,9 @@ async function boardEdit() {
         })
 
         if(res.data.result){
-
-            alert("수정이 완료되었습니다.");
-            window.location.reload();
-
+            return true;
         } else{
-
-            alert("다시 시도해주세요.");
-
+            return false;
         }
 
     } catch(error) {
@@ -69,31 +57,52 @@ async function boardEdit() {
     }
 }
 //게시판 삭제
-  async function boardDelete () {
+  async function boardDelete (id) {
 
-    try{
+    try {
+
         const deleteRes = await axios({
-        method:"DELETE",
-        url:"/post/delete",
-        data: {
-            id: 4
+            method:"DELETE",
+            url:"/post/delete",
+            data: { id }
+        })
+
+        if (deleteRes.data.result) {
+            return true;
+        } else{
+            return false;
         }
-    })
-        if (deleteRes.result) {
-            alert('삭제가 완료되었습니다.')
-        }else{
-            alert("다시 시도해주세요.");
-        }
 
-    }catch(error){
+    } catch(error){
 
-        alert("다시 시도해주세요.");
-
+        return false
     }
     
 }
 
 //게시판 조회
+
+async function boardFindOne(id){
+
+    const res = await axios({
+        method: "POST",
+        url:"/post/findone",
+        data: {
+            id
+        }
+    })
+    
+    if (res.data.result){
+        return res.data;
+    } else{
+        return {result:false};
+    }
+}
+
+
+
+
+
 async function boradFindAll(offset){
     console.log("offset 확인",offset);
     const res = await axios({

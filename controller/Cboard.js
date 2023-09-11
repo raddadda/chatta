@@ -13,7 +13,6 @@ const Cauth = require('./Cauth');
 const getUserId = async (req) => {
 
     if (req.signedCookies && req.signedCookies['logined'] && req.signedCookies['logined'].id) {
-        console.log('cookie', req.signedCookies['logined'].id);
         return uuid = await Cauth.stringToUuid(req.signedCookies['logined'].id);
     } else {
         return ''
@@ -107,11 +106,7 @@ const edit_board_post = async(req,res)=>{
 }
 const delete_board = async (req, res) => {
 
-    const user_id = await getUserId(req);
-    if (user_id === '') return res.json({result:false});
-
     const { id } = req.body;
-    
     try {
 
         const board = await Board.destroy({ where : { id }})
@@ -126,20 +121,18 @@ const delete_board = async (req, res) => {
         res.json({result:false});
         console.log(e);
     }
-
 }
 
 const boarduser_findone = async (req,res)=>{
-
     const {id} = req.body;
-
     try {
         const board = await Board.findOne({
             attributes:['id', 'title', 'views', 'content', 'event_time', 'category', 'createdAt'],
             where: {id}
         })
-        if (board.dataValues){
-            res.json({result:true,board});
+      
+        if (board && board.dataValues){
+            res.json({result:true, board});
         }else{
             res.json({result:false});
         }   
@@ -182,7 +175,6 @@ const boarduser_findall = async(req,res)=>{
 
 const boarduser_findall_pagenation = async (req, res)=>{
     
-    console.log('body', req.body);
     const user_id = await getUserId(req);
     
     let pagenation = {};
