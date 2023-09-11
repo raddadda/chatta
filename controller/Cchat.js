@@ -1,4 +1,4 @@
-const { Chat_Room_Join } = require('../models');
+const { Chat_Room,Chat_Room_Join } = require('../models');
 const Cauth = require('./Cauth');
 
 const chatRoomJoin = async (req,res) => {
@@ -12,12 +12,30 @@ const chatRoomJoin = async (req,res) => {
     res.json({ result: true })
 }
 
-const myChatRoomList = async (user_id) => {
-    const list = Chat_Room_JoinfindAll({ attributes: ["room_id"], where: { user_id }, raw: true })
-    console.log('list',list);
+const myChatRoomList = async (req,res) => {
+    const user_id = await Cauth.stringToUuid(req.body.user_id) 
+    const list = await Chat_Room_Join.findAll({ attributes: ["room_id"], where: { user_id }, raw: true })
+    let roomInfoList = [];
+    for(let i =0; i < list.length; i++ ){
+        const roomInfo = await Chat_Room.findOne({where:{room_id:list[i].room_id},raw:true})
+        roomInfoList.push(roomInfo);
+    }
+    res.json({ result: true, roomInfoList});
+}
+
+const chatRoomMain = async (req,res) => {
+    const getCheck = await Cauth.getAuthCheck(req, res);
+    if (!getCheck) {
+        res.redirect('/login')
+        return;
+    }
+    const {room_id} = req.query
+    const { id, nickname } = req.signedCookies.logined
+    res.render('chatRoom',{ id, nickname, room_id });
 }
 
 module.exports = {
     chatRoomJoin,
     myChatRoomList,
+    chatRoomMain,
 }
