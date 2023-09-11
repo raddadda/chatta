@@ -1,0 +1,105 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+    
+}
+
+.header {
+    background-color: #3498db;
+    padding: 10px 0;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.header-title {
+    color: #fff;
+    font-size: 24px;
+}
+
+/* 유저 정보 영역 */
+.center-info {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: white;
+}
+
+.center-info label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.center-info input {
+    width: 95%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+/* 버튼 영역 */
+.btn {
+    display: flex;
+}
+.edit_btn button {
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.edit_btn button:hover {
+    background-color: #2980b9;
+}
+
+.cancel_btn button {
+    background-color: #c6c6c6;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+.cancel_btn button:hover {
+    background-color: #8c8c8c;
+}
+
+/* resultBox */
+.result {
+    display: none;
+    font-weight: bold;
+    font-size: 16px;
+    color: #e74c3c;
+    margin-top: 10px;
+}
+/* result 애니메이션 */
+.result.show {
+    animation: fadeIn 0.3s ease-in-out;
+    display: block; 
+}
+
+/* fadeIn 효과 */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
