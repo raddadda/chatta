@@ -14,7 +14,9 @@
         text-align: center;
     }
 
-   
+    .wrap{
+        background-color: rgb(71,87,111);
+    }
     .board-form{
         background-color:  rgb(255, 255, 255);
       
@@ -150,27 +152,29 @@
                 <button id="boardCreateButton" type="button" onclick="boardCreate()">게시판 만들기</button>
             </div>
         </form> -->
-
-        <form class="board-form" name="board-form">
-            <div class="left-form">
-                <label for="title"></label>
-            <input type="text" id="title" name="title" placeholder="제목을 입력해주세요."><br/>
-            <label for="content"> </label>
-            <textarea  cols="50" rows="30" type="text" id="content" name="content" placeholder="내용을 입력해주세요."></textarea>
-            </div>
-            <div class="right-form">
-                <label for="eventDate">홍보시간</label>
-                <input type="datetime-local" id="eventDate" name="eventDate" placeholder="홍보시간을 입력해주세요."><br/>
-                <label for="category">카테고리</label>
-                <!-- <input type="text" id="category" name="category" placeholder="카테고리를 입력해주세요."><br/> -->
-                <select name="category" id="category">
-                    <option value="sports">sports</option>
-                    <option value="e-sports">e-sports</option>
-                </select>
-                <button id="boardCreateButton" type="button" onclick="boardCreate()">게시판 만들기</button>
-                <button id="backButton" type="button" onclick="back()">뒤로가기</button>
-            </div>
-        </form>
+        <div class="wrap">
+            <form class="board-form" name="board-form">
+                <div class="left-form">
+                    <label for="title"></label>
+                <input type="text" id="title" name="title" placeholder="제목을 입력해주세요."><br/>
+                <label for="content"> </label>
+                <textarea  cols="50" rows="30" type="text" id="content" name="content" placeholder="내용을 입력해주세요."></textarea>
+                </div>
+                <div class="right-form">
+                    <label for="eventDate">홍보시간</label>
+                    <input type="datetime-local" id="eventDate" name="eventDate" placeholder="홍보시간을 입력해주세요."><br/>
+                    <label for="category">카테고리</label>
+                    <!-- <input type="text" id="category" name="category" placeholder="카테고리를 입력해주세요."><br/> -->
+                    <select name="category" id="category">
+                        <option value="sports">sports</option>
+                        <option value="e-sports">e-sports</option>
+                    </select>
+                    <button id="boardCreateButton" type="button" onclick="boardCreate()">게시판 만들기</button>
+                    <button id="backButton" type="button" onclick="back()">뒤로가기</button>
+                </div>
+            </form>
+        </div>
+        
   
   
 

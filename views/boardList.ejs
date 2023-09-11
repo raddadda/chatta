@@ -14,7 +14,7 @@
 </head>
 <body>
     <header class="main-header">
-        <span class="header-logo">Chatta</span>
+        <span class="header-logo logo">Chatta</span>
         <ul class="header-menu">
             <li><a href="/post/new">게시판 등록</a></li>
         </ul>
@@ -141,7 +141,7 @@
                 if (findAllData.length > 0) {
                     const wrap = document.querySelector("#wrap");
                   
-
+                    let date = new Date(`${findAllData[i].createdAt}`);
                     let boxhtml = ``;
                     for (let i=0; i<findAllData.length; i++){
                         list.push(findAllData[i]);
@@ -149,10 +149,11 @@
                             bord_category : findAllData[i] && findAllData[i].bord_category ? findAllData[i].bord_category : '',
                             title :  findAllData[i] && findAllData[i].title ? findAllData[i].title : '',
                             views : findAllData[i] && findAllData[i].views ? findAllData[i].views : 0,
-                            createAt : findAllData[i] && findAllData[i].createdAt.split('T')[0]? findAllData[i].createdAt.split('T')[0] : '',
-                            createAt2: findAllData[i] && findAllData[i].createdAt.split('T')[1]? findAllData[i].createdAt.split('T')[1].split('.')[0] : ''
+                            createAt: `${date.getFullYear()}-${(date.getMonth() + 1)>= 10 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1) }-${date.getDate() >= 10 ? date.getDate() : '0' + date.getDate()} ${date.getHours()}시`
                         }
-                        
+                        let date =new Date();
+                        data.createAt2 = `${date.getHours()}`;
+                        createAt2.get
                         if(i%2==0){
                             boxhtml += `
                         <div class="imgFlex1" onclick="loadDetailModal(${i})">
@@ -160,7 +161,7 @@
                             <div class="boardInfo">
                                 <div class="boxBordCategory">${data.bord_category}</div>
                                 <div class="boxTitle">${data.title}</div><br>
-                                <div class="boxCreateAt">${data.createAt} ${data.createAt2}</div>
+                                <div class="boxCreateAt">${data.createAt}</div>
                                 <div class="boxViews"><img src="../public/view icon.png" style="width: 20px; position: relative; top: 5px" >${data.views}</div>      
                             </div>
                         </div>
@@ -173,7 +174,7 @@
                             <div class="boardInfo">
                                 <div class="boxBordCategory">${data.bord_category}</div>
                                 <div class="boxTitle">${data.title}</div><br>
-                                <div class="boxCreateAt">${data.createAt} ${data.createAt2}</div>
+                                <div class="boxCreateAt">${data.createAt}}</div>
                                 <div class="boxViews"><img src="../public/view icon.png" style="width: 20px; position: relative; top: 5px" >${data.views}</div>      
                             </div>
                         </div>
