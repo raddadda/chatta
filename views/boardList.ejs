@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <link rel="stylesheet" href="../public/css/layout.css">
-    <link rel="stylesheet" href="../public/css/header.css">
-    <link rel="stylesheet" href="../public/css/footer.css">
-    <link rel="stylesheet" href="../public/css/board/board_list.css">
-    <link rel="stylesheet" href="../public/css/board/board_detail.css">
+    <link rel="stylesheet" href="/public/css/layout.css">
+    <link rel="stylesheet" href="/public/css/header.css">
+    <link rel="stylesheet" href="/public/css/footer.css">
+    <link rel="stylesheet" href="/public/css/board/board_list.css">
+    <link rel="stylesheet" href="/public/css/board/board_detail.css">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -97,8 +97,8 @@
         }
     }
 </script>
-<script src="../public/js/board/board_CRUD.js"></script>
-<script src="../public/js/board/board_svg.js"></script>
+<script src="/public/js/board/board_CRUD.js"></script>
+<script src="/public/js/board/board_svg.js"></script>
 <script>
 
     let list = [];
@@ -166,7 +166,6 @@
                         </div>
                         `;  
                         } else{
-                            console.log("############",i);
                             boxhtml += `
                         <div class="imgFlex2" onclick="loadDetailModal(${i})">
                             <div class="roomImg"></div>
@@ -238,7 +237,7 @@
                     ${data.poster_check === true ? 
                         `<div class="button-box">
                             <button type="button" onclick = "boardModified(${data.id})">수정하기</button>
-                            <button type="button" onclick = "boardDelete(${data.id})">삭제하기</button>
+                            <button type="button" onclick = "boardDelete1(${data.id})">삭제하기</button>
                         </div>`
                         : 
                         ''
@@ -258,13 +257,26 @@
         if(!confirm('수정페이지로 넘어가겠습니까?')) return;
 
         // 페이지 이동
-        // window.location.href = `${id}`
+        window.location.href = `/post/edit/${id}`
 
     }
 
-    function boardDelete (id) {
-        if(!confirm('정말로 삭제하시겠습니까?')) return;
-        // boardDelete(id);
+    async function boardDelete1 (id) {
+
+        if (!confirm('정말로 삭제하시겠습니까?')) return;
+        try {
+            const deleteRes = await boardDelete(id);
+            console.log('deleteRes', deleteRes);
+            if (deleteRes) {
+                alert('삭제가 되었습니다.');
+                window.location.reload();
+            } else {
+               return alert('다시 시도해 주세요.');
+            }
+            
+        } catch (e) {
+            alert('잠시 후에 시도해주세요.');
+        }
     }
 
     async function chatRoomJoin(board_id){

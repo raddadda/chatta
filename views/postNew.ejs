@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <link rel="stylesheet" href="../public/css/board/board_edit.css">
+    <link rel="stylesheet" href="/public/css/board/board_edit.css">
     <title>게시판 등록 페이지</title>
 
 </head>
@@ -59,8 +59,8 @@
                         <option value="sports">sports</option>
                         <option value="e-sports">e-sports</option>
                     </select>
-                    <button id="boardCreateButton" type="button" onclick="boardCreate()">게시판 만들기</button>
-                    <button id="backButton" type="button" onclick="back()">뒤로가기</button>
+                    <button id="boardCreateButton" class="board-button" type="button" onclick="boardCreate()">게시판 만들기</button>
+                    <button id="backButton" class="board-button" type="button" onclick="back()">뒤로가기</button>
                 </div>
             </form>
         </div>
@@ -70,7 +70,7 @@
 
        
 
-    <script src="../public/js/board/board_CRUD.js"></script>
+    <script src="/public/js/board/board_CRUD.js"></script>
 </body>
 
 </html>
