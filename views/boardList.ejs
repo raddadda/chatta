@@ -12,10 +12,14 @@
 <body>
     
     <!-- <button id="view">더보기</button> -->
+
+    
+
 <div class="wrap" id="wrap"> </div>
 <div class="board-detail-modal" id="boardDetailModal"></div>
 
 <script src="../public/js/board/board_CRUD.js"></script>
+<script src="../public/js/board/board_svg.js"></script>
 <script>
 
     let list = [];
@@ -40,7 +44,6 @@
                     }
                 }else{
                     if(currentDirection != 'up'){
-                        // asd()
                         currentDirection = 'up';
                         console.log(currentDirection+' 실행 !!!!');
                     }
@@ -66,7 +69,6 @@
                             views : findAllData[i] && findAllData[i].views ? findAllData[i].views : 0,
                             createAt : findAllData[i] && findAllData[i].createdAt.split('T')[0]? findAllData[i].createdAt.split('T')[0] : '',
                         }
-                        
                         
                         if(i%2==0){
                             boxhtml += `
@@ -108,11 +110,14 @@
     function loadDetailModal (index) {
 
         const data = {
+            id : list[index] && list[index].id ? list[index].id : 0,
+            poster_check : list[index] && list[index].poster_check ? list[index].poster_check : false,
             bord_category : list[index] && list[index].bord_category ? list[index].bord_category : '',
             content: list[index] && list[index].content ? list[index].content : '',
             title :  list[index] && list[index].title ? list[index].title : '',
             views : list[index] && list[index].views ? list[index].views : 0,
             event_time : list[index] && list[index].event_time.split('T')[0]? list[index].event_time.split('T')[0] : '',
+            book_mark : false
         }
         
         let modal = document.getElementById('boardDetailModal');
@@ -128,6 +133,9 @@
                 <div class="bd-info">
                     <div class="bd-info_category"> ${data.bord_category}</div>
                     <h2 class="bd-info_title">${data.title}</h2>
+                    <div class="bd-book_mark" onclick= "bookMarkToggle()">
+                        ${getBookMarkSvg(data.book_mark)}
+                    </div>
                 </div>
                 <div id="eventDetailSubInfo" class="bd-sub-content">
                     <div class="txt-box">
@@ -141,20 +149,40 @@
 
                     <div class="txt-box">
                         <h6>채팅방</h6>
-                        <p><button>입장하기</button><p>
+                        <p><button>입장하기</button></p>
                     </div>
-
+                    ${data.poster_check === true ? 
+                        `<div class="button-box">
+                            <button type="button" onclick = "boardModified(${data.id})">수정하기</button>
+                            <button type="button" onclick = "boardDelete(${data.id})">삭제하기</button>
+                        </div>`
+                        : 
+                        ''
+                    }
                 </div>
+               
             </div>
         `
     }
-
+    
     function modalCloase () {
         document.getElementById('boardDetailModal').style.display = 'none';
     }
-    // const socket = io('/new');
-    // // 네임 스페이스가 /new로 되어있는 소켓을 사용
-    // socket.emit('userLog')
+
+    function boardModified (id) {
+
+        if(!confirm('수정페이지로 넘어가겠습니까?')) return;
+
+        // 페이지 이동
+        // window.location.href = `${id}`
+
+    }
+
+    function boardDelete (id) {
+        if(!confirm('정말로 삭제하시겠습니까?')) return;
+        // boardDelete(id);
+    }
+
 </script>
 </body>
 </html>

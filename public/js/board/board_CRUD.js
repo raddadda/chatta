@@ -49,21 +49,28 @@ async function boardEdit() {
             url:"/post/edit",
             data,
         })
+
         if(res.data.result){
+
             alert("수정이 완료되었습니다.");
             window.location.reload();
-        }else{
+
+        } else{
+
             alert("다시 시도해주세요.");
+
         }
+
     } catch(error) {
+
         alert("잠시후 다시 시도해주세요.");
         console.log(error);
+
     }
 }
 //게시판 삭제
   async function boardDelete () {
 
-    if(!confirm('정말로 삭제하시겠습니까?')) return;
     try{
         const deleteRes = await axios({
         method:"DELETE",
@@ -77,8 +84,11 @@ async function boardEdit() {
         }else{
             alert("다시 시도해주세요.");
         }
+
     }catch(error){
+
         alert("다시 시도해주세요.");
+
     }
     
 }
