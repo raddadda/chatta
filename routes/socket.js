@@ -1,11 +1,12 @@
 const constant = require('../common/constant');
-const controller = require('../controller/Cmain');
+const Csocket = require('../controller/Csocket');
 
 module.exports = (io) => {
     const nameSpace = constant.nameSpace;
-    nameSpace.forEach((name) => {
-        io.of(name).on('connection', (socket) => {
-            controller.connection(io, socket, name);
+    nameSpace.forEach((e) => {
+        io.of(e.name).on('connection', (socket) => {
+            Csocket.systemSocket(io,socket);
+            e.func(io, socket);
         })
     })
 };

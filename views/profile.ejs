@@ -65,10 +65,10 @@
                     <!-- 내가 개설한 채팅방 목록 -->
                     <ul>
                         <li class="category-title">내가 개설한 채팅방</li>
-                        <% if (ownerChatRooms.length === 0) { %>
+                        <% if (posterChatRooms.length === 0) { %>
                         <li class="empty-message">내가 개설한 방이 없어요</li>
                         <% } else { %>
-                        <% ownerChatRooms.forEach(function(room) { %>
+                        <% posterChatRooms.forEach(function(room) { %>
                         <li>
                             <a href="/chat/<%= room.id %>">
                                 <%= room.title %> (<%= room.unreadMessages %> 안 읽은 메시지)

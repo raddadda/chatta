@@ -13,8 +13,7 @@ async function userLogOut() {
         method: "post",
         url: "/logout",
     })
-    isLogin = false;
-    loginAdj(isLogin);
+    document.location.href = "/login";
 }
 
 

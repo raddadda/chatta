@@ -1,15 +1,26 @@
 // 문자열 통일 및 오타 방지를 위해 한 곳에 모아두는 공간
 const secret = require('../config/secret')
+const Csocket = require('../controller/Csocket')
 
 
 //////////////////////////socket/////////////////////////
-const nameSpace = ['/', '/new'];
+const nameSpace = [{
+    name:'/',
+    func:Csocket.rootSocket
+},{
+    name:'/new',
+    func:Csocket.newSocket
+    
+},{
+    name:'/room',
+    func:Csocket.roomSocket
+},
+]
 
 
 
 /////////////////////////cookie//////////////////////////
 const loginCookie = 'logined'
-const kakaoLoginCookie = 'kakao_logined'
 const maxAge = 60 * 60 * 1000
 const httpOnly = true
 const signed = true
@@ -27,7 +38,6 @@ const auth = { keylen, digest, maxint, minint };
 module.exports = {
     nameSpace,
     loginCookie,
-    kakaoLoginCookie,
     cookieSetting,
     auth,
 };

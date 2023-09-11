@@ -44,7 +44,7 @@ const authKakao = async (req,res)=>{
             const auth = await Cauth.authCodeIssue(uuid);
             await Cauth.loginCookieRes(id,profile.nickname,auth,res)
         }
-        res.redirect('/');
+        res.redirect('/profile');
     } catch (error) {
         console.log(error)   
     }

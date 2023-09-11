@@ -6,6 +6,7 @@ const constant = require('../common/constant');
 const secret = require('../config/secret');
 const { keylen, digest, maxint, minint } = constant.auth
 
+
 const dbIdCheck = async (login_id) => {
     try {
         const users = await User.findAll({ attributes: ["login_id"], where: { login_id } })
