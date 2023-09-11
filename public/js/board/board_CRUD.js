@@ -84,17 +84,21 @@ async function boardEdit(data) {
 
 async function boardFindOne(id){
 
-    const res = await axios({
-        method: "POST",
-        url:"/post/findone",
-        data: {
-            id
+    try {
+        const res = await axios({
+            method: "POST",
+            url:"/post/findone",
+            data: {
+                id
+            }
+        })
+        if (res.data.result){
+            return res.data;
+        } else{
+            return {result:false};
         }
-    })
-    
-    if (res.data.result){
-        return res.data;
-    } else{
+
+    } catch (e) {
         return {result:false};
     }
 }
@@ -105,20 +109,25 @@ async function boardFindOne(id){
 
 async function boradFindAll(offset){
     console.log("offset 확인",offset);
-    const res = await axios({
-        method: "POST",
-        url:"/post/findall",
-        data: {
-            offset:offset
+
+    try { 
+        const res = await axios({
+            method: "POST",
+            url:"/post/findall",
+            data: {
+                offset:offset
+            }
+        })
+        if (res.data.result){
+            return res.data.board;
+        } else{
+            console.log('res',res);
+            return [];
         }
-    })
-    
-    if (res.data.result){
-        return res.data.board;
-    } else{
-        console.log('res',res);
+    } catch (e) {
         return [];
     }
+ 
 }
 
 async function boradFindAll_pagination(page_id){
@@ -139,6 +148,80 @@ async function boradFindAll_pagination(page_id){
         return [];
     }
 }
+
+
+const bookMark_FindOne = async (id) => {
+
+    const data = { board_id : id }
+    try {   
+
+        const createBookMarkres = await axios({
+            method:"post",
+            url:"/post/findonebookmark",
+            data,
+        })  
+        if (createBookMarkres.data.result) {
+            return true
+        } else {
+            return false
+        }
+
+    } catch (e) {
+        return false
+    }
+
+    
+}
+
+
+
+const bookMark_create = async (id) => {
+
+    const data = { board_id : id }
+    try {   
+
+        const createBookMarkres = await axios({
+            method:"post",
+            url:"post/newbookmark",
+            data,
+        })  
+        if (createBookMarkres) {
+            return true
+        } else {
+            return false
+        }
+
+    } catch (e) {
+        return false
+    }
+}
+ 
+const bookMark_delete = async (id) => {
+
+    const data = { board_id : id }
+
+    try {   
+        const deleteBookMarkres = await axios({
+            method:"post",
+            url:"post/deletebookmark",
+            data,
+        })
+
+        if (deleteBookMarkres) {
+            return true
+
+        } else {
+            return false
+        }
+
+    } catch (e) {
+
+        return false
+    }
+}
+
+
+
 
 
 function back(){

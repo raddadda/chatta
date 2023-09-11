@@ -25,7 +25,7 @@ function getBookMarkSvg (book_mark) {
     `
 }
 async function bookMarkToggle (id,book_mark) {
-
+    console.log('id', id, 'book_mark', book_mark);
     const bookmarkDom = document.querySelector('#boardDetailModal > .board-detail-contents >  .bd-info > .bd-book_mark > svg > g');
     console.log(bookmarkDom.style.fill);
     if (bookmarkDom.style.fill  === 'rgb(245, 205, 0)') {
