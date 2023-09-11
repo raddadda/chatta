@@ -11,7 +11,7 @@ async function boardCreate(){
             title:boardForm.title.value,
             content:boardForm.content.value,
             event_time:boardForm.eventDate.value,
-            bord_category:boardForm.category.value
+            category:boardForm.category.value
         }
         const res = await axios({
             method:"post",
@@ -42,7 +42,7 @@ async function boardEdit() {
             title:boardForm.title.value,
             content:boardForm.content.value,
             event_time:boardForm.eventDate.value,
-            bord_category:boardForm.category.value
+            category:boardForm.category.value
         }
         const res = await axios({
             method:"post",

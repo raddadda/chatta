@@ -23,7 +23,7 @@ async function userSignin() {
         })
         alert(res.data.message);
         if (res.data.result) {
-            document.location.assign('/profile');
+            document.location.assign('/');
         }
     } catch (error) {
         console.log(error);
