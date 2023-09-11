@@ -87,9 +87,8 @@ const findPw = async (req,res) => {
 const profileUpdatePost = async (req,res)=>{
     try {
         const {id,nick,email} = req.body
-
         const update = await User.update({nickname : nick, email,}, {where : {user_id : id}})
-        res.json({result : true})
+        res.json({result : true, message : '저장되었습니다.'})
 
     } catch (error) {
         console.log(error)
@@ -102,7 +101,6 @@ const pwUpdatePost = async (req,res)=>{
         
         const hashPwEdit = await Cauth.pwHashing(pw_edit)
         const pwCompare = await bcrypt.compare(Cpw,login_pw)
-        //console.log(pwCompare) 
 
         if(pwCompare && pw_edit === pw_edit2) {
             const update = await User.update({login_pw : hashPwEdit}, {where : {user_id : id}})
@@ -149,7 +147,7 @@ const findInfoPost = async (req,res) =>{
         if(user.user_name === name){
             const email = user.email
 
-            const password = crypto.randomBytes(8).toString('base64')
+            const password = crypto.randomBytes(6).toString('base64')
             const hash = await Cauth.pwHashing(password)
 
             const update = await User.update({login_pw : hash},{where : {login_id}}) 
