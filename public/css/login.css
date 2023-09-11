@@ -1,0 +1,104 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 전체 화면 가운데 정렬 */
+html, body {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f3f3f3;
+}
+
+/* 로그인 컨테이너 스타일 */
+.login-container {
+    text-align: center;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 로고 스타일 */
+.logo {
+    width: 150px;
+    margin-bottom: 20px;
+}
+
+/* 로그인 폼 스타일 */
+.signin-form {
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.signin-form h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* 입력 필드 스타일 */
+input[type='text'],
+input[type='password'] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* 로그인 버튼 스타일 */
+button.login {
+    background-color: #e50914;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+button.Klogin {
+    background-color: #fef01b;
+    color: #3A1D1D;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* 로그인 상태 유지 스타일 */
+.remember-me {
+    display: flex;
+    align-items: center;
+    margin : 5px
+}
+
+/* 가입 링크 스타일 */
+a {
+    text-decoration: none;
+    color: #e50914;
+    font-weight: bold;
+}
+
+.signup {
+    margin-top: 10px;
+}
+
+.signup a {
+    color: #000;
+}
+
+/* 비밀번호 재설정 링크 스타일 */
+.signup a:hover {
+    text-decoration: underline;
+}

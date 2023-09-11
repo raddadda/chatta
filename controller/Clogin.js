@@ -5,7 +5,11 @@ const Cauth = require('./Cauth');
 
 const signUp = async (req,res)=>{
     try {
-        const {login_id,login_pw,user_name,gender,birth,email}=req.body
+        const {login_id,login_pw,Cpw,user_name,gender,birth,email}=req.body
+        if(login_pw !== Cpw) {
+            res.json({result : false, message : '비밀번호가 일치하는지 확인해주세요'})
+            return;
+        }
         const flag = await Cauth.dbIdCheck(login_id)
         if(flag){
             res.json({result:false , message:'아이디가 중복되어 사용할 수 없습니다'})
@@ -78,10 +82,20 @@ const userLogOut = async (req,res)=>{
     }
 }
 
+/////register 분리/////
+const register = async (req,res)=>{
+    try {
+        res.render('register')
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 
 module.exports = {
     signUp,
     signIn,
     signUpCreate,
     userLogOut,
+    register,
 }

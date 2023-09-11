@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/public/js/register.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Document</title>
+    <link rel="stylesheet" href="/public/css/register.css">
+</head>
+<body>
+    <div id="sign_up_div">
+        <div>회원가입</div>
+        <form name="signup-form">
+            <input type="text" name="name" placeholder="이름"/><br/>
+            <input type="text" name="userid" placeholder="아이디"><br/>
+            <input type="password" name="pw" placeholder="비밀번호"><br/>
+            <input type="password" name="Cpw" placeholder="비밀번호 확인"><br/>
+            <input type="email" name="email" placeholder="임시 비밀번호를 받을 email"><br />
+            <!-- <button type="button" onclick="emailAuth()">인증</button>
+            <br/>
+            <div class="auth" id="auth" hidden>
+                <input type="text" name="auth" placeholder="인증코드" required>
+                <button type="button">확인</button>
+            </div>     -->
+            <label for="gender">성별:</label>
+            <select name="gender" id="gender">
+                <option value="남성">남성</option>
+                <option value="여성">여성</option>
+                <option value="기타">기타</option>
+            </select><br />
+
+            <label for="birth">생년월일:</label>
+            <select name="year" id="birth-year">
+            </select>
+            <select name="month" id="birth-month">
+            </select>
+            <select name="day" id="birth-day">
+            </select><br />
+
+            <button type="button" onclick="userSignUp()">회원가입</button>
+        </form>
+    </div>
+</body>
+</html>
