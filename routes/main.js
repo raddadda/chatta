@@ -18,7 +18,9 @@ router.get('/profile/edit/pw', cprofileEdit.pwUpdate)
 router.get('/profile/edit/delete', cprofileEdit.profileDelete)
 router.get('/findpw', cprofileEdit.findPw)
 
-router.get('/chat',controller.chatMain);
+router.get('/mychat',controller.myChatMain);
+router.get('/chat_room',cchat.chatRoomMain);
+router.post('/load/roomlist',cchat.myChatRoomList);
 
 router.get('/signup/kakao',ckakao.signUpKakao)
 router.get('/oauth/kakao',ckakao.authKakao);
