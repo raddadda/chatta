@@ -7,7 +7,7 @@
 }
 .board-detail-modal > .board-modal-close {
     position: absolute; top: -30px; right: 2px;
-    width: 16px; height: 16px;
+    width: 20px; height: 20px;
     cursor: pointer;
 }
 .board-detail-modal > .board-modal-close > img {
@@ -41,7 +41,7 @@
 }
 
 .board-detail-modal > .board-detail-contents > .bd-info > .bd-info_category {
-    text-align: center; font-weight: bold; font-size: 1.2em; color: #ccc;
+    text-align: center; font-weight: bold; font-size: 1.2em; color: #928e8e;
     line-height: 1.2em; padding: 10px 0;
 }
 
