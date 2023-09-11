@@ -1,5 +1,5 @@
 .board-detail-modal {
-    width: 65%; height: 650px; 
+    width: 65%; height: 90vh; 
     background-color: #eee; display: none;
     position: fixed; top: 50px; left: 50%;
     border-radius: 10px;  z-index: 100;
@@ -19,7 +19,7 @@
 }
 
 .board-detail-modal > .bd-image {
-    width: 100%; height: 200px;
+    width: 100%; height: 28vh;
     /* background-color: rgb(1, 1, 61); */
     background-image: url("https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/test_1280.jpg");
     background-position: center;
@@ -30,20 +30,30 @@
 
 
 .board-detail-modal > .board-detail-contents {
-    width: 96%; height: 450px; margin: auto;
+    width: 96%; height: 62vh; margin: auto;
     margin-top: -30px;
 }
 
 
 .board-detail-modal > .board-detail-contents > .bd-info {
-    width: 100%; height: 125px; background-color: #fff;
-    border-radius: 9px; margin-bottom: 20px;
+    width: 100%; height: 25%; background-color: #fff;
+    border-radius: 9px; margin-bottom: 20px; position: relative;
 }
 
 .board-detail-modal > .board-detail-contents > .bd-info > .bd-info_category {
     text-align: center; font-weight: bold; font-size: 1.2em; color: #ccc;
     line-height: 1.2em; padding: 10px 0;
 }
+
+.board-detail-modal > .board-detail-contents > .bd-info > .bd-book_mark {
+    width: 28px; height: 28px; cursor: pointer;
+    position: absolute; right: 1em; top: 0.8em;
+}
+
+.board-detail-modal > .board-detail-contents > .bd-info > .bd-book_mark > svg {
+    width: 28px; height: 28px;
+}
+
 
 .board-detail-modal > .board-detail-contents > .bd-info > .bd-info_title {
     width: 90%;  margin: auto;  overflow:hidden; min-height: 35px;
@@ -56,7 +66,7 @@
 }
 
 .board-detail-modal > .board-detail-contents >  .bd-sub-content {
-    width: 98%; margin: auto; height: 310px; overflow: auto; overflow-x: hidden;
+    width: 98%; height: 70%; margin: auto;  overflow: auto; overflow-x: hidden;
     text-align: left;
 }
 
@@ -94,14 +104,18 @@
     font-size: 16px; line-height: 1.75; padding-right: 1em;
 }
 
+.board-detail-modal > .board-detail-contents > .bd-sub-content > .txt-box > .button-box {
+
+    position: absolute; bottom: 0;
+}
+
+
+
 @media screen and (max-width:756px) {
     .board-detail-modal {
-        width: 90%; height: 600px;
+        width: 90%; 
     }
 
-    .board-detail-modal > .board-detail-contents >  .bd-sub-content {
-        height: 260px; 
-    }
 }
 
 @keyframes rotate {

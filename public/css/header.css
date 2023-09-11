@@ -1,0 +1,89 @@
+
+* {
+    box-sizing: border-box;
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0;
+    padding: 0;
+}
+.main-header {
+    width: 100%; height: 60px;
+    padding: 0 20px;
+
+    display: flex; background-color: rgb(244,155,033);
+    align-items: center; justify-content: space-between;
+}
+
+.main-header > .header-logo {
+    cursor: pointer; font-weight: bold;
+    color: #fff;
+}       
+
+/** manu */
+.main-header > .header-menu {
+    margin: 0; padding: 0; list-style: none;
+    display: flex; width: 25%; height: auto;
+    justify-content: space-between;
+    font-size: 0.5em;
+}
+.main-header > .header-menu > li {
+    display: flex; align-items: center;
+    justify-content: center;
+}
+.main-header > .header-menu > li > a {
+    font-size: 0.7em;
+    text-decoration: none;
+    color: #fff;
+}
+
+.main-header > .header-profie {
+    display: flex; align-items: center;
+    position: relative;
+}
+  
+.main-header > .header-profie > .profile {
+    width: 32px; height: 32px;
+    border: 1px solid #000;
+    border-radius: 50%; overflow: hidden; 
+    cursor: pointer; border: 2px solid #eee;
+
+}
+
+.main-header > .header-profie > .profile > img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+}
+
+.main-header > .header-profie > .header-profile-tab {
+    position: absolute; display: none;
+    top: 35px; width: 150px; left: -120px; background-color: #fff;
+    border-radius: 9px;
+    list-style: none;  border: 1px solid #ddd; padding: 1em;
+}
+
+.main-header > .header-profie > .header-profile-tab > li {
+    font-size: 0.7em; cursor: pointer;
+    padding: 0.5em 0; text-align: center;
+}
+
+.main-header > .header-profie > .header-profile-tab > #mobileView {
+    display: none;
+
+}
+.main-header > .header-profie > .header-profile-tab > li > a {
+    font-size: 0.6em; text-decoration: none;
+}
+.main-header > .header-profie > .header-profile-tab > li > button {
+    font-size: 0.6em; border: 0; background: transparent;
+} 
+
+
+@media screen and (max-width:756px) {
+    .main-header > .header-menu {
+      display: none;
+    }
+    .main-header > .header-profie > .header-profile-tab > #mobileView  {
+        display: block;
+    }
+
+}

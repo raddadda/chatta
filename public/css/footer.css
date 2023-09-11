@@ -1,0 +1,113 @@
+footer {
+    position: relative; bottom: 0;
+  }
+  .footer-body{
+      /* rgb(71.87.111) */
+      background: #363636;
+      box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
+      box-sizing: border-box;
+      width: 100%;
+      text-align: left;
+      font: bold 16px sans-serif;
+      padding: 55px 50px;
+  }
+  
+  .footer-left{
+      display: inline-block;
+      vertical-align: top;
+  }
+  .footer-git{
+      display: inline-block;
+      vertical-align: top;
+  }
+  .footer-space{
+      display: inline-block;
+      vertical-align: top;
+  }
+  .footer-body .footer-left{
+      width: 40%;
+  }
+  
+  .footer-body .footer-home{
+      color:  #ffffff;
+      margin: 20px 0 10px;
+  }
+  
+  .footer-body .footer-home a{
+      display:inline-block;
+      line-height: 1.8;
+        font-weight:400;
+      text-decoration: none;
+      color:  inherit;
+  }
+  
+  .footer-body .footer-team-name{
+      color:  #ffffff;
+      font-size: 14px;
+      font-weight: normal;
+      margin: 0;
+  }
+  
+  .footer-body .footer-git{
+      width: 35%;
+      
+  }
+  .footer-body .footer-git p{
+      display: inline-block;
+      color: #ffffff;
+        font-weight:400;
+      vertical-align: middle;
+      margin:0;
+  }
+  .footer-body .footer-git p a{
+      color:  rgb(222, 222, 222);
+      text-decoration: none;;
+  }
+  
+  .footer-space{
+      width: 20%;
+  }
+  
+  .footer-project-info{
+      color:  #ffffff;
+  }
+  .footer-project-info{
+      line-height: 20px;
+      color:  #92999f;
+      font-size: 13px;
+      font-weight: normal;
+      margin: 0;
+  }
+  
+  .footer-project-info > span{
+      display: block;
+      color:  #ffffff;
+      font-size: 14px;
+      font-weight: 800;
+      margin-bottom: 20px;
+  }
+  
+  .logo{
+      font-family: 'PartialSansKR-Regular', Courier, monospace;
+      color: white;
+      font-size:  xx-large;
+  }
+  @font-face {
+      font-family: 'PartialSansKR-Regular';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/PartialSansKR-Regular.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+  }
+  @media (max-width: 800px) {
+      .footer-body{
+          min-width: 250px;
+      }
+      .footer-body .footer-left,
+      .footer-body .footer-git,
+      .footer-body .footer-space{
+          display: block;
+          width: 100%;
+          margin-bottom: 40px;
+          text-align: center;
+      }
+  }
