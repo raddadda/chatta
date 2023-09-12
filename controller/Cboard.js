@@ -19,14 +19,6 @@ const getUserId = async (req) => {
     }
 }
 
-const boardList = async (req, res)=>{
-    const getCheck = await Cauth.getAuthCheck(req, res);
-    if (!getCheck) {
-        res.redirect('/login')
-        return;
-    }
-    res.render('boardList');
-}
 
 const create_board = async (req, res)=>{
     const getCheck = await Cauth.getAuthCheck(req, res);
@@ -284,7 +276,6 @@ module.exports = {
     edit_board,
     edit_board_post,
     delete_board,
-    boardList,
     boarduser_findone,
     boarduser_findall,
     boarduser_findall_pagenation,
