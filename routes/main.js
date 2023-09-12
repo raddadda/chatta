@@ -8,12 +8,13 @@ const ckakao = require('../controller/Ckakao.js');
 const cprofile = require('../controller/Cprofile.js');
 const cprofileEdit = require('../controller/CprofileEdit.js');
 const cchat = require('../controller/Cchat.js');
+const cimage = require('../controller/Cimage.js');
 
 router.post('/auth',cauth.authCheckPost);
 
 
 router.get('/', controller.main);
-router.get('/login',controller.loginMain);
+router.get('/login', controller.loginMain);
 router.get('/new', controller.newMain);
 router.get('/profile', cprofile.profile);
 router.get('/profile/edit', cprofileEdit.profileUpdate);
@@ -21,31 +22,37 @@ router.get('/profile/edit/pw', cprofileEdit.pwUpdate)
 router.get('/profile/edit/delete', cprofileEdit.profileDelete)
 router.get('/findpw', cprofileEdit.findPw)
 
-router.get('/mychat',controller.myChatMain);
-router.get('/chat_room',cchat.chatRoomMain);
-router.post('/load/roomlist',cchat.myChatRoomList);
+router.get('/mychat', controller.myChatMain);
+router.get('/chat_room', cchat.chatRoomMain);
+router.post('/load/roomlist', cchat.myChatRoomList);
 
-router.get('/signup/kakao',ckakao.signUpKakao)
-router.get('/oauth/kakao',ckakao.authKakao);
-router.get('/kakao/leave',ckakao.logoutKakao);
+router.get('/signup/kakao', ckakao.signUpKakao)
+router.get('/oauth/kakao', ckakao.authKakao);
+router.get('/kakao/leave', ckakao.logoutKakao);
+
+router.get('/s3/:filename', cimage.getS3ImageURL);
 
 router.post('/mail', cprofileEdit.findPwPost)
 //router.get('/new/:userid',controller.newMain);
 
-//boardlist
-router.get('/post',cboard.boardList);
 //boardCreate 생성
 router.get('/post/new',cboard.create_board);
 router.post('/post/new',cboard.create_board_post);
-//boardEdit 생성
-router.get('/post/edit',cboard.edit_board);
+//boardEdit 
+router.get('/post/edit/:id',cboard.edit_board);
 router.post('/post/edit',cboard.edit_board_post);
 //boardDelete 삭제
 router.delete('/post/delete', cboard.delete_board);
 //board 조회
-router.post('/post/findone',cboard.boarduser_findone);
-router.post('/post/findall',cboard.boarduser_findall);
+router.post('/post/findone', cboard.boarduser_findone);
+router.post('/post/findall', cboard.boarduser_findall);
 router.post('/post/findall/pagination', cboard.boarduser_findall_pagenation);
+
+
+router.post('/post/findonebookmark', cboard.findone_board_bookmark);
+router.post('/post/newbookmark',cboard.create_board_bookmark);
+router.post('/post/deletebookmark',cboard.delete_board_bookmark);
+
 
 router.post('/chat/join',cchat.chatRoomJoin)
 
@@ -59,8 +66,9 @@ router.post('/member/load',cchat.memberLoad)
 router.post('/profile/edit', cprofileEdit.profileUpdatePost)
 router.post('/profile/edit/pw', cprofileEdit.pwUpdatePost)
 router.post('/profile/edit/delete', cprofileEdit.profileDeletePost)
-router.post('/findpw', cprofileEdit.findInfoPost )
+router.post('/findpw', cprofileEdit.findInfoPost)
 router.post('/mail', cprofileEdit.findPwPost)
+
 
 
 router.post('/bookmark',controller.bookmarkPost)
@@ -70,19 +78,20 @@ router.post('/chatroomjoin',controller.chatRoomJoinPost)
 router.post('/chatmessage',controller.chatMessagePost)
 
 
-router.post('/delete/user',controller.deleteUser)
-router.post('/delete/board',controller.deleteBoard)
-router.post('/delete/friend',controller.deleteFriend)
-router.post('/delete/chatroom',controller.deleteChatRoom)
-router.post('/delete/chatroomjoin',controller.deleteChatRoomJoin)
-router.post('/delete/chatmessage',controller.deleteChatMessage)
+
+router.post('/delete/user', controller.deleteUser)
+router.post('/delete/board', controller.deleteBoard)
+router.post('/delete/friend', controller.deleteFriend)
+router.post('/delete/chatroom', controller.deleteChatRoom)
+router.post('/delete/chatroomjoin', controller.deleteChatRoomJoin)
+router.post('/delete/chatmessage', controller.deleteChatMessage)
 
 //회원가입(로그인과 분리)
-router.get('/register',clogin.register)
-router.post('/register',clogin.signUp)
+router.get('/register', clogin.register)
+router.post('/register', clogin.signUp)
 
 //로그인
-router.post('/login',clogin.signIn)
-router.post('/logout',clogin.userLogOut)
+router.post('/login', clogin.signIn)
+router.post('/logout', clogin.userLogOut)
 
 module.exports = router;

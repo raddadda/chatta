@@ -9,15 +9,15 @@ async function pwEdit() {
         pw_edit: form.pw_edit.value,
         pw_edit2: form.pw_edit2.value,
     }
+    if (!confirm('변경하시겠습니까?')) {
+        return;
+    }
     const res = await axios({
         method: 'POST',
         url: '/profile/edit/pw',
         data,
     })
     if (res.data.result) {
-        if (!confirm('변경하시겠습니까?')) {
-            return;
-        }
         alert('변경완료')
         document.location.href='/profile';
     }else if(res.data.result === false) {
