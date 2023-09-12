@@ -1,6 +1,8 @@
 const constant = require('../common/constant');
 const {User} = require('../models');
 const Cauth = require('./Cauth');
+const Ckakao = require('./Ckakao');
+const axios = require('axios');
 
 
 const signUp = async (req,res)=>{
@@ -76,6 +78,26 @@ const signIn = async (req,res)=>{
 
 const userLogOut = async (req,res)=>{
     try {
+        const getCheck = await Cauth.getAuthCheck(req, res);
+        if (!getCheck) {
+            res.redirect('/login')
+            return;
+        }
+        const {id} = req.signedCookies.logined;
+        const token = await Ckakao.tokenLoad(id);
+        if (token.token){
+            const logout = await axios({
+                method: "POST",
+                url: "https://kapi.kakao.com/v1/user/unlink",
+                headers: {
+                    "Authorization": token.token,
+                },
+                data: {
+                    "target_id_type":"user_id",
+                    "target_id":token.id,
+                },
+            })
+        }
         res.clearCookie(constant.loginCookie);
         res.json({result:true});
     } catch (error) {
@@ -83,7 +105,7 @@ const userLogOut = async (req,res)=>{
     }
 }
 
-/////register 분리/////
+
 const register = async (req,res)=>{
     try {
         res.render('register')
