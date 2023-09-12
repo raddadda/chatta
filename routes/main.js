@@ -44,7 +44,9 @@ router.delete('/post/delete', cboard.delete_board);
 router.post('/post/findone', cboard.boarduser_findone);
 router.post('/post/findall', cboard.boarduser_findall);
 router.post('/post/findall/pagination', cboard.boarduser_findall_pagenation);
+//프로필 북마크 라우터 추가
 
+router.post('/post/findall/profile_pagination_board',cboard.findall_profile_bookmark_board);
 
 router.post('/post/findonebookmark', cboard.findone_board_bookmark);
 router.post('/post/newbookmark',cboard.create_board_bookmark);

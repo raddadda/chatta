@@ -28,5 +28,6 @@
     "socket.io": "^1.7.4",
     "ws": "^8.13.0"
   },
+  "devDependencies": {},
   "description": ""
 }

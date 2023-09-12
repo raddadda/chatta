@@ -270,6 +270,33 @@ const findone_board_bookmark = async (req,res)=>{
     }
 }
 
+
+const findall_profile_bookmark_board =  async (req,res)=>{
+    const user_id = await getUserId(req);
+    // const {findAllData} = req.body;
+    try {
+        const board = await Board_Bookmark.findAll({
+            include: [{
+                model: Board,
+                attributes:['title','category'],
+                where: {
+                     poster_id: user_id,
+                }
+            }]
+        })
+        if (board) {
+            res.json({result:true, board});
+        } else{
+            console.log("x");
+            res.json({result:false});
+        }
+    } catch(e){
+        res.json({result:false});
+        console.log(e);
+    }
+}
+
+
 module.exports = {
     create_board,
     create_board_post,
@@ -281,5 +308,6 @@ module.exports = {
     boarduser_findall_pagenation,
     findone_board_bookmark,
     create_board_bookmark,
-    delete_board_bookmark
+    delete_board_bookmark,
+    findall_profile_bookmark_board
 }

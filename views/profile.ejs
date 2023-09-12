@@ -7,6 +7,8 @@
     <title>사용자 프로필</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="/public/css/profile.css">
+    <link rel="stylesheet" href="/public/css/board/board_list.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
@@ -56,6 +58,7 @@
         <button><i class="fas fa-plus"></i> 게시물 작성</button>
     </div>
 
+    
     <div class="bottom-section">
         <div class="categories-container">
             <!-- 채팅방 버튼 -->
@@ -64,7 +67,7 @@
             </div>
             <!-- 북마크한 게시물 버튼 -->
             <div class="category">
-                <button class="category-button" id="bookmarkButton">북마크한 게시물</button>
+                <button class="category-button" id="bookmarkButton" onclick="getbaordPagenation()">북마크한 게시물</button>
             </div>
             <!-- 일정 버튼 -->
             <div class="category">
@@ -118,10 +121,12 @@
                 </ul>
             </div>
         </div>
-
+        <div class="wrap" id="wrap"> </div>
         <div class="list-container" id="bookmarkList">
             <!-- 북마크한 게시물 목록 -->
             <div class="category-list">
+                <!-- <button type="button" onclick="getbaordPagenation()">버튼</button> -->
+                
                 <ul>
                     <% if (bookmarkedBoards.length === 0) { %>
                     <li>북마크한 게시물이 없어요</li>
@@ -156,8 +161,72 @@
         </div>
     </div>
     </div>
+    <script src="/public/js/index.js" defer></script>
+    <script src="/public/js/board/board_CRUD.js"></script>
+    <script>
+
+    let list = [];
+    async function getbaordPagenation(){       
+    try {
+
+    // const findAllData = await findall_profile_bookmark(3);
+    // console.log("findAllData",findAllData);
+    const findAllData_board = await findall_profile_bookmark_board();
+        if (findAllData_board.length > 0) {
+            const wrap = document.querySelector("#wrap");
+
+            let boxhtml = ``;
+
+            for (let i=0; i<findAllData_board.length; i++){
+                let date = new Date(`${findAllData_board[i].createdAt}`);
+                list.push(findAllData_board[i]);
+                const data = {
+                    category : findAllData_board[i] && findAllData_board[i].board.category ? findAllData_board[i].board.category : '',
+                    title :  findAllData_board[i] && findAllData_board[i].board.title ? findAllData_board[i].board.title : '',
+                    views : findAllData_board[i] && findAllData_board[i].views ? findAllData_board[i].views : 0,
+                    createAt: `${date.getFullYear()}-${(date.getMonth() + 1)>= 10 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1) }-${date.getDate() >= 10 ? date.getDate() : '0' + date.getDate()} ${date.getHours()}시`
+                }
+                if(i%2==0){
+                    boxhtml += `
+                <div class="imgFlex1" onclick="loadDetailModal(${i})">
+                    <div class="roomImg"></div>
+                    <div class="boardInfo">
+                        <div class="boxBordCategory">${data.category}</div>
+                        <div class="boxTitle">${data.title}</div><br>
+                        <div class="boxCreateAt">${data.createAt}</div>
+                        <div class="boxViews"><img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/viewicon.png" style="width: 20px; position: relative; top: 5px" >${data.views}</div>      
+                    </div>
+                </div>
+                `;  
+                } else{
+                    boxhtml += `
+                <div class="imgFlex2" onclick="loadDetailModal(${i})">
+                    <div class="roomImg"></div>
+                    <div class="boardInfo">
+                        <div class="boxBordCategory">${data.category}</div>
+                        <div class="boxTitle">${data.title}</div><br>
+                        <div class="boxCreateAt">${data.createAt}</div>
+                        <div class="boxViews"><img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/viewicon.png" style="width: 20px; position: relative; top: 5px" >${data.views}</div>      
+                    </div>
+                </div>
+                `;  
+                }
+                if (findAllData_board.length === i + 1) {
+                    page_id = findAllData_board[i].id + 1;
+                }
+
+            }
+        wrap.innerHTML += boxhtml;
+    }
+
+} catch (e) {
+}
+}
+    
+    </script>
 
     <script src="/public/js/profile.js"></script>
+
 </body>
 
 </html>
