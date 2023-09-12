@@ -39,10 +39,12 @@ async function userSignUp() {
     try {
         if(!idFlag){
             alert('아이디를 확인해 주세요')
+            $('#userid').focus();
             return;
         }
         if(!pwFlag){
             alert('비밀번호를 확인해 주세요')
+            $('#pw').focus();
             return;
         }
         const data = {
@@ -85,7 +87,7 @@ function idCheck() {
     if($('#userid').val() == "") {
         $('#idtx').text('아이디를 입력하세요').css({
             "color": "red",
-            "font-size": "11px",
+            "font-size": "12px",
             "text-align" : "start"
         });
         return;
@@ -102,7 +104,7 @@ function pwCheck() {
     if(!pwdCheck.test( $("#pw").val() ) ) {
         $('#pwtx').text('영문자+숫자 조합으로 8~25자리 입력해 주세요').css({
             "color": "red",
-            "font-size": "11px",
+            "font-size": "12px",
             "text-align" : "start"
         });
         return
@@ -110,7 +112,7 @@ function pwCheck() {
     if($('#pw').val() == "") {
         $('#pwtx').text('비밀번호를 입력하세요').css({
             "color": "red",
-            "font-size": "11px",
+            "font-size": "12px",
             "text-align" : "start"
         });
         return
@@ -118,7 +120,7 @@ function pwCheck() {
     if($('#pw').val() !== $('#Cpw').val()) {
         $('#pwtx').text('비밀번호가 일치하지 않습니다').css({
             "color": "red",
-            "font-size": "11px",
+            "font-size": "12px",
             "text-align" : "start"
         });
         return
@@ -126,10 +128,17 @@ function pwCheck() {
     if($('#pw').val() == $('#Cpw').val()) {
         $('#pwtx').text('비밀번호가 일치합니다').css({
             "color": "green",
-            "font-size": "11px",
+            "font-size": "12px",
             "text-align" : "start"
         });
         pwFlag = true
     }
     return;
 }
+
+// Enter 키 이벤트 감지
+document.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+        userSignUp(); // 엔터 키를 누르면 회원가입 함수 호출
+    }
+});
