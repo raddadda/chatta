@@ -1,7 +1,8 @@
 const {
     Board,
     Sequelize,
-    Chat_Room
+    Chat_Room,
+    Board_Bookmark
 } = require('../models');
 
 const Op = Sequelize.Op;
@@ -12,21 +13,12 @@ const Cauth = require('./Cauth');
 const getUserId = async (req) => {
 
     if (req.signedCookies && req.signedCookies['logined'] && req.signedCookies['logined'].id) {
-        console.log('cookie', req.signedCookies['logined'].id);
         return uuid = await Cauth.stringToUuid(req.signedCookies['logined'].id);
     } else {
         return ''
     }
 }
 
-const boardList = async (req, res)=>{
-    const getCheck = await Cauth.getAuthCheck(req, res);
-    if (!getCheck) {
-        res.redirect('/login')
-        return;
-    }
-    res.render('boardList');
-}
 
 const create_board = async (req, res)=>{
     const getCheck = await Cauth.getAuthCheck(req, res);
@@ -106,11 +98,7 @@ const edit_board_post = async(req,res)=>{
 }
 const delete_board = async (req, res) => {
 
-    const user_id = await getUserId(req);
-    if (user_id === '') return res.json({result:false});
-
     const { id } = req.body;
-    
     try {
 
         const board = await Board.destroy({ where : { id }})
@@ -125,20 +113,18 @@ const delete_board = async (req, res) => {
         res.json({result:false});
         console.log(e);
     }
-
 }
 
 const boarduser_findone = async (req,res)=>{
-
     const {id} = req.body;
-
     try {
         const board = await Board.findOne({
             attributes:['id', 'title', 'views', 'content', 'event_time', 'category', 'createdAt'],
             where: {id}
         })
-        if (board.dataValues){
-            res.json({result:true,board});
+      
+        if (board && board.dataValues){
+            res.json({result:true, board});
         }else{
             res.json({result:false});
         }   
@@ -173,7 +159,7 @@ const boarduser_findall = async(req,res)=>{
         }else{
             res.json({result:false});
         }
-    }catch(e){
+    } catch(e){
         res.json({result:false});
         console.log(e);
     }
@@ -181,7 +167,6 @@ const boarduser_findall = async(req,res)=>{
 
 const boarduser_findall_pagenation = async (req, res)=>{
     
-    console.log('body', req.body);
     const user_id = await getUserId(req);
     
     let pagenation = {};
@@ -216,13 +201,74 @@ const boarduser_findall_pagenation = async (req, res)=>{
         } else{
             res.json({result:false});
         }
-    }catch(e){
+    } catch(e){
         res.json({result:false});
 
         console.log(e);
     }
 }
 
+const create_board_bookmark = async (req, res)=>{
+
+    try {
+            const user_id = await getUserId(req);
+            const { board_id, id } = req.body;
+            const board = await Board_Bookmark.create({
+                user_id: user_id,
+                board_id:board_id
+            })
+            if(board){
+                res.json({result:true});
+            } else {
+                res.json({result:false});
+            }
+
+        } catch(e){
+
+            res.json({result:false});
+            console.log(e);
+
+        }
+}
+const delete_board_bookmark = async (req, res)=>{
+
+    try {
+        const user_id = await getUserId(req);
+        const { board_id } = req.body;
+        const board = await Board_Bookmark.destroy({ where : { board_id, user_id }});
+
+        if (board) {
+
+            res.json({result:true});
+        } else {
+            res.json({result:false});
+        }
+        } catch(e){
+            res.json({result:false});
+            console.log(e);
+        }
+}
+
+const findone_board_bookmark = async (req,res)=>{
+    const {board_id} = req.body;
+
+    try {
+        const board = await Board_Bookmark.findOne({
+            // attributes:['id', 'title', 'views', 'content', 'event_time', 'category', 'createdAt'],
+            where: {board_id}
+        })
+      
+        if (board && board.dataValues){
+            res.json({result:true });
+        }else{
+            res.json({result:false});
+        }   
+      
+    } catch(e) {
+        res.json({result:false});
+        console.log(e);
+    }
+}
 
 module.exports = {
     create_board,
@@ -230,8 +276,10 @@ module.exports = {
     edit_board,
     edit_board_post,
     delete_board,
-    boardList,
     boarduser_findone,
     boarduser_findall,
-    boarduser_findall_pagenation
+    boarduser_findall_pagenation,
+    findone_board_bookmark,
+    create_board_bookmark,
+    delete_board_bookmark
 }
