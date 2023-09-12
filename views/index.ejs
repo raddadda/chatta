@@ -207,10 +207,8 @@
     }
 
     async function loadDetailModal (index) {
-        console.log("list[index]",list[index]);
 
         list[index].book_mark = await post_bookmark(list[index].id);
-
         const data = {
             id : list[index] && list[index].id ? list[index].id : 0,
             poster_check : list[index] && list[index].poster_check ? list[index].poster_check : false,
@@ -268,12 +266,13 @@
     }
     async function post_bookmark(id){
 
-        try{
+        try {
             const findOneData = await bookMark_FindOne(id);
+            console.log("findOneData",findOneData);
 
             return findOneData
-            console.log("findOneData",findOneData);
-        }catch(e){
+        } catch(e){
+
             return false;
             console.log(e);
         }
@@ -290,8 +289,6 @@
 
             if (result) {
                 list[index].book_mark = false;
-                modalCloase();
-                loadDetailModal(index);
                 bookmarkDom.style.fill = '#eee';
             } else {
 
@@ -305,8 +302,6 @@
 
             if (result) {
                 list[index].book_mark = true;
-                modalCloase();
-                loadDetailModal(index);
                 bookmarkDom.style.fill = '#f5cd00';
             } else {
 
