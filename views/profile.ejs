@@ -128,9 +128,11 @@
                     <% } else { %>
                     <% bookmarkedBoards.forEach(function(board) { %>
                     <% if (board && board.id) { %>
-                    <li><a href="/board/<%= board.id %>">
-                            <%= board.title %>
-                        </a></li>
+                    <a href="/">
+                        제목: <%= board.title %>
+                        <br />
+                        내용: <%= board.content %>
+                    </a>
                     <% } %>
                     <% }); %>
                     <% } %>
@@ -147,7 +149,7 @@
                     <% } else { %>
                     <% schedules.forEach(function(schedule) { %>
                     <li>
-                        <%= schedule.title %>: <%= schedule.date %>
+                        <%= schedule %>
                     </li>
                     <% }); %>
                     <% } %>
