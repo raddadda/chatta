@@ -14,31 +14,26 @@
     const user_id = '<%= id %>'
     const nickname = '<%= nickname %>'
     const listUl = document.querySelector("#lists");
+    (async () => { await myChatRoomList() })()
     async function myChatRoomList(){
         const myChatRoom = await axios({
             method: "post",
             url: "/load/roomlist",
             data:{user_id}
         })
-        console.log('mychatroom',myChatRoom);
         let list = myChatRoom.data.roomInfoList;
-        console.log('list',list);
         list.forEach(chatRoom => {
             const li = document.createElement('li');
-            console.log('chat',chatRoom);
             for (e in chatRoom){
-                console.log('e',e)
                 const div = document.createElement('div');
                 div.innerHTML = e + ' : ' + chatRoom[`${e}`];
                 li.appendChild(div);
             }          
             li.ondblclick = () => {
-                window.open(`/chat_room?room_id=${chatRoom.room_id}`)
+                window.open(`/chat_room?room_id=${chatRoom.room_id}&category=${chatRoom.category}`)
             }
             listUl.appendChild(li);
         });
-        console.log(list);
     }
-    myChatRoomList()
 </script>
 </html>

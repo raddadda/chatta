@@ -9,6 +9,9 @@ const cprofile = require('../controller/Cprofile.js');
 const cprofileEdit = require('../controller/CprofileEdit.js');
 const cchat = require('../controller/Cchat.js');
 
+router.post('/auth',cauth.authCheckPost);
+
+
 router.get('/', controller.main);
 router.get('/login',controller.loginMain);
 router.get('/new', controller.newMain);
@@ -46,6 +49,9 @@ router.post('/post/findall/pagination', cboard.boarduser_findall_pagenation);
 
 router.post('/chat/join',cchat.chatRoomJoin)
 
+router.post('/msg/load',cchat.msgLoad)
+router.post('/msg/send',cchat.msgSend)
+router.post('/member/load',cchat.memberLoad)
 
 //router.post('/signup',clogin.signUp)
 
@@ -62,7 +68,6 @@ router.post('/friendlist',controller.friendListPost)
 router.post('/chatroom',controller.chatRoomPost)
 router.post('/chatroomjoin',controller.chatRoomJoinPost)
 router.post('/chatmessage',controller.chatMessagePost)
-router.post('/auth',cauth.authCheckPost);
 
 
 router.post('/delete/user',controller.deleteUser)

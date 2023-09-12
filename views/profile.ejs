@@ -83,7 +83,7 @@
                     <% } else { %>
                     <% posterChatRooms.forEach(function(room) { %>
                     <li>
-                        <a href="/chat?<%= room.room_id %>">
+                        <a href="/chat_room?room_id=<%= room.room_id %>&category=<%= room.category %>">
                             <%= room.title %> (<%= room.unreadMessages %> 안 읽은 메시지)
                             <% if (room.latestUnreadMessage) { %>
                             <span class="latest-message">
@@ -104,7 +104,7 @@
                     <% } else { %>
                     <% userChatRooms.forEach(function(room) { %>
                     <li>
-                        <a href="/chat?<%= room.room_id %>">
+                        <a href="/chat_room?room_id=<%= room.room_id %>&category=<%= room.category %>">
                             <%= room.title %> (<%= room.unreadMessages %> 안 읽은 메시지)
                             <% if (room.latestUnreadMessage) { %>
                             <span class="latest-message">

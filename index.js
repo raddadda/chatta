@@ -18,11 +18,12 @@ app.use("/public", express.static(__dirname + '/public'));
 const server = http.createServer(app);
 const io = SocketIo(server);
 
-const socketRouter = require('./routes/socket');
-socketRouter(io);
 
 const router = require('./routes/main');
 app.use('/', router);
+
+const socketRouter = require('./routes/socket');
+socketRouter(io);
 
 app.use('*', (req, res) => {
     res.status(404).render('404');
