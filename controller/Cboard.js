@@ -40,11 +40,10 @@ const edit_board = async (req, res)=>{
 
 const create_board_post = async (req,res)=>{
     try {
-    const user_id = await getUserId(req);
+        const user_id = await getUserId(req);
+    
+        const {title,content,event_time,category} = req.body
 
-    const {title,content,event_time,category} = req.body
-    // user_id는 쿠키를 생성해서 req.cookies로 가져와야 될거 같긴 한데
-    // 백앤드로 관계형 잘 설정되는지만 보려고 일단은 req에 같이 넣음
         const board = await Board.create({
             title,
             poster_id : user_id,
@@ -55,6 +54,7 @@ const create_board_post = async (req,res)=>{
                 title,
                 poster_id : user_id,
                 category,
+                event_time,
             }
         },{
             include:Chat_Room,
@@ -84,6 +84,14 @@ const edit_board_post = async(req,res)=>{
             category
         },{
             where:{id}
+        })
+        const chat = await Chat_Room.update({
+            title,
+            poster_id : user_id,
+            event_time,
+            category
+        },{
+            where:{room_id:id}
         })
         if(board.dataValues){
             res.json({result:true , title , content, event_time, category});

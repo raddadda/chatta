@@ -21,7 +21,6 @@
     
     <!-- <button onclick="cookieAuthCheck()">쿠키 인증 체크</button><br/>
     <button onclick="userLogOut()">로그아웃</button><br/>
-    <button onclick="logoutKaKao()">카톡 로그아웃</button> <br/>
 
     <a href="/profile">프로필 페이지로 이동</a> <br/>
     <a href="/post/new">게시글 작성</a><br/>
@@ -352,6 +351,8 @@
             if (res.data.result) {
                 alert('채팅방에 참여했습니다')
                 document.location.assign('/mychat')
+            } else {
+                alert('이미 참여한 채팅방입니다')
             }
         }
 </script>
