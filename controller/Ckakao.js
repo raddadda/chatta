@@ -11,6 +11,7 @@ const {REST_API_KEY,REDIRECT_URI} = secret;
 const signUpKakao = async (req,res)=>{
     try {
         const url = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}`;
+        console.log('url',url)
         res.redirect(url);
     } catch (error) {
         console.log(error);
@@ -44,7 +45,7 @@ const authKakao = async (req,res)=>{
             const auth = await Cauth.authCodeIssue(uuid);
             await Cauth.loginCookieRes(id,profile.nickname,auth,res)
         }
-        res.redirect('/profile');
+        res.redirect('/');
     } catch (error) {
         console.log(error)   
     }
@@ -88,33 +89,6 @@ const userInfoRef = async (auth)=>{
     }
 }
 
-const logoutKakao = async (req,res)=>{
-    try {
-        const loginCookieValue = req.signedCookies.logined
-        if (loginCookieValue){
-            const {id,auth} = loginCookieValue;
-            const check = await Cauth.authCheck(id,auth);
-            if(check.result){
-                const token = await tokenLoad(id);
-                const logout = await axios({
-                    method: "POST",
-                    url: "https://kapi.kakao.com/v1/user/unlink",
-                    headers: {
-                        "Authorization": token.token,
-                    },
-                    data: {
-                        "target_id_type":"user_id",
-                        "target_id":token.id,
-                    },
-                })
-                res.clearCookie(constant.loginCookie);
-            }
-        }
-        res.redirect('/login');
-    } catch (error) {
-        console.log(error);
-    }
-}
 
 const tokenLoad = async (id) => {
     try {
@@ -129,5 +103,5 @@ const tokenLoad = async (id) => {
 module.exports = {
     signUpKakao,
     authKakao,
-    logoutKakao,
+    tokenLoad,
 }

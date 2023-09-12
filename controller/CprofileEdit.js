@@ -83,6 +83,7 @@ const profileDelete = async (req,res) => {
 const findPw = async (req,res) => {
     res.render('findpw')
 }
+
 ////////////POST//////////////
 const profileUpdatePost = async (req,res)=>{
     try {

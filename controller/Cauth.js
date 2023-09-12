@@ -237,23 +237,24 @@ const getAuthCheck = async (req, res) => {
 // 정상적으로 사이트를 이용하는 유저가 맞는지 확인하는 함수 
 
 
-const authCheckPost = async (req, res) => {
-    try {
-        const loginCookieValue = req.signedCookies.logined
-        if (loginCookieValue) {
-            const { id, nickname, auth } = loginCookieValue;
-            const check = await authCheck(id, auth);
-            if (check.result) {
-                await loginCookieRes(id, nickname, check.newAuth, res)
-                res.json({ result: true })
-                return;
-            }
-        }
-        res.json({ result: false })
-    } catch (error) {
-        console.log(error);
-    }
-}
+// const authCheckPost = async (req, res) => {
+//     try {
+//         const loginCookieValue = req.signedCookies.logined
+//         if (loginCookieValue) {
+//             const { id, nickname, auth } = loginCookieValue;
+//             const check = await authCheck(id, auth);
+//             if (check.result) {
+//                 await loginCookieRes(id, nickname, check.newAuth, res)
+//                 res.json({ result: true })
+//                 return;
+//             }
+//         }
+//         res.json({ result: false })
+//     } catch (error) {
+//         console.log(error);
+//     }
+// }
+// //post를 받으면 인증 체크를 해주는 함수, 필요시 주석 해제
 
 
 module.exports = {
@@ -268,5 +269,4 @@ module.exports = {
     signUpConst,
     authCheck,
     getAuthCheck,
-    authCheckPost,
 }

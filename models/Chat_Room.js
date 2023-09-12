@@ -10,6 +10,10 @@ const Chat_Room = (sequelize) => {
             type: DataTypes.UUID,
             allowNull: false,
         },
+        event_time: {
+            type: DataTypes.DATE,
+            allowNull: false,
+        },
         title: {
             type: DataTypes.STRING(20),
             allowNull: false,
