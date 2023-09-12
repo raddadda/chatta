@@ -37,6 +37,14 @@ for (let day = 1; day <= 31; day++) {
 async function userSignUp() {
     const signUpForm = document.forms["signup-form"];
     try {
+        if(!idFlag){
+            alert('아이디를 확인해 주세요')
+            return;
+        }
+        if(!pwFlag){
+            alert('비밀번호를 확인해 주세요')
+            return;
+        }
         const data = {
             user_name: signUpForm.name.value,
             login_id: signUpForm.userid.value,
@@ -64,3 +72,64 @@ async function userSignUp() {
 // function emailAuth() {
 //     auth.hidden = false;
 // }
+
+//////////////유효성 검사///////////////
+
+let idFlag;
+let pwFlag;
+
+const pwdCheck = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,25}$/;
+
+function idCheck() {
+    idFlag = false;
+    if($('#userid').val() == "") {
+        $('#idtx').text('아이디를 입력하세요').css({
+            "color": "red",
+            "font-size": "11px",
+            "text-align" : "start"
+        });
+        return;
+    }
+    if($('#userid').val() !== "") {
+        $('#idtx').text('')
+    }
+    idFlag = true;
+    return;
+}
+
+function pwCheck() {
+    pwFlag = false
+    if(!pwdCheck.test( $("#pw").val() ) ) {
+        $('#pwtx').text('영문자+숫자 조합으로 8~25자리 입력해 주세요').css({
+            "color": "red",
+            "font-size": "11px",
+            "text-align" : "start"
+        });
+        return
+    }  
+    if($('#pw').val() == "") {
+        $('#pwtx').text('비밀번호를 입력하세요').css({
+            "color": "red",
+            "font-size": "11px",
+            "text-align" : "start"
+        });
+        return
+    }
+    if($('#pw').val() !== $('#Cpw').val()) {
+        $('#pwtx').text('비밀번호가 일치하지 않습니다').css({
+            "color": "red",
+            "font-size": "11px",
+            "text-align" : "start"
+        });
+        return
+    }
+    if($('#pw').val() == $('#Cpw').val()) {
+        $('#pwtx').text('비밀번호가 일치합니다').css({
+            "color": "green",
+            "font-size": "11px",
+            "text-align" : "start"
+        });
+        pwFlag = true
+    }
+    return;
+}
