@@ -209,7 +209,7 @@ const boarduser_findall_pagenation = async (req, res)=>{
         } else{
             res.json({result:false});
         }
-    }catch(e){
+    } catch(e){
         res.json({result:false});
 
         console.log(e);
@@ -241,8 +241,9 @@ const create_board_bookmark = async (req, res)=>{
 const delete_board_bookmark = async (req, res)=>{
 
     try {
+        const user_id = await getUserId(req);
         const { board_id } = req.body;
-        const board = await Board_Bookmark.destroy({ where : { board_id }});
+        const board = await Board_Bookmark.destroy({ where : { board_id, user_id }});
 
         if (board) {
 
