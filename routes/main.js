@@ -29,8 +29,9 @@ router.get('/kakao/leave',ckakao.logoutKakao);
 router.post('/mail', cprofileEdit.findPwPost)
 //router.get('/new/:userid',controller.newMain);
 
-//boardlist
-router.get('/post',cboard.boardList);
+
+
+
 //boardCreate 생성
 router.get('/post/new',cboard.create_board);
 router.post('/post/new',cboard.create_board_post);
