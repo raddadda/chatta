@@ -17,11 +17,11 @@ html, body {
 .user-info {
     text-align: center;
     background-color: #fff;
-    padding: 25px 40px 25px 40px;
+    padding: 25px 35px 25px 35px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 400px;
+    max-width: 500px;
 }
 
 /* 회원가입 폼 타이틀 스타일 */
@@ -36,11 +36,19 @@ label {
     font-weight: bold;
 }
 
+.must {
+    font-size: 12px;
+}
+
 /* 입력 필드 스타일 */
+.info-set.id{
+    display: flex;
+    margin: 0;
+}
 .user-info input{
     width: 100%;
     padding: 10px;
-    margin : 5px 0 10px 0;
+    margin : 5px 0 5px 0;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
@@ -52,8 +60,16 @@ label {
     border-radius: 5px;
 }
 
-/* 회원가입 버튼 스타일 */
-.user-info button {
+#userid {
+    width: 100%;
+    padding: 10px;
+    margin : 5px 0 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+/* 버튼 스타일 */
+
+.registerBtn {
     background-color: rgb(123,142,169);
     color: #fff;
     padding: 10px;
@@ -76,3 +92,8 @@ label {
     justify-content: space-around
 }
 
+#birth-year,
+#birth-month,
+#birth-day {
+    margin: 3px;
+}

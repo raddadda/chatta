@@ -26,7 +26,6 @@ const profile = async (req, res) => {
             room.unreadMessages = await calculateUnreadMessages(room.room_id, userId);
             room.latestUnreadMessage = await getLatestUnreadMessage(room.room_id, userId);
         };
-        console.log(allChatRooms)
 
         const bookmarkedBoards = await getBookmarkedBoards(userId);
         const schedules = await getSchedules(userId);
@@ -153,8 +152,9 @@ const getBookmarkedBoards = async (userId) => {
             where: { user_id: userId },
             include: [Board],
         });
+        console.log('bookmarkedBoards:', bookmarkedBoards);
 
-        return bookmarkedBoards.map((bookmark) => bookmark.Board);
+        return bookmarkedBoards.map((bookmark) => bookmark.board);
     } catch (error) {
         console.error('북마크한 게시물 가져오기 오류:', error);
         throw error;
@@ -163,9 +163,30 @@ const getBookmarkedBoards = async (userId) => {
 
 const getSchedules = async (userId) => {
     try {
-        // const schedules = await Schedule.findAll({ where: { user_id: userId } });
-        // return schedules;
-        return [];
+        const schedules = await Board.findAll({
+            attributes: ['event_time'],
+            where: { poster_id: userId, event_time: { [Op.not]: null } },
+        });
+
+        // event_time을 원하는 형식으로 포맷
+        const formattedSchedules = schedules.map((schedule) => {
+            const eventTime = new Date(schedule.event_time);
+            const options = {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                weekday: 'long',
+                hour: 'numeric',
+                minute: 'numeric',
+                second: 'numeric',
+                hour12: true,
+                timeZoneName: 'short',
+            };
+            const dateFormatter = new Intl.DateTimeFormat('ko-KR', options);
+            return dateFormatter.format(eventTime);
+        });
+
+        return formattedSchedules;
     } catch (error) {
         console.error('일정 가져오기 오류:', error);
         throw error;
