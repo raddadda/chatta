@@ -32,14 +32,12 @@ router.get('/s3/:filename', cimage.getS3ImageURL);
 router.post('/mail', cprofileEdit.findPwPost)
 //router.get('/new/:userid',controller.newMain);
 
-//boardlist
-router.get('/post', cboard.boardList);
 //boardCreate 생성
-router.get('/post/new', cboard.create_board);
-router.post('/post/new', cboard.create_board_post);
-//boardEdit 생성
-router.get('/post/edit', cboard.edit_board);
-router.post('/post/edit', cboard.edit_board_post);
+router.get('/post/new',cboard.create_board);
+router.post('/post/new',cboard.create_board_post);
+//boardEdit 
+router.get('/post/edit/:id',cboard.edit_board);
+router.post('/post/edit',cboard.edit_board_post);
 //boardDelete 삭제
 router.delete('/post/delete', cboard.delete_board);
 //board 조회
@@ -47,7 +45,13 @@ router.post('/post/findone', cboard.boarduser_findone);
 router.post('/post/findall', cboard.boarduser_findall);
 router.post('/post/findall/pagination', cboard.boarduser_findall_pagenation);
 
-router.post('/chat/join', cchat.chatRoomJoin)
+
+router.post('/post/findonebookmark', cboard.findone_board_bookmark);
+router.post('/post/newbookmark',cboard.create_board_bookmark);
+router.post('/post/deletebookmark',cboard.delete_board_bookmark);
+
+
+router.post('/chat/join',cchat.chatRoomJoin)
 
 
 //router.post('/signup',clogin.signUp)

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <link rel="stylesheet" href="../public/css/board/board_edit.css">
+    <link rel="stylesheet" href="/public/css/board/board_edit.css">
     <title>게시판 수정 페이지</title>
 </head>
 
@@ -15,26 +15,105 @@
         <form class="board-form" name="board-form">
             <div class="left-form">
                 <label for="title"></label>
-            <input type="text" id="title" name="title" placeholder="제목을 입력해주세요."><br/>
-            <label for="content"> </label>
-            <textarea  cols="50" rows="30" type="text" id="content" name="content" placeholder="내용을 입력해주세요."></textarea>
+                <input type="text" id="title" name="title" placeholder="제목을 입력해주세요."><br/>
+                <label for="content"> </label>
+                <textarea  cols="50" rows="30" type="text" id="content" name="content" placeholder="내용을 입력해주세요."></textarea>
             </div>
             <div class="right-form">
                 <label for="eventDate">홍보시간</label>
-                <input type="datetime-local" id="eventDate" name="eventDate" placeholder="홍보시간을 입력해주세요."><br/>
+                <input type="datetime-local" id="eventDate" name="eventDate" placeholder="홍보시간을 입력해주세요." oninput="test(this)"><br/>
                 <label for="category">카테고리</label>
                 <!-- <input type="text" id="category" name="category" placeholder="카테고리를 입력해주세요."><br/> -->
                 <select name="category" id="category">
                     <option value="sports">sports</option>
                     <option value="e-sports">e-sports</option>
                 </select>
-                <button id="boardEditButton" type="button" onclick="boardEdit()">게시판 수정</button><br/>
-                <button id="boardDeleteButton" type="button" onclick="boardDelete()">게시판 삭제</button>
-                <button id="backButton" type="button" onclick="back()">뒤로가기</button>
+                <button class="board-button" type="button" onclick="boardEdit1()">게시판 수정</button>
+                <button id="boardDeleteButton" class="board-button" type="button" onclick="boardDelete1()">게시판 삭제</button>
+                <button id="backButton" class="board-button" type="button" onclick="back()">뒤로가기</button>
             </div>
         </form>
     </div>
-    <script src="../public/js/board/board_CRUD.js"></script>
-</body>
+    <script src="/public/js/board/board_CRUD.js"></script>
 
+    <script>
+        
+        let boardID = 0;
+
+        ( async function() {
+         
+            const id = Number(window.location.pathname.split('/')[3]);
+            if (id === null || id === undefined) {
+                alert('없는 페이지입니다.');
+                window.history.back();
+            } else {
+                boardID = id;
+            }
+            try {
+               const boardRes = await boardFindOne(id);
+               if (boardRes.result) {
+                    const boardForm = document.forms["board-form"];
+                    boardForm.title.value = boardRes.board.title;
+                    boardForm.content.value = boardRes.board.content;
+                    boardForm.eventDate.value = boardRes.board.event_time;
+                    boardForm.category.value = boardRes.board.category;
+
+               } else {
+                    alert('없는 페이지입니다.');
+                    window.history.back();
+               }
+
+            } catch (e) {
+                alert('없는 페이지입니다.');
+                window.history.back();
+            }
+        })();
+
+        function test(e) {
+            console.log(e.value)
+
+        }
+        async function boardEdit1 () {
+
+            try {
+                let resData = {};
+
+                const boardForm = document.forms["board-form"];
+
+                resData.id = boardID;
+                resData.title = boardForm.title.value;
+                resData.content = boardForm.content.value;
+                resData.event_time = boardForm.eventDate.value;
+                resData.category =  boardForm.category.value;
+                const editRes = await boardEdit(resData);
+
+                if (editRes) {
+                    alert('수정이  완료 되었습니다.');
+                    window.location.reload();
+                } else {
+                    alert('다시 시도해 주세요.');
+                }
+            } catch (e) {
+                alert('잠시 후에 시도해주세요.');
+            }
+        }
+
+        async function boardDelete1() {
+
+            if(!confirm('정말로 삭제하시겠습니까?')) return;
+            try {
+                const deleteRes = await boardDelete(boardID);
+                if (deleteRes) {
+                    alert('삭제가 되었습니다.');
+                    window.history.back();
+                } else {
+                    alert('다시 시도해 주세요.');
+                }
+            } catch (e) {
+                alert('잠시 후에 시도해주세요.');
+            }
+        }
+    </script>
+
+</body>
 </html>
