@@ -4,17 +4,43 @@ h1 {
 }
 body {
     margin: 0; padding: 0;
+
     background-color: rgb(71,87,111);
+}
+
+
+.board-modal-close {
+    position: absolute; 
+    width: 25px; height: 25px;
+    cursor: pointer; top: 30px; right: 75px;
+}
+ .board-modal-close > img {
+    width: 100%; height: 100%;
+}
+.board-modal-close:hover {
+    animation: rotate 0.5s
+}
+
+
+.board-body {
+    margin: 0; 
+    box-sizing: border-box;
+    padding: 3.3em 0;
+}
+
+.board-body > h1 {
+    padding: 0.5em 0 ; margin: 0;
+
 }
 
 /** board form **/
 .board-form {
-    background-color: rgb(71,87,111);
-    display: block; margin-left: 5%; margin-right: 5%; margin-bottom: 5%;
+    background-color: rgb(71,87,111); position: relative;
+    display: block; width: 80%; margin: auto;
 }
 /** board form > .left-form **/
 .board-form > .left-form {
-    margin:0 auto; display: flex;
+    margin: 0 auto; display: flex;
     width: 100%; flex-direction: column;
 }
 
@@ -26,7 +52,7 @@ body {
     width: 100%; padding: 0.2em;
     height: 40px;
     border: solid #ccc 3px;
-    border-radius: 10px;
+    border-radius: 10px;     box-sizing: border-box;
     background-color:  rgb(255, 255, 255);
 }
 
@@ -34,7 +60,7 @@ body {
     background-color: rgb(255, 255, 255);
     border: solid #ccc 3px;
     border-radius: 10px;
-    width: 100%; padding: 0.2em; box-sizing: border-box;
+    width: 100%; padding: 0.8em; box-sizing: border-box;
     resize: none;
 }
 
@@ -53,7 +79,7 @@ body {
 }
 
 .board-form > .right-form > #eventDate {
-    height: 40px; padding: 0.2em 0.5em;
+    height: 40px; padding: 0.2em 0.8em;
     background-color:rgb(255, 255, 255);
     border: solid #ccc  3px;
     border-radius: 10px;
@@ -61,7 +87,7 @@ body {
 
 .board-form > .right-form > #category {
     margin-bottom: 40px;
-    height: 40px; padding: 0.2em;
+    height: 40px; padding: 0.8em;
     background-color: rgb(255, 255, 255);
     border: solid #ccc 3px;
     border-radius: 10px;
@@ -90,5 +116,19 @@ body {
     }
     .board-form{
         display: block;
+    }
+}
+
+@keyframes rotate {
+    from {
+        -webkit-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    to {
+        -webkit-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
     }
 }

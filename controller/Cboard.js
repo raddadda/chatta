@@ -284,6 +284,8 @@ const findall_profile_bookmark_board =  async (req,res)=>{
                 }
             }]
         })
+
+        console.log('board', board)
         if (board) {
             res.json({result:true, board});
         } else{

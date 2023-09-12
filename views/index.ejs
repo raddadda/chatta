@@ -18,7 +18,6 @@
 </head>
 <body>  
 
-    
     <!-- <button onclick="cookieAuthCheck()">쿠키 인증 체크</button><br/>
     <button onclick="userLogOut()">로그아웃</button><br/>
     <button onclick="logoutKaKao()">카톡 로그아웃</button> <br/>
@@ -28,24 +27,30 @@
     <a href="/post">게시글 목록</a><br/> -->
 
     <header class="main-header">
-        <span class="header-logo logo"><a href="/">Chatta</a></span> 
-        <ul class="header-menu">
-            <li><a href="/post/new">게시판 등록</a></li>
-        </ul>
-        <div class="header-profie">
-            <div class="profile"  onclick="toggleHeaderProfile()">
-                <img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/test_1280.jpg" alt="profile_image" />
-            </div>
-            <ul class="header-profile-tab">
-                <li id="mobileView"><a href="/post/new">게시판 등록</a> </li>
-                <li><a href="/profile">프로필</a> </li>
-                <li><button type="button" onclick="">로그아웃</button></li>
+        <div class="header-layout">
+            <span class="header-logo logo"><a href="/">Chatta</a></span> 
+            <ul class="header-menu">
+                <li><a href="/">게시판 리스트</a></li>
             </ul>
+            <div class="header-profie">
+                <div class="profile"  onclick="toggleHeaderProfile()">
+                    <img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/test_1280.jpg" alt="profile_image" />
+                </div>
+                <ul class="header-profile-tab">
+                    <li id="mobileView"><a href="/">게시판 리스트</a> </li>
+                    <li><a href="/profile">프로필</a> </li>
+                    <li><button type="button" onclick="">로그아웃</button></li>
+                </ul>
+                <div class="close-box"></div>
+            </div>
         </div>
     </header>
     <div class="main-content">
-        <div class="wrap" id="wrap"> </div>
-        <div class="board-detail-modal" id="boardDetailModal"></div>
+        <div class="content-layout">
+            <div class="post-create"><a href="/post/new">게시물 등록</a></div>
+            <div class="board-wrap" id="wrap"> </div>
+            <div class="board-detail-modal" id="boardDetailModal"></div>
+        </div>
     </div>
     <footer class="footer-body">
             <div class="footer-left">
@@ -69,50 +74,41 @@
             </div>
 
             <div class="footer-git">
-            <div>
-                <p>김민영</p>
-            </div>
-            <div>
-                <p><a href="https://github.com/raddadda"><img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/giticon.png" style="width: 20px; position: relative; top: 5px;"> github.com/raddadda</a>
-            </div>
-            <div>
-                <p>김성제</p>
-            </div>
-            <div>
-                <p><a href="https://github.com/raddadda"><img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/giticon.png" style="width: 20px; position: relative; top: 5px;"> github.com/raddadda</a>
-            </div>
-            <div>
-                <p>류승기</p>
-            </div>
-            <div>
-                <p><a href="https://github.com/raddadda"><img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/giticon.png" style="width: 20px; position: relative; top: 5px;"> github.com/raddadda</a>
-            </div>
-            <div>
-                <p>정인근</p>
-            </div>
-            <div>
-                <p><a href="https://github.com/raddadda"><img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/giticon.png" style="width: 20px; position: relative; top: 5px;"> github.com/raddadda</a>
-            </div>
-            <div>
-                <p>최영찬 </p>
-            </div>
-            <div>
-                <p><a href="https://github.com/raddadda"><img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/giticon.png" style="width: 20px; position: relative; top: 5px;"> github.com/raddadda</a>
-            </div>
+                <div>
+                    <p>김민영</p>
+                </div>
+                <div>
+                    <p><a href="https://github.com/raddadda"><img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/giticon.png" style="width: 20px; position: relative; top: 5px;"> github.com/raddadda</a>
+                </div>
+                <div>
+                    <p>김성제</p>
+                </div>
+                <div>
+                    <p><a href="https://github.com/raddadda"><img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/giticon.png" style="width: 20px; position: relative; top: 5px;"> github.com/raddadda</a>
+                </div>
+                <div>
+                    <p>류승기</p>
+                </div>
+                <div>
+                    <p><a href="https://github.com/raddadda"><img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/giticon.png" style="width: 20px; position: relative; top: 5px;"> github.com/raddadda</a>
+                </div>
+                <div>
+                    <p>정인근</p>
+                </div>
+                <div>
+                    <p><a href="https://github.com/raddadda"><img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/giticon.png" style="width: 20px; position: relative; top: 5px;"> github.com/raddadda</a>
+                </div>
+                <div>
+                    <p>최영찬 </p>
+                </div>
+                <div>
+                    <p><a href="https://github.com/raddadda"><img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/giticon.png" style="width: 20px; position: relative; top: 5px;"> github.com/raddadda</a>
+                </div>
         </div>
     </footer>
-<script>
-    function toggleHeaderProfile () {
-        const headerProfile = document.querySelector('.main-header > .header-profie > .header-profile-tab');
-        if (window.getComputedStyle(headerProfile).display === 'none') {
-            headerProfile.style.display = 'block';
-        } else {
-            headerProfile.style.display = 'none';
-        }
-    }
-</script>
 
 <script src="/public/js/index.js" defer></script>
+<script src="/public/js/header.js"></script>
 <script src="/public/js/board/board_CRUD.js"></script>
 <script src="/public/js/board/board_svg.js"></script>
 <script>
@@ -132,15 +128,17 @@
                 let scrollHeight = document.body.offsetHeight;
             
                 if ( scrollTop + innerHeight >= scrollHeight){
-                    console.log("스크롤");
                     if(currentDirection != 'down'){
                         getbaordPagenation();
                         currentDirection = 'down';
                         console.log(currentDirection+' 실행 !!!!');
                      
                     }
-                }else{
-                    if(currentDirection != 'up'){
+
+                } else {
+
+                    if (currentDirection != 'up'){
+                        
                         currentDirection = 'up';
                         console.log(currentDirection+' 실행 !!!!');
                     }
@@ -153,6 +151,7 @@
     async function getbaordPagenation(){
 
         try {
+            
             const findAllData = await boradFindAll_pagination(page_id);
                 if (findAllData.length > 0) {
                     const wrap = document.querySelector("#wrap");
@@ -169,31 +168,20 @@
                             createAt: `${date.getFullYear()}-${(date.getMonth() + 1)>= 10 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1) }-${date.getDate() >= 10 ? date.getDate() : '0' + date.getDate()} ${date.getHours()}시`
                         }
         
-                        if(i%2==0){
-                            boxhtml += `
-                        <div class="imgFlex1" onclick="loadDetailModal(${i})">
-                            <div class="roomImg"></div>
-                            <div class="boardInfo">
-                                <div class="boxBordCategory">${data.category}</div>
-                                <div class="boxTitle">${data.title}</div><br>
-                                <div class="boxCreateAt">${data.createAt}</div>
-                                <div class="boxViews"><img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/viewicon.png" style="width: 20px; position: relative; top: 5px" >${data.views}</div>      
+                        boxhtml += `
+                            <div class="board-card" onclick="loadDetailModal(${i})">
+                                <div class="roomImg">
+                                    <div class="img-box"></div>
+                                </div>
+                                <div class="boardInfo">
+                                    <div class="boxBordCategory">${data.category}</div>
+                                    <div class="boxTitle">${data.title}</div>
+                                    <div class="boxCreateAt">${data.createAt}</div>
+                                    <div class="boxViews"><img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/viewicon.png" >&nbsp; ${data.views}</div>      
+                                </div>
                             </div>
-                        </div>
                         `;  
-                        } else{
-                            boxhtml += `
-                        <div class="imgFlex2" onclick="loadDetailModal(${i})">
-                            <div class="roomImg"></div>
-                            <div class="boardInfo">
-                                <div class="boxBordCategory">${data.category}</div>
-                                <div class="boxTitle">${data.title}</div><br>
-                                <div class="boxCreateAt">${data.createAt}</div>
-                                <div class="boxViews"><img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/viewicon.png" style="width: 20px; position: relative; top: 5px" >${data.views}</div>      
-                            </div>
-                        </div>
-                        `;  
-                        }
+                  
                         if (findAllData.length === i + 1) {
                             page_id = findAllData[i].id + 1;
                         }
@@ -270,7 +258,6 @@
 
         try{
             const findOneData = await bookMark_FindOne(id);
-
             return findOneData
             console.log("findOneData",findOneData);
         }catch(e){
@@ -290,14 +277,11 @@
 
             if (result) {
                 list[index].book_mark = false;
-                modalCloase();
-                loadDetailModal(index);
                 bookmarkDom.style.fill = '#eee';
             } else {
 
                 alert('잠시 후에 사용해 주세요.');
             } 
-           
 
         } else if (list[index].book_mark === false) { // 북마크 생성할 때
 
@@ -305,8 +289,6 @@
 
             if (result) {
                 list[index].book_mark = true;
-                modalCloase();
-                loadDetailModal(index);
                 bookmarkDom.style.fill = '#f5cd00';
             } else {
 
@@ -315,7 +297,7 @@
         }
     }
     
-    
+
     function modalCloase () {
         document.getElementById('boardDetailModal').style.display = 'none';
     }
@@ -358,7 +340,10 @@
                 alert('채팅방에 참여했습니다')
                 document.location.assign('/mychat')
             }
-        }
+    }
+
+
+
 </script>
 </body>
 </html>

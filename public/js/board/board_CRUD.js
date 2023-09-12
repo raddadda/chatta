@@ -216,7 +216,6 @@ async function findall_profile_bookmark_board(){
         method: "POST",
         url:"post/findall/profile_pagination_board",
         data: {
-    
         }
     })
     if (res.data.result){
@@ -225,9 +224,4 @@ async function findall_profile_bookmark_board(){
         console.log('res',res);
         return [];
     }
-}
-
-
-function back(){
-    window.location.href='/';
 }

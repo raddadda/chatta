@@ -10,6 +10,9 @@ const cprofileEdit = require('../controller/CprofileEdit.js');
 const cchat = require('../controller/Cchat.js');
 const cimage = require('../controller/Cimage.js');
 
+router.post('/auth',cauth.authCheckPost);
+
+
 router.get('/', controller.main);
 router.get('/login', controller.loginMain);
 router.get('/new', controller.newMain);
@@ -55,6 +58,9 @@ router.post('/post/deletebookmark',cboard.delete_board_bookmark);
 
 router.post('/chat/join',cchat.chatRoomJoin)
 
+router.post('/msg/load',cchat.msgLoad)
+router.post('/msg/send',cchat.msgSend)
+router.post('/member/load',cchat.memberLoad)
 
 //router.post('/signup',clogin.signUp)
 
@@ -66,12 +72,13 @@ router.post('/findpw', cprofileEdit.findInfoPost)
 router.post('/mail', cprofileEdit.findPwPost)
 
 
-router.post('/bookmark', controller.bookmarkPost)
-router.post('/friendlist', controller.friendListPost)
-router.post('/chatroom', controller.chatRoomPost)
-router.post('/chatroomjoin', controller.chatRoomJoinPost)
-router.post('/chatmessage', controller.chatMessagePost)
-router.post('/auth', cauth.authCheckPost);
+
+router.post('/bookmark',controller.bookmarkPost)
+router.post('/friendlist',controller.friendListPost)
+router.post('/chatroom',controller.chatRoomPost)
+router.post('/chatroomjoin',controller.chatRoomJoinPost)
+router.post('/chatmessage',controller.chatMessagePost)
+
 
 
 router.post('/delete/user', controller.deleteUser)

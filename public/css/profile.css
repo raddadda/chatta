@@ -1,12 +1,16 @@
 body {
-    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f0f0f0;
-    max-width: 1200px;
-    margin: 0 auto;
+    background: rgb(231, 231, 231);
+
 }
 
+
+.profile-contents {
+    font-family: Arial, sans-serif;
+    max-width: 1200px; min-height: 1000px;
+    margin: 0 auto;
+}
 .header {
     background-color: #007bff;
     padding: 10px 0;
