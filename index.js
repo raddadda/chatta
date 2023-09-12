@@ -14,7 +14,6 @@ app.use(express.json());
 app.use(cookieParser(secret.cookieSecret));
 app.use("/public", express.static(__dirname + '/public'));
 
-
 const server = http.createServer(app);
 const io = SocketIo(server);
 

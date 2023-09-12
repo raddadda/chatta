@@ -1,6 +1,7 @@
 const { User, Friend_List, Chat_Room_Join, Chat_Room, Chat_Message, Board, Board_Bookmark } = require('../models');
 const constant = require('../common/constant');
 const Cauth = require('./Cauth');
+const Cimage = require('./Cimage');
 const { Op } = require('sequelize');
 
 const profile = async (req, res) => {
@@ -35,8 +36,10 @@ const profile = async (req, res) => {
             return res.status(404).render('404');
         }
 
-        console.log(user, age, friendCount, posterChatRooms, userChatRooms, bookmarkedBoards, schedules)
-        res.render('profile', { user, age, friendCount, posterChatRooms, userChatRooms, bookmarkedBoards, schedules });
+        const profileImage = await Cimage.getProfileImage(userId);
+
+        // console.log(user, age, friendCount, posterChatRooms, userChatRooms, bookmarkedBoards, schedules)
+        res.render('profile', { user, age, profileImage, friendCount, posterChatRooms, userChatRooms, bookmarkedBoards, schedules });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: '내부 서버 오류' });
