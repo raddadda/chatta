@@ -220,10 +220,3 @@ const bookMark_delete = async (id) => {
     }
 }
 
-
-
-
-
-function back(){
-    window.location.href='/';
-}

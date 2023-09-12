@@ -12,6 +12,11 @@
 <body>
     <div class="board-body">
         <h1>수정 페이지</h1>
+        <div class="board-modal-close" onclick="histryBack()" >
+            <img src= "https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/close.png"
+                alt="close_img"
+            />
+        </div>
         <form class="board-form" name="board-form">
             <div class="left-form">
                 <label for="title"></label>
@@ -69,10 +74,11 @@
             }
         })();
 
-        function test(e) {
-            console.log(e.value)
+        function histryBack () {
 
+            window.history.back();
         }
+
         async function boardEdit1 () {
 
             try {

@@ -1,7 +1,7 @@
 // 프로필 수정 버튼 클릭 시 이벤트
-document.querySelector('.profile-edit-button').addEventListener('click', function () {
-    window.location.href = '/profile/edit';
-});
+// document.querySelector('.profile-edit-button').addEventListener('click', function () {
+//     window.location.href = '/profile/edit';
+// });
 
 // 게시물 작성 버튼 클릭 시 이벤트 처리
 document.querySelector('.friend-info button').addEventListener('click', function () {
@@ -30,6 +30,7 @@ listContainers.forEach(function (container) {
 // 목록을 토글하는 함수
 function toggleList(listId, button) {
     const listContainer = document.getElementById(listId);
+    console.log('listContainer', listContainer)
     if (listContainer.style.display === 'block') {
         listContainer.style.display = 'none';
         button.style.color = 'gray';

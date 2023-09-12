@@ -9,7 +9,7 @@ footer {
       width: 100%;
       text-align: left;
       font: bold 16px sans-serif;
-      padding: 55px 50px;
+      padding: 35px 50px;
   }
   
   .footer-left{
@@ -55,12 +55,12 @@ footer {
   .footer-body .footer-git p{
       display: inline-block;
       color: #ffffff;
-        font-weight:400;
+      font-weight:400; font-size: 0.8em;
       vertical-align: middle;
       margin:0;
   }
   .footer-body .footer-git p a{
-      color:  rgb(222, 222, 222);
+      color:  rgb(222, 222, 222); font-size: 1em;
       text-decoration: none;;
   }
   
