@@ -53,39 +53,19 @@ const pwdCheck = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,25}$/;
 function pwCheck() {
     pwFlag = false
     if(!pwdCheck.test( $("#pw_edit").val() ) ) {
-        $('#pwtx').text('영문자+숫자 조합으로 8~25자리 입력해 주세요').css({
-            "color": "red",
-            "font-size": "16px",
-            "text-align" : "start",
-            "font-weight" : "bold"
-        });
+        $('#pwtx').text('영문자+숫자 조합으로 8~25자리 입력해 주세요').addClass('red').removeClass('green')
         return
     }  
     if($('#pw_edit').val() == "") {
-        $('#pwtx').text('비밀번호를 입력하세요').css({
-            "color": "red",
-            "font-size": "16px",
-            "text-align" : "start",
-            "font-weight" : "bold"
-        });
+        $('#pwtx').text('비밀번호를 입력하세요').addClass('red').removeClass('green')
         return
     }
     if($('#pw_edit').val() !== $('#pw_edit2').val()) {
-        $('#pwtx').text('비밀번호가 일치하지 않습니다').css({
-            "color": "red",
-            "font-size": "16px",
-            "text-align" : "start",
-            "font-weight" : "bold"
-        });
+        $('#pwtx').text('비밀번호가 일치하지 않습니다').addClass('red').removeClass('green')
         return
     }
     if($('#pw_edit').val() == $('#pw_edit2').val()) {
-        $('#pwtx').text('비밀번호가 일치합니다').css({
-            "color": "green",
-            "font-size": "16px",
-            "text-align" : "start",
-            "font-weight" : "bold"
-        });
+        $('#pwtx').text('비밀번호가 일치합니다').addClass('green').removeClass('red')
         pwFlag = true
     }
     return;

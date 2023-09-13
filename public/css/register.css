@@ -97,3 +97,16 @@ label {
 #birth-day {
     margin: 3px;
 }
+
+/* 메세지 스타일 */
+.red { 
+    color: red;
+    font-size: 12px;
+    text-align: start;
+}
+
+.green {
+    color: green;
+    font-size: 12px;
+    text-align : start;
+}
