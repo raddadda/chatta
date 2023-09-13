@@ -96,7 +96,7 @@
                         <% } else { %>
                         <% posterChatRooms.forEach(function(room) { %>
                         <li>
-                            <a href="/chat_room?room_id=<%= room.room_id %>&category=<%= room.category %>">
+                            <a href="/chat_room?room_id=<%= room.room_id %>&category=<%= room.category %>" target="_blank">
                                 <%= room.title %> (<%= room.unreadMessages %> 안 읽은 메시지)
                                 <% if (room.latestUnreadMessage) { %>
                                 <span class="latest-message">
