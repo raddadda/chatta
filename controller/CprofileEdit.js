@@ -84,6 +84,10 @@ const findPw = async (req,res) => {
     res.render('findpw')
 }
 
+const findId = async (req,res) => {
+    res.render('findId')
+}
+
 ////////////POST//////////////
 const profileUpdatePost = async (req,res)=>{
     try {
@@ -107,7 +111,7 @@ const pwUpdatePost = async (req,res)=>{
             const update = await User.update({login_pw : hashPwEdit}, {where : {user_id : id}})
             res.json({result : true})
         } else if(!pwCompare && pw_edit === pw_edit2) {
-            res.json({result : false, message : '비밀번호가 틀립니다'})
+            res.json({result : false, message : '현재 비밀번호가 틀립니다'})
         } else if(pwCompare && pw_edit !== pw_edit2) {
             res.json({result : false, message : '비밀번호가 서로 다릅니다'})
         } else {
@@ -191,16 +195,43 @@ const findPwPost = (req, res) => { // /mail 에서 받는 포스트
   }
 
 
+const findIdPost = async (req, res) => {
+    const { name, birth } = req.body
+    try {
+        const birthArray = birth.split('-')
+        if(birthArray[1].length == 1) {
+            birthArray[1] = '0' + birthArray[1]
+        }
+        if (birthArray[2].length ==1 ) {
+            birthArray[2] = '0' + birthArray[2]
+        }
+        const birth2 = birthArray.join('-')
+        const user = await User.findOne({attributes: ["login_id","birth","user_name"] ,where:{user_name : name}})
+        if(!user){
+            res.send({result : false,  message : '존재하지 않는 회원입니다.'})
+        }
+        console.log('birth',birth2)
+        console.log('user.birth',user.birth)
+        if(birth2 == user.birth){
+            res.send({result : true, name : user.user_name, message : user.login_id})
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 module.exports ={
     profileUpdate,
     pwUpdate,
     profileDelete,
     findPw,
+    findId,
     profileUpdatePost,
     pwUpdatePost,
     profileDeletePost,
     findInfoPost,
     findPwPost,
+    findIdPost,
 }
 
 

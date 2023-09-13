@@ -92,8 +92,11 @@ a {
     text-decoration: none;
     color: rgb(244, 115, 033);
     font-weight: bold;
+    margin-bottom: 10px;
 }
-
+.pwa{
+    margin-bottom: 10px;
+}
 .signup {
     margin: 0 0 10px 0;
 }
