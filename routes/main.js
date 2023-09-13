@@ -96,6 +96,8 @@ router.post('/profile/edit/pw', cprofileEdit.pwUpdatePost)
 
 router.post('/profile/edit/delete', cprofileEdit.profileDeletePost)
 
+router.post('/profile/edit/upload', cprofileEdit.uploadProfileImage, cprofileEdit.handleUploadedProfileImage);
+
 router.post('/findpw', cprofileEdit.findInfoPost)
 
 
