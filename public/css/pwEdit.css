@@ -104,3 +104,18 @@ body {
         opacity: 1;
     }
 }
+
+/* 메세지 스타일 */
+.red {
+    color: red;
+    font-size : 16px;
+    text-align : start;
+    font-weight : bold;
+}
+
+.green {
+    color: green;
+    font-size: 16px;
+    text-align : start;
+    font-weight : bold;
+}
