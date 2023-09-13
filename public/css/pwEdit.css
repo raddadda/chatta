@@ -53,6 +53,7 @@ body {
 /* 버튼 영역 */
 .btn {
     display: flex;
+    margin-bottom: 10px;
 }
 .edit_btn button {
     background-color: #3498db;
