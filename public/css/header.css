@@ -7,13 +7,16 @@
     padding: 0;
 }
 .main-header {
-    width: 100%; height: 60px;
-    padding: 0 20px;
-    display: flex; background-color: rgb(71,87,111);
-    align-items: center; justify-content: space-between;
+    width: 100%; height: 60px; background-color: rgb(71,87,111);
+
 }
- 
-.main-header > .header-logo a{
+
+.main-header > .header-layout {
+    width: 88%; height: 60px; margin: auto;   display: flex; 
+    align-items: center; justify-content: space-between;
+
+}
+.main-header > .header-layout > .header-logo a{
     cursor: pointer; font-weight: bold;
     color: #fff;
     text-decoration: none;
@@ -22,28 +25,28 @@
       font-size:  xx-large;
 }
 /** manu */
-.main-header > .header-menu {
+.main-header >  .header-layout > .header-menu {
     margin: 0; padding: 0; list-style: none;
     display: flex; width: 25%; height: auto;
     justify-content: space-between;
-    font-size: 0.5em;
+    font-size: 0.5em;     margin-left: -40em;
 }
-.main-header > .header-menu > li {
+.main-header >  .header-layout  >.header-menu > li {
     display: flex; align-items: center;
     justify-content: center;
 }
-.main-header > .header-menu > li > a {
+.main-header >  .header-layout  >.header-menu > li > a {
     font-size: 0.7em;
     text-decoration: none;
     color: #fff;
 }
 
-.main-header > .header-profie {
+.main-header > .header-layout > .header-profie {
     display: flex; align-items: center;
     position: relative;
 }
   
-.main-header > .header-profie > .profile {
+.main-header >  .header-layout > .header-profie > .profile {
     width: 32px; height: 32px;
     border: 1px solid #000;
     border-radius: 50%; overflow: hidden; 
@@ -51,40 +54,69 @@
 
 }
 
-.main-header > .header-profie > .profile > img {
+.main-header > .header-layout  > .header-profie > .profile > img {
     width: 100%; height: 100%;
     object-fit: cover;
 }
 
-.main-header > .header-profie > .header-profile-tab {
-    position: absolute; display: none; z-index: 100;
+.main-header >  .header-layout  >.header-profie > .header-profile-tab {
+    position: absolute; display: none;     z-index: 10000;
     top: 35px; width: 150px; left: -120px; background-color: #fff;
     border-radius: 9px;
     list-style: none;  border: 1px solid #ddd; padding: 1em;
 }
 
-.main-header > .header-profie > .header-profile-tab > li {
-    font-size: 0.7em; cursor: pointer;
+.main-header >  .header-layout  >.header-profie > .header-profile-tab > li {
+    cursor: pointer;
     padding: 0.5em 0; text-align: center;
 }
 
-.main-header > .header-profie > .header-profile-tab > #mobileView {
+.main-header >  .header-layout  >.header-profie > .header-profile-tab > #mobileView {
     display: none;
 
 }
-.main-header > .header-profie > .header-profile-tab > li > a {
-    font-size: 0.6em; text-decoration: none;
+.main-header >  .header-layout  >.header-profie > .header-profile-tab > li > a {
+    font-size: 0.65em;
+    color: #000; text-decoration: none;
 }
-.main-header > .header-profie > .header-profile-tab > li > button {
-    font-size: 0.6em; border: 0; background: transparent; cursor: pointer;
+
+.main-header >  .header-layout  >.header-profie > .header-profile-tab > li > a:visited {
+    color: #000; /* 링크를 클릭해본 상태 */
+}
+
+.main-header >  .header-layout  >.header-profie > .header-profile-tab > li > button {
+    font-size: 0.65em; border: 0; background: transparent; cursor: pointer;
 } 
 
 
+@font-face {
+    font-family: 'PartialSansKR-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/PartialSansKR-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+@media screen and (min-width:1920px) {
+
+    .main-header >  .header-layout > .header-menu {
+        margin-left: -35em;
+    }
+}
+
+
+@media screen and (max-width:1080px) {
+
+    .main-header >  .header-layout > .header-menu {
+        margin-left: -20em;
+    }
+}
+
 @media screen and (max-width:756px) {
-    .main-header > .header-menu {
+    .main-header >  .header-layout  >.header-menu {
       display: none;
     }
-    .main-header > .header-profie > .header-profile-tab > #mobileView  {
+    .main-header >  .header-layout  >.header-profie > .header-profile-tab > #mobileView  {
         display: block;
     }
 

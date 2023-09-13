@@ -2,7 +2,46 @@
 
 .main-content {
     width: 100%; min-height: 850px; box-sizing: border-box;
-    padding-top: 1em; 
+    padding-top: 2.5em; padding-bottom: 5em;
     background-color: rgb(231, 231, 231)
 
+}
+.main-content > .content-layout {
+    width: 88%; margin: auto;
+}
+
+.main-content > .content-layout > .post-create {
+    width: 100%; display: flex; justify-content: end; margin-bottom: 2em;
+
+}
+.main-content > .content-layout > .post-create > a {
+    text-decoration: none; color: #000; line-height: 40px; box-sizing: content-box;
+    width: 150px; height: 40px; background-color: rgb(106, 118, 138); border: 3px solid #ccc;
+    border-radius: 9px; padding: 0.2em; font-size: 0.7em; font-weight: bold; color: #fff;
+    text-align: center; display: block; cursor: pointer;
+
+}
+
+.main-content > .content-layout > .post-create > a:hover {
+    border-color: rgb(71,87,111); background-color: rgb(71,87,111);
+
+}
+#scrollby-top{
+    cursor: pointer;
+    width: 75px;
+    height: 75px;
+    bottom: 10%;
+    right: 7%;
+    position: fixed;
+    z-index: 2000;
+}
+#scrollby-top > img{
+    width: 100%;
+    height: 100%;
+    opacity: 0.7;
+}
+#scrollby-top > img:hover{
+    border: solid #ccc 3px;
+    border-radius: 50%;
+    opacity: 1;
 }
