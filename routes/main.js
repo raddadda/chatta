@@ -102,6 +102,8 @@ router.post('/profile/edit/pw', cprofileEdit.pwUpdatePost)
 router.post('/profile/edit/delete', cprofileEdit.profileDeletePost)
 //회원 탈퇴
 
+router.post('/profile/edit/upload', cprofileEdit.uploadProfileImage, cprofileEdit.handleUploadedProfileImage);
+
 router.post('/findpw', cprofileEdit.findInfoPost)
 //비밀번호 찾기
 
