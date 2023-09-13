@@ -142,6 +142,7 @@ const boarduser_findall = async(req,res)=>{
    
     try {
         const board = await Board.findAll({
+            order: [["id","desc"]],
             limit:3
         })
 
@@ -174,7 +175,7 @@ const boarduser_findall_pagenation = async (req, res)=>{
     let boardRowlimit = 12; 
 
     if (req.body.page_id) {
-        pagenation.startid = {id :{ [Op.gte]: req.body.page_id}}
+        pagenation.startid = {id :{ [Op.lt]: req.body.page_id-1}}
 
     } else {
         pagenation.startid = {id :{[Op.gte]: 1}}
@@ -183,6 +184,7 @@ const boarduser_findall_pagenation = async (req, res)=>{
 
     try {
         const board = await Board.findAll({
+             order: [["id","desc"]],
             where: pagenation.startid,
             limit : boardRowlimit
         })

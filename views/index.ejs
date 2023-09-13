@@ -127,14 +127,14 @@
                 let scrollTop = window.scrollY;
                 let innerHeight = window.innerHeight;
                 let scrollHeight = document.body.offsetHeight;
-                console.log("scrollTop",scrollTop);
-                console.log("innerHeight",innerHeight);
-                console.log("scrollHeight",scrollHeight);
+                //console.log("scrollTop",scrollTop);
+                //console.log("innerHeight",innerHeight);
+                //console.log("scrollHeight",scrollHeight);
                 if ( scrollTop + innerHeight +400>= scrollHeight){
                     if(currentDirection != 'down'){
                         getbaordPagenation();
                         currentDirection = 'down';
-                        console.log(currentDirection+' 실행 !!!!');
+                        //console.log(currentDirection+' 실행 !!!!');
                      
                     }
 
@@ -142,7 +142,7 @@
 
                    
                         currentDirection = '';
-                        console.log(currentDirection+' 실행 !!!!');
+                        //console.log(currentDirection+' 실행 !!!!');
                     
                 }
                 lastScrollTop = scrollTop;
@@ -150,6 +150,7 @@
 
         }
     )()
+
     async function getbaordPagenation(){
 
         try {
@@ -157,12 +158,13 @@
             const findAllData = await boradFindAll_pagination(page_id);
                 if (findAllData.length > 0) {
                     const wrap = document.querySelector("#wrap");
-                  
-                   
+                    
                     let boxhtml = ``;
+                    
                     for (let i=0; i<findAllData.length; i++){
                         let date = new Date(`${findAllData[i].createdAt}`);
                         list.push(findAllData[i]);
+                        console.log("findAllData[i]",findAllData[i]);
                         const data = {
                             category : findAllData[i] && findAllData[i].category ? findAllData[i].category : '',
                             title :  findAllData[i] && findAllData[i].title ? findAllData[i].title : '',
