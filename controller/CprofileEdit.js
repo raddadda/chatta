@@ -90,6 +90,7 @@ const profileDelete = async (req, res) => {
 const findPw = async (req, res) => {
     res.render('findpw')
 }
+
 ////////////POST//////////////
 const uploadProfileImage = upload.single('profileImage');
 

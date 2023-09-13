@@ -5,6 +5,11 @@ const chatRoomJoin = async (req,res) => {
     try {
         const user_id = await Cauth.stringToUuid(req.signedCookies.logined.id);
         const { room_id } = req.body
+        const chat_room_join_check = await Chat_Room_Join.findOne({ attributes: ["room_id"], where: { user_id, room_id}, raw: true })
+        if (chat_room_join_check){
+            res.json({result: false})
+            return;
+        }
         const chat_room_join = await Chat_Room_Join.create({
             user_id,
             room_id
