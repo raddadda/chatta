@@ -101,8 +101,9 @@ const delete_board = async (req, res) => {
     const { id } = req.body;
     try {
 
-        const board = await Board.destroy({ where : { id }})
-        const bookmark = await Board_Bookmark.destroy({ where : {id}})
+        const board = await Board.destroy({ where : { id }});
+        const bookmark = await Board_Bookmark.destroy({ where : {id}});
+        
         if (board) {
             res.json({result:true});
         } else {

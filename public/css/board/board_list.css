@@ -102,11 +102,11 @@
 @media (min-width : 641px) and (max-width : 850px) {
 
     .board-wrap {
-        display: block;
+        display: block; margin: auto; 
     }
 
     .board-wrap > .board-card { 
-        width: 80%; margin-right: 0; margin: auto;
+        width: 80%; margin-right: 0; margin: auto; margin-bottom: 1rem;
     }
   
 }
