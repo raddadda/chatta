@@ -109,10 +109,11 @@ const delete_board = async (req, res) => {
     const { id } = req.body;
     try {
 
-        const board = await Board.destroy({ where : { id }})
+        const board = await Board.destroy({ where : { id }});
+        const bookmark = await Board_Bookmark.destroy({ where : {id}});
+        
         if (board) {
             res.json({result:true});
-        
         } else {
             res.json({result:false});
         } 
@@ -149,6 +150,7 @@ const boarduser_findall = async(req,res)=>{
    
     try {
         const board = await Board.findAll({
+            order: [["id","desc"]],
             limit:3
         })
 
@@ -178,11 +180,11 @@ const boarduser_findall_pagenation = async (req, res)=>{
     const user_id = await getUserId(req);
     
     let pagenation = {};
-    let boardRowlimit = 3; 
+    let boardRowlimit = 12; 
 
     if (req.body.page_id) {
-        pagenation.startid = {id :{ [Op.gte]: req.body.page_id}}
-
+        pagenation.startid = {id :{ [Op.lt]: req.body.page_id-1}}
+        console.log(" pagenation.startid ", pagenation.startid )
     } else {
         pagenation.startid = {id :{[Op.gte]: 1}}
     }
@@ -190,6 +192,7 @@ const boarduser_findall_pagenation = async (req, res)=>{
 
     try {
         const board = await Board.findAll({
+             order: [["id","desc"]],
             where: pagenation.startid,
             limit : boardRowlimit
         })
@@ -220,11 +223,13 @@ const create_board_bookmark = async (req, res)=>{
 
     try {
             const user_id = await getUserId(req);
-            const { board_id, id } = req.body;
+            const { board_id, view } = req.body;
+            console.log("view",view)
             const board = await Board_Bookmark.create({
                 user_id: user_id,
                 board_id:board_id
             })
+            const findone = await Board.update({views: view+1},{where: {id:board_id} })
             if(board){
                 res.json({result:true});
             } else {
@@ -242,11 +247,10 @@ const delete_board_bookmark = async (req, res)=>{
 
     try {
         const user_id = await getUserId(req);
-        const { board_id } = req.body;
+        const { board_id , view} = req.body;
         const board = await Board_Bookmark.destroy({ where : { board_id, user_id }});
-
+        const findone = await Board.update({views: view-1},{where: {id:board_id} })
         if (board) {
-
             res.json({result:true});
         } else {
             res.json({result:false});
@@ -278,6 +282,45 @@ const findone_board_bookmark = async (req,res)=>{
     }
 }
 
+
+const findall_profile_bookmark_board =  async (req,res)=>{
+    const user_id = await getUserId(req);
+    // const {findAllData} = req.body;
+    try {
+        const board = await Board_Bookmark.findAll({
+            include: [{
+                model: Board,
+                attributes:['title','category','event_time','views','content','id','poster_id'],
+                where: {
+                     poster_id: user_id,
+                }
+            }]
+        })
+
+        console.log('board', board)
+        if (board) {
+            board.forEach(index => {
+                console.log('index', index.dataValues.board)
+                if (index.dataValues.board.dataValues.poster_id === user_id) {
+                    index.dataValues.board.dataValues.poster_check = true;
+                    delete index.dataValues.board.dataValues.poster_id;
+                } else {
+                    index.dataValues.board.dataValues.poster_check = false;
+                    delete index.dataValues.board.dataValues.poster_id;
+                }
+            });
+            res.json({result:true, board});
+        } else{
+            console.log("x");
+            res.json({result:false});
+        }
+    } catch(e){
+        res.json({result:false});
+        console.log(e);
+    }
+}
+
+
 module.exports = {
     create_board,
     create_board_post,
@@ -289,5 +332,6 @@ module.exports = {
     boarduser_findall_pagenation,
     findone_board_bookmark,
     create_board_bookmark,
-    delete_board_bookmark
+    delete_board_bookmark,
+    findall_profile_bookmark_board
 }

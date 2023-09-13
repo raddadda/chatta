@@ -13,36 +13,15 @@
 
 <body>
     
-<!-- 
-    <form name="board-form">
-        <label for="title">게시글 제목 : </label>
-        <input type="text" id="title" name="title" placeholder="제목을 입력해주세요."><br />
-        <label for="content"> 내용 : </label>
-        <input type="text" id="content" name="content" placeholder="내용을 입력해주세요."><br />
-        <label for="eventDate"> 홍보시간 : </label>
-        <input type="date" id="eventDate" name="eventDate" placeholder="날짜를 입력해주세요."><br />
-        <label for="category"> 카테고리 : </label>
-        <input type="text" id="category" name="category" placeholder="카테고리를 입력해주세요."><br />
-        <button type="button" onclick="boardCreate()">게시판 만들기</button>
-    </form> -->
-   
-        <!-- <form class="board-form" name="board-form">
-            <div class="left-form">
-                <label for="title"> </label>
-            <input type="text" id="title" name="title" placeholder="제목을 입력해주세요."><br/>
-            <label for="content"> </label>
-            <textarea  cols="50" rows="30" type="text" id="content" name="content" placeholder="내용을 입력해주세요."></textarea>
-            </div>
-            <div class="right-form">
-                <label for="eventDate"></label>
-                <input type="date" id="eventDate" name="eventDate" placeholder="홍보시간을 입력해주세요."><br/>
-                <label for="category"></label>
-                <input type="text" id="category" name="category" placeholder="카테고리를 입력해주세요."><br/>
-                <button id="boardCreateButton" type="button" onclick="boardCreate()">게시판 만들기</button>
-            </div>
-        </form> -->
         <div class="board-body">
             <h1>게시판 작성</h1>
+
+            <div class="board-modal-close" onclick="histryBack()" >
+                <img src= "https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/close.png"
+                    alt="close_img"
+                />
+            </div>
+
             <form class="board-form" name="board-form">
                 <div class="left-form">
                     <label for="title"></label>
@@ -59,18 +38,26 @@
                         <option value="sports">sports</option>
                         <option value="e-sports">e-sports</option>
                     </select>
-                    <button id="boardCreateButton" class="board-button" type="button" onclick="boardCreate()">게시판 만들기</button>
-                    <button id="backButton" class="board-button" type="button" onclick="back()">뒤로가기</button>
+                    <!-- <input type="button" id="boardCreateButton" class="board-button" value="게시판 만들기" onclick="boardCreate(); this.onclick='';"/> -->
+                    <button id="boardCreateButton" class="board-button" type="button" onclick="boardCreate(); this.onclick='';" >게시판 만들기</button>
+                    <button id="backButton" class="board-button" type="button" onclick="histryBack()">뒤로가기</button>
                 </div>
             </form>
         </div>
-        
-  
-  
-
-       
+    
 
     <script src="/public/js/board/board_CRUD.js"></script>
+
+    <script>
+
+        function histryBack () {
+
+             window.history.back();
+        }
+
+
+    </script>
+
 </body>
 
 </html>

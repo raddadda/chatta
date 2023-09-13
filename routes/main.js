@@ -135,10 +135,12 @@ router.post('/post/findone', cboard.boarduser_findone);
 // 데이터베이스에서 게시판 하나 조회하는 함수
 
 router.post('/post/findall', cboard.boarduser_findall);
+router.post('/post/findall/pagination', cboard.boarduser_findall_pagenation);
+//프로필 북마크 라우터 추가
+
+router.post('/post/findall/profile_pagination_board',cboard.findall_profile_bookmark_board);
 // 데이터베이스에서 게시판 전체를 조회하는 함수
 
-router.post('/post/findall/pagination', cboard.boarduser_findall_pagenation);
-// 아몰랑
 
 router.post('/post/findonebookmark', cboard.findone_board_bookmark);
 
