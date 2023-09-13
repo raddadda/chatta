@@ -66,6 +66,7 @@ router.post('/member/load',cchat.memberLoad)
 router.post('/profile/edit', cprofileEdit.profileUpdatePost)
 router.post('/profile/edit/pw', cprofileEdit.pwUpdatePost)
 router.post('/profile/edit/delete', cprofileEdit.profileDeletePost)
+router.post('/profile/edit/upload', cprofileEdit.uploadProfileImage, cprofileEdit.handleUploadedProfileImage);
 router.post('/findpw', cprofileEdit.findInfoPost)
 router.post('/mail', cprofileEdit.findPwPost)
 
