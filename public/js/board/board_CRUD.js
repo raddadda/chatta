@@ -173,8 +173,8 @@ const bookMark_FindOne = async (id) => {
     
 }
 
-const bookMark_create = async (id) => {
-    const data = { board_id : id }
+const bookMark_create = async (id,view) => {
+    const data = { board_id : id ,view : view}
     try {   
         const createBookMarkres = await axios({
             method:"post",
@@ -191,8 +191,8 @@ const bookMark_create = async (id) => {
     }
 }
  
-const bookMark_delete = async (id) => {
-    const data = { board_id : id }
+const bookMark_delete = async (id,view) => {
+    const data = { board_id : id , view : view }
     try {   
         const deleteBookMarkres = await axios({
             method:"post",

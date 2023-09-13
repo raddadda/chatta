@@ -213,11 +213,13 @@ const create_board_bookmark = async (req, res)=>{
 
     try {
             const user_id = await getUserId(req);
-            const { board_id, id } = req.body;
+            const { board_id, view } = req.body;
+            console.log("view",view)
             const board = await Board_Bookmark.create({
                 user_id: user_id,
                 board_id:board_id
             })
+            const findone = await Board.update({views: view+1},{where: {id:board_id} })
             if(board){
                 res.json({result:true});
             } else {
@@ -235,11 +237,10 @@ const delete_board_bookmark = async (req, res)=>{
 
     try {
         const user_id = await getUserId(req);
-        const { board_id } = req.body;
+        const { board_id , view} = req.body;
         const board = await Board_Bookmark.destroy({ where : { board_id, user_id }});
-
+        const findone = await Board.update({views: view-1},{where: {id:board_id} })
         if (board) {
-
             res.json({result:true});
         } else {
             res.json({result:false});

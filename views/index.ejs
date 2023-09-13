@@ -196,7 +196,7 @@
 
     async function loadDetailModal (index) {
         console.log("list[index]",list[index]);
-
+        // console.log("list[index]",list[index].views++);
         list[index].book_mark = await post_bookmark(list[index].id);
 
         const data = {
@@ -273,10 +273,11 @@
 
         if (list[index].book_mark === true) { // 북마크 삭제 할 때
 
-            const result =  await bookMark_delete(list[index].id);
+            const result =  await bookMark_delete(list[index].id,list[index].views);
 
             if (result) {
                 list[index].book_mark = false;
+                list[index].views -=1;
                 bookmarkDom.style.fill = '#eee';
             } else {
 
@@ -285,10 +286,11 @@
 
         } else if (list[index].book_mark === false) { // 북마크 생성할 때
 
-            const result =  await bookMark_create(list[index].id);
+            const result =  await bookMark_create(list[index].id,list[index].views);
 
             if (result) {
                 list[index].book_mark = true;
+                list[index].views +=1;
                 bookmarkDom.style.fill = '#f5cd00';
             } else {
 
