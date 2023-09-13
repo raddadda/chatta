@@ -15,9 +15,6 @@
 
     margin-right: 2%;
 }
-.board-wrap > .board-card:nth-child(3n) {
-    margin-right: 0;
-}
 
 
 .board-card {
@@ -89,7 +86,16 @@
 }
 
 
-@media (min-width : 858px) and (max-width : 1280px) {
+@media (min-width : 1281px) {
+
+    .board-wrap > .board-card:nth-child(3n) {
+        margin-right: 0;
+    }
+    
+}
+
+
+@media (min-width : 851px) and (max-width : 1280px) {
 
     .board-wrap {
         justify-content: space-between;
@@ -97,6 +103,8 @@
     .board-wrap > .board-card { 
         width: 45%; margin-right: 0;
     }
+
+    
 }
 
 @media (min-width : 641px) and (max-width : 850px) {
@@ -108,6 +116,7 @@
     .board-wrap > .board-card { 
         width: 80%; margin-right: 0; margin: auto; margin-bottom: 1rem;
     }
+
   
 }
 
@@ -119,7 +128,7 @@
     }
 
     .board-wrap > .board-card { 
-        width: 100%; margin-right: 0;
+        width: 90%; margin-right: 0; margin: auto; margin-bottom: 1rem;
     }
   
 }
