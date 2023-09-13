@@ -171,7 +171,7 @@ const boarduser_findall_pagenation = async (req, res)=>{
     const user_id = await getUserId(req);
     
     let pagenation = {};
-    let boardRowlimit = 3; 
+    let boardRowlimit = 12; 
 
     if (req.body.page_id) {
         pagenation.startid = {id :{ [Op.gte]: req.body.page_id}}

@@ -25,7 +25,7 @@
     <a href="/profile">프로필 페이지로 이동</a> <br/>
     <a href="/post/new">게시글 작성</a><br/>
     <a href="/post">게시글 목록</a><br/> -->
-
+    <div id="scrollby-top" onclick="goTop()"><img src="../public/images/gotopicon.png"> </div>
     <header class="main-header">
         <div class="header-layout">
             <span class="header-logo logo"><a href="/">Chatta</a></span> 
@@ -111,6 +111,7 @@
 <script src="/public/js/header.js"></script>
 <script src="/public/js/board/board_CRUD.js"></script>
 <script src="/public/js/board/board_svg.js"></script>
+<script src="/public/js/board/board_list.js"></script>
 <script>
 
     let list = [];
@@ -126,8 +127,10 @@
                 let scrollTop = window.scrollY;
                 let innerHeight = window.innerHeight;
                 let scrollHeight = document.body.offsetHeight;
-            
-                if ( scrollTop + innerHeight >= scrollHeight){
+                console.log("scrollTop",scrollTop);
+                console.log("innerHeight",innerHeight);
+                console.log("scrollHeight",scrollHeight);
+                if ( scrollTop + innerHeight +400>= scrollHeight){
                     if(currentDirection != 'down'){
                         getbaordPagenation();
                         currentDirection = 'down';
@@ -137,11 +140,10 @@
 
                 } else {
 
-                    if (currentDirection != 'up'){
-                        
-                        currentDirection = 'up';
+                   
+                        currentDirection = '';
                         console.log(currentDirection+' 실행 !!!!');
-                    }
+                    
                 }
                 lastScrollTop = scrollTop;
         })
@@ -167,7 +169,7 @@
                             views : findAllData[i] && findAllData[i].views ? findAllData[i].views : 0,
                             createAt: `${date.getFullYear()}-${(date.getMonth() + 1)>= 10 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1) }-${date.getDate() >= 10 ? date.getDate() : '0' + date.getDate()} ${date.getHours()}시`
                         }
-        
+                        
                         boxhtml += `
                             <div class="board-card" onclick="loadDetailModal(${i})">
                                 <div class="roomImg">
@@ -177,7 +179,7 @@
                                     <div class="boxBordCategory">${data.category}</div>
                                     <div class="boxTitle">${data.title}</div>
                                     <div class="boxCreateAt">${data.createAt}</div>
-                                    <div class="boxViews"><img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/viewicon.png" >&nbsp; ${data.views}</div>      
+                                    <div class="boxViews"><img src="../public/images/bookmarkicon.png" >&nbsp; ${data.views}</div>      
                                 </div>
                             </div>
                         `;  
@@ -343,6 +345,27 @@
                 document.location.assign('/mychat')
             }
     }
+    
+    function goTop(){
+        window.addEventListener('scroll', () => {
+    if ( window.scrollY >100) {
+      document.getElementById('scrollby-top').style.display = "block";
+      document.getElementById('scrollby-top').addEventListener('click',()=>{
+            window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: 'smooth'
+            });
+        })
+    } else {
+      document.getElementById('scrollby-top').style.display = "none";
+    }
+  });
+
+        
+    }
+
+    goTop();
 
 
 

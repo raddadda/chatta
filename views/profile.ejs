@@ -267,7 +267,7 @@
                             <div class="boxBordCategory">${data.category}</div>
                             <div class="boxTitle">${data.title}</div>
                             <div class="boxCreateAt">${data.createAt}</div>
-                            <div class="boxViews"><img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/viewicon.png" >&nbsp; ${data.views}</div>      
+                            <div class="boxViews"><img src="../public/images/bookmarkicon.png" >&nbsp; ${data.views}</div>      
                         </div>
                     </div>
                 `;  
@@ -275,7 +275,6 @@
                 if (findAllData_board.length === i + 1) {
                     page_id = findAllData_board[i].id + 1;
                 }
-
             }
                  wrap.innerHTML += boxhtml;
         }
