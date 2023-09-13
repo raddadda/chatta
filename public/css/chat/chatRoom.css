@@ -112,3 +112,14 @@ body {
 .my-msg{
     text-align: end;
 }
+
+.custom-context-menu {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    z-index: 1000; /* 다른 요소 위에 표시되도록 설정 */
+}

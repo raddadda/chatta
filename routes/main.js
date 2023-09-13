@@ -29,9 +29,6 @@ router.get('/login', controller.loginMain);
 router.get('/oauth/kakao', ckakao.authKakao);
 // 카카오 로그인 페이지 열기
 
-// router.get('/kakao/leave', ckakao.logoutKakao);
-// // 카카오 로그아웃 페이지 열기 (사실상 로그아웃 실행)
-
 
 
 ///////////post//////////////
@@ -90,7 +87,7 @@ router.get('/profile/edit/delete', cprofileEdit.profileDelete)
 
 ///////////post//////////////
 
-router.post('/mail', cprofileEdit.findPwPost)
+router.post('/mail', cprofileEdit.findInfoPost)
 // 비밀번호 찾기 메시지를 보내는 함수 (왜 필요한지 확인)
 
 router.post('/profile/edit', cprofileEdit.profileUpdatePost)
@@ -170,6 +167,8 @@ router.get('/mychat', controller.myChatMain);
 
 router.get('/chat_room', cchat.chatRoomMain);
 // 채팅방 페이지 열기
+
+router.get('/game', cchat.gameMain);
 
 
 

@@ -9,13 +9,13 @@ const nameSpace = [{
     category: 'sports',
     func: Csocket.rootSocket
 },{
-    name: '/new',
-    category: null,
-    func: Csocket.newSocket
+    name: '/game',
+    category: 'game',
+    func: Csocket.gameSocket,
 },{
-    name: '/room',
-    category: null,
-    func: Csocket.roomSocket
+    name: '/chat',
+    category: 'chat',
+    func: Csocket.chatSocket
 },
 ]
 
