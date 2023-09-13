@@ -43,7 +43,7 @@ const User = (sequelize) => {
         token: {
             type: DataTypes.STRING(63),
         },
-        profileImageFilename: {
+        profile_image_filename: {
             type: DataTypes.STRING(255),
             defaultValue: 'default-profile-image.png'
         },

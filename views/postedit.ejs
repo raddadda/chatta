@@ -12,6 +12,11 @@
 <body>
     <div class="board-body">
         <h1>수정 페이지</h1>
+        <div class="board-modal-close" onclick="histryBack()" >
+            <img src= "https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/close.png"
+                alt="close_img"
+            />
+        </div>
         <form class="board-form" name="board-form">
             <div class="left-form">
                 <label for="title"></label>
@@ -29,8 +34,8 @@
                     <option value="e-sports">e-sports</option>
                 </select>
                 <button class="board-button" type="button" onclick="boardEdit1()">게시판 수정</button>
-                <button id="boardDeleteButton" class="board-button" type="button" onclick="boardDelete1()">게시판 삭제</button>
-                <button id="backButton" class="board-button" type="button" onclick="back()">뒤로가기</button>
+                <button id="boardDeleteButton" class="board-button" type="button" onclick="boardDelete1(); this.onclick='';">게시판 삭제</button>
+                <button id="backButton" class="board-button" type="button" onclick="histryBack()">뒤로가기</button>
             </div>
         </form>
     </div>
@@ -69,10 +74,11 @@
             }
         })();
 
-        function test(e) {
-            console.log(e.value)
+        function histryBack () {
 
+            window.history.back();
         }
+
         async function boardEdit1 () {
 
             try {

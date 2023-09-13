@@ -7,159 +7,286 @@
     <title>사용자 프로필</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="/public/css/profile.css">
+    <link rel="stylesheet" href="/public/css/header.css">
+    <link rel="stylesheet" href="/public/css/footer.css">
+    <link rel="stylesheet" href="/public/css/board/board_list.css">
+    <link rel="stylesheet" href="/public/css/board/board_detail.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
-    <div class="header">
-        <div class="header-content">
-            <div class="header-title">
-                사용자 프로필
-            </div>
-            <div class="profile-edit-button">
-                <i class="fas fa-cog" alt="프로필 수정"></i>
-            </div>
-        </div>
-    </div>
-
-    <!-- 중앙 사용자 정보 섹션 -->
-    <div class="user-info">
-        <!-- 좌측 프로필 사진 및 닉네임 -->
-        <div class="left-section">
-            <div class="profile-picture">
-                <img src="<%= profileImage %>" alt="프로필 사진">
-            </div>
-            <div class="user-nickname">
-                <h1>
-                    <%= user.nickname %>
-                </h1>
-            </div>
-        </div>
-        <!-- 우측 사용자 정보 -->
-        <div class="right-section">
-            <p>ID: <%= user.login_id %>
-            </p>
-            <p>나이: <%= age %>
-            </p>
-            <p>성별: <%= user.gender %>
-            </p>
-            <p>생년월일: <%= user.birth %>
-            </p>
-            <p>이메일: <%= user.email %>
-            </p>
-        </div>
-    </div>
-
-    <div class="friend-info">
-        <!-- 친구 수 및 버튼 -->
-        <p class="friend-count">친구 수: <%= friendCount %>
-        </p>
-        <button><i class="fas fa-plus"></i> 게시물 작성</button>
-    </div>
-
-    <div class="bottom-section">
-        <div class="categories-container">
-            <!-- 채팅방 버튼 -->
-            <div class="category">
-                <button class="category-button" id="chatButton">내 채팅방</button>
-            </div>
-            <!-- 북마크한 게시물 버튼 -->
-            <div class="category">
-                <button class="category-button" id="bookmarkButton">북마크한 게시물</button>
-            </div>
-            <!-- 일정 버튼 -->
-            <div class="category">
-                <button class="category-button" id="scheduleButton">일정</button>
-            </div>
-        </div>
-
-        <!-- 카테고리에 따른 목록 -->
-        <div class="list-container" id="chatList">
-            <!-- 채팅방 목록 -->
-            <div class="category-list">
-                <ul>
-                    <li class="category-title">내가 개설한 채팅방</li>
-                    <% if (posterChatRooms.length === 0) { %>
-                    <li class="empty-message">내가 개설한 방이 없어요</li>
-                    <% } else { %>
-                    <% posterChatRooms.forEach(function(room) { %>
-                    <li>
-                        <a href="/chat_room?room_id=<%= room.room_id %>&category=<%= room.category %>">
-                            <%= room.title %> (<%= room.unreadMessages %> 안 읽은 메시지)
-                            <% if (room.latestUnreadMessage) { %>
-                            <span class="latest-message">
-                                <%= room.latestUnreadMessage.message %>
-                            </span>
-                            <% } %>
-                        </a>
-                    </li>
-                    <% }); %>
-                    <% } %>
-                </ul>
-                <!-- 내가 참여한 채팅방 목록 -->
-                <ul>
-                    <li class="category-title">내가 참여한 채팅방</li>
-                    <!-- 내가 참여한 채팅방 목록 내용... -->
-                    <% if (userChatRooms.length === 0) { %>
-                    <li class="empty-message">내가 참여한 방이 없어요</li>
-                    <% } else { %>
-                    <% userChatRooms.forEach(function(room) { %>
-                    <li>
-                        <a href="/chat_room?room_id=<%= room.room_id %>&category=<%= room.category %>">
-                            <%= room.title %> (<%= room.unreadMessages %> 안 읽은 메시지)
-                            <% if (room.latestUnreadMessage) { %>
-                            <span class="latest-message">
-                                <%= room.latestUnreadMessage.message %>
-                            </span>
-                            <% } %>
-                        </a>
-                    </li>
-                    <% }); %>
-                    <% } %>
+    <header class="main-header">
+        <div class="header-layout">
+            <span class="header-logo logo"><a href="/">Chatta</a></span> 
+            <ul class="header-menu">
+                <li><a href="/">게시판 리스트</a></li>
+            </ul>
+            <div class="header-profie">
+                <div class="profile"  onclick="toggleHeaderProfile()">
+                    <img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/test_1280.jpg" alt="profile_image" />
+                </div>
+                <ul class="header-profile-tab">
+                    <li id="mobileView"><a href="/">게시판 리스트</a> </li>
+                    <li><a href="/profile">프로필</a> </li>
+                    <li><button type="button" onclick="">로그아웃</button></li>
                 </ul>
             </div>
         </div>
-
-        <div class="list-container" id="bookmarkList">
-            <!-- 북마크한 게시물 목록 -->
-            <div class="category-list">
-                <ul>
-                    <% if (bookmarkedBoards.length === 0) { %>
-                    <li>북마크한 게시물이 없어요</li>
-                    <% } else { %>
-                    <% bookmarkedBoards.forEach(function(board) { %>
-                    <% if (board && board.id) { %>
-                    <a href="/">
-                        제목: <%= board.title %>
-                        <br />
-                        내용: <%= board.content %>
-                    </a>
-                    <% } %>
-                    <% }); %>
-                    <% } %>
-                </ul>
+    </header>
+    <div class="profile-contents">
+        <!-- 중앙 사용자 정보 섹션 -->
+        <div class="user-info">
+            <!-- 좌측 프로필 사진 및 닉네임 -->
+            <div class="left-section">
+                <div class="profile-picture">
+                    <img src="<%= profileImage %>" alt="프로필 사진">
+                </div>
+                <div class="user-nickname">
+                    <h1>
+                        <%= user.nickname %>
+                    </h1>
+                </div>
+            </div>
+            <!-- 우측 사용자 정보 -->
+            <div class="right-section">
+                <p>ID: <%= user.login_id %>
+                </p>
+                <p>나이: <%= age %>
+                </p>
+                <p>성별: <%= user.gender %>
+                </p>
+                <p>생년월일: <%= user.birth %>
+                </p>
+                <p>이메일: <%= user.email %>
+                </p>
             </div>
         </div>
 
-        <!-- 일정 목록 -->
-        <div class="list-container" id="scheduleList">
-            <div class="category-list">
-                <ul>
-                    <% if (schedules.length === 0) { %>
-                    <li>저장된 일정이 없어요</li>
-                    <% } else { %>
-                    <% schedules.forEach(function(schedule) { %>
-                    <li>
-                        <%= schedule %>
-                    </li>
-                    <% }); %>
-                    <% } %>
-                </ul>
+        <div class="friend-info">
+            <!-- 친구 수 및 버튼 -->
+            <p class="friend-count">친구 수: <%= friendCount %>
+            </p>
+            <button><i class="fas fa-plus"></i> 게시물 작성</button>
+        </div>
+
+        <div class="bottom-section">
+            <div class="categories-container">
+                <!-- 채팅방 버튼 -->
+                <div class="category">
+                    <button class="category-button" id="chatButton">내 채팅방</button>
+                </div>
+                <!-- 북마크한 게시물 버튼 -->
+                <div class="category">
+                    <button class="category-button" id="bookmarkButton">북마크한 게시물</button>
+                </div>
+                <!-- 일정 버튼 -->
+                <div class="category">
+                    <button class="category-button" id="scheduleButton">일정</button>
+                </div>
+            </div>
+
+            <!-- 카테고리에 따른 목록 -->
+            <div class="list-container" id="chatList">
+                <!-- 채팅방 목록 -->
+                <div class="category-list">
+                    <ul>
+                        <li class="category-title">내가 개설한 채팅방</li>
+                        <% if (posterChatRooms.length === 0) { %>
+                        <li class="empty-message">내가 개설한 방이 없어요</li>
+                        <% } else { %>
+                        <% posterChatRooms.forEach(function(room) { %>
+                        <li>
+                            <a href="/chat_room?room_id=<%= room.room_id %>&category=<%= room.category %>" target="_blank">
+                                <%= room.title %> (<%= room.unreadMessages %> 안 읽은 메시지)
+                                <% if (room.latestUnreadMessage) { %>
+                                <span class="latest-message">
+                                    <%= room.latestUnreadMessage.message %>
+                                </span>
+                                <% } %>
+                            </a>
+                        </li>
+                        <% }); %>
+                        <% } %>
+                    </ul>
+                    <!-- 내가 참여한 채팅방 목록 -->
+                    <ul>
+                        <li class="category-title">내가 참여한 채팅방</li>
+                        <!-- 내가 참여한 채팅방 목록 내용... -->
+                        <% if (userChatRooms.length === 0) { %>
+                        <li class="empty-message">내가 참여한 방이 없어요</li>
+                        <% } else { %>
+                        <% userChatRooms.forEach(function(room) { %>
+                        <li>
+                            <a href="/chat_room?room_id=<%= room.room_id %>&category=<%= room.category %>">
+                                <%= room.title %> (<%= room.unreadMessages %> 안 읽은 메시지)
+                                <% if (room.latestUnreadMessage) { %>
+                                <span class="latest-message">
+                                    <%= room.latestUnreadMessage.message %>
+                                </span>
+                                <% } %>
+                            </a>
+                        </li>
+                        <% }); %>
+                        <% } %>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="list-container" id="bookmarkList">
+                <!-- 북마크한 게시물 목록 -->
+                <div class="category-list">
+                    <div class="board-wrap" id="wrap"></div>
+                    <div class="board-detail-modal" id="boardDetailModal"></div>
+                </div>
+            </div>
+
+            <!-- 일정 목록 -->
+            <div class="list-container" id="scheduleList">
+                <div class="category-list">
+                    <ul>
+                        <% if (schedules.length === 0) { %>
+                        <li>저장된 일정이 없어요</li>
+                        <% } else { %>
+                        <% schedules.forEach(function(schedule) { %>
+                        <li>
+                            <%= schedule.title %>: <%= schedule.date %>
+                        </li>
+                        <% }); %>
+                        <% } %>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
-    </div>
 
-    <script src="/public/js/profile.js"></script>
+    <footer class="footer-body">
+        <div class="footer-left">
+            <div class="logo">chatta</div>
+            <p class="footer-home">
+            <a href="/" class="link-1">Home</a>
+            <a class = "utube" href="/"> | <img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/youtubeicon.png" style="width: 20px; position: relative; top: 5px;"/></a>
+            <a class = "facebook" href="/"> | <img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/facebookicon.png" style="width: 20px; position: relative; top: 5px;"/></a>
+            </p>    
+            <hr>
+            <p class="footer-project-info">
+                <span>back-end socket project</span>
+                실시간 채팅 및 동시 영상시청 웹 애플리케이션
+            </p> 
+            </p>
+                <p class="footer-team-name">Copyright © 2023 socket-chat project</p>
+            </div>
+            
+            <div class="footer-space"></div>
+
+            <div class="footer-git">
+            <div>
+                <p>김민영</p>
+            </div>
+            <div>
+                <p><a href="https://github.com/raddadda"><img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/giticon.png" style="width: 20px; position: relative; top: 5px;"> github.com/raddadda</a>
+            </div>
+            <div>
+                <p>김성제</p>
+            </div>
+            <div>
+                <p><a href="https://github.com/raddadda"><img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/giticon.png" style="width: 20px; position: relative; top: 5px;"> github.com/raddadda</a>
+            </div>
+            <div>
+                <p>류승기</p>
+            </div>
+            <div>
+                <p><a href="https://github.com/raddadda"><img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/giticon.png" style="width: 20px; position: relative; top: 5px;"> github.com/raddadda</a>
+            </div>
+            <div>
+                <p>정인근</p>
+            </div>
+            <div>
+                <p><a href="https://github.com/raddadda"><img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/giticon.png" style="width: 20px; position: relative; top: 5px;"> github.com/raddadda</a>
+            </div>
+            <div>
+                <p>최영찬 </p>
+            </div>
+            <div>
+                <p><a href="https://github.com/raddadda"><img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/giticon.png" style="width: 20px; position: relative; top: 5px;"> github.com/raddadda</a>
+            </div>
+        </div>
+    </footer>
+<script src="/public/js/index.js" defer></script>
+<script src="/public/js/board/board_CRUD.js"></script>
+<script src="/public/js/board/board_render.js"></script>
+<script src="/public/js/board/board_render_func.js"></script>
+<script src="/public/js/board/board_book_mark.js"></script>
+<script src="/public/js/profile.js"></script>
+<script src="/public/js/header.js"></script>
+
+<script>
+
+    let list = [];
+    
+    ( function() {
+       
+        getbaordPagenation();
+    
+    })();
+
+    async function getbaordPagenation() {    
+
+        try {
+        
+            const findAllData_board = await findall_profile_bookmark_board ();
+
+            if (findAllData_board.length > 0) {
+                const wrap = document.querySelector("#wrap");
+                let boxhtml = ``;
+                for ( let i=0; i<findAllData_board.length; i++) {
+                    let date = new Date(`${findAllData_board[i].createdAt}`);
+                    list.push(findAllData_board[i].board);
+                    const data = {
+                        category : findAllData_board[i] && findAllData_board[i].board.category ? findAllData_board[i].board.category : '',
+                        title :  findAllData_board[i] && findAllData_board[i].board.title ? findAllData_board[i].board.title : '',
+                        views : findAllData_board[i] && findAllData_board[i].board.views ? findAllData_board[i].board.views : 0,
+                        createAt: `${date.getFullYear()}-${(date.getMonth() + 1)>= 10 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1) }-${date.getDate() >= 10 ? date.getDate() : '0' + date.getDate()} ${date.getHours()}시`
+                    }
+                    boxhtml += await list_item(i , data);
+                    if (findAllData_board.length === i + 1) {
+                        page_id = findAllData_board[i].id + 1;
+                    }
+                }
+                wrap.innerHTML += boxhtml;
+
+            } else {
+
+                const noneData = document.querySelector('.category-list');
+                noneData.innerHTML +=  `  <ul>
+                        <li>북마크한 게시물이 없어요</li>
+                    </ul>
+                `;
+            }
+
+        } catch (e) {
+            
+            console.log(e);
+        }
+    }   
+
+    async function chatRoomJoin(board_id){
+        
+        const res = await axios({
+            method: "post",
+            url: "/chat/join",
+            data: {
+                room_id:board_id,
+            }
+        })
+
+        if (res.data.result) {
+            alert('채팅방에 참여했습니다')
+            document.location.assign('/mychat')
+        }
+    }
+
+</script>
+
 </body>
 
 </html>

@@ -53,6 +53,7 @@ body {
 /* 버튼 영역 */
 .btn {
     display: flex;
+    margin-bottom: 10px;
 }
 .edit_btn button {
     background-color: #3498db;
@@ -102,4 +103,19 @@ body {
     100% {
         opacity: 1;
     }
+}
+
+/* 메세지 스타일 */
+.red {
+    color: red;
+    font-size : 16px;
+    text-align : start;
+    font-weight : bold;
+}
+
+.green {
+    color: green;
+    font-size: 16px;
+    text-align : start;
+    font-weight : bold;
 }

@@ -76,6 +76,9 @@ router.get('/profile/edit/pw', cprofileEdit.pwUpdate);
 router.get('/findpw', cprofileEdit.findPw)
 // 비밀번호 찾기 페이지 열기
 
+router.get('/findId', cprofileEdit.findId)
+// 아이디 찾기 페이지 열기
+
 router.get('/profile/edit/delete', cprofileEdit.profileDelete)
 // 프로필 삭제 페이지 열기
 
@@ -88,14 +91,21 @@ router.post('/mail', cprofileEdit.findInfoPost)
 // 비밀번호 찾기 메시지를 보내는 함수 (왜 필요한지 확인)
 
 router.post('/profile/edit', cprofileEdit.profileUpdatePost)
+//프로필 정보 업데이트
 
 router.post('/profile/edit/pw', cprofileEdit.pwUpdatePost)
+//비밀번호 업데이트
 
 router.post('/profile/edit/delete', cprofileEdit.profileDeletePost)
+//회원 탈퇴
+
+router.post('/profile/edit/upload', cprofileEdit.uploadProfileImage, cprofileEdit.handleUploadedProfileImage);
 
 router.post('/findpw', cprofileEdit.findInfoPost)
+//비밀번호 찾기
 
-
+router.post('/findId', cprofileEdit.findIdPost)
+//아이디 찾기
 
 
 /////////////////////////////게시판 페이지////////////////////////////
@@ -122,10 +132,12 @@ router.post('/post/findone', cboard.boarduser_findone);
 // 데이터베이스에서 게시판 하나 조회하는 함수
 
 router.post('/post/findall', cboard.boarduser_findall);
+router.post('/post/findall/pagination', cboard.boarduser_findall_pagenation);
+//프로필 북마크 라우터 추가
+
+router.post('/post/findall/profile_pagination_board',cboard.findall_profile_bookmark_board);
 // 데이터베이스에서 게시판 전체를 조회하는 함수
 
-router.post('/post/findall/pagination', cboard.boarduser_findall_pagenation);
-// 아몰랑
 
 router.post('/post/findonebookmark', cboard.findone_board_bookmark);
 

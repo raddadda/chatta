@@ -131,8 +131,9 @@ async function boradFindAll(offset){
 }
 
 async function boradFindAll_pagination(page_id){
-
-    if (page_id === undefined || page_id == null) return console.log('page_id이 없음');
+    console.log("page_id",page_id)
+    if (page_id === undefined || page_id == null) 
+        return console.log('page_id이 없음');
     const res = await axios({
         method: "POST",
         url:"/post/findall/pagination",
@@ -153,8 +154,7 @@ async function boradFindAll_pagination(page_id){
 const bookMark_FindOne = async (id) => {
 
     const data = { board_id : id }
-    try {   
-
+    try {
         const createBookMarkres = await axios({
             method:"post",
             url:"/post/findonebookmark",
@@ -173,13 +173,9 @@ const bookMark_FindOne = async (id) => {
     
 }
 
-
-
-const bookMark_create = async (id) => {
-
-    const data = { board_id : id }
+const bookMark_create = async (id,view) => {
+    const data = { board_id : id ,view : view}
     try {   
-
         const createBookMarkres = await axios({
             method:"post",
             url:"post/newbookmark",
@@ -190,16 +186,13 @@ const bookMark_create = async (id) => {
         } else {
             return false
         }
-
     } catch (e) {
         return false
     }
 }
  
-const bookMark_delete = async (id) => {
-
-    const data = { board_id : id }
-
+const bookMark_delete = async (id,view) => {
+    const data = { board_id : id , view : view }
     try {   
         const deleteBookMarkres = await axios({
             method:"post",
@@ -208,22 +201,27 @@ const bookMark_delete = async (id) => {
         })
 
         if (deleteBookMarkres) {
-            return true
-
+            return true;
         } else {
-            return false
+            return false;
         }
-
     } catch (e) {
-
-        return false
+        return false;
     }
 }
 
 
-
-
-
-function back(){
-    window.location.href='/';
+async function findall_profile_bookmark_board(){
+    const res = await axios({
+        method: "POST",
+        url:"post/findall/profile_pagination_board",
+        data: {
+        }
+    })
+    if (res.data.result){
+        return res.data.board;
+    } else{
+        console.log('res',res);
+        return [];
+    }
 }
