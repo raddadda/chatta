@@ -39,28 +39,74 @@
             border: 1px solid #000;
             border-radius: 50%;
         }
+        .black-circle{
+            width:30px;
+            height:30px;
+            border-radius: 50%;
+            background-color: black;
+            margin:5px;
+        }
+        .white-circle{
+            width:30px;
+            height:30px;
+            border-radius: 50%;
+            border-color: black;
+            border-style: solid;
+            border-width: thin;
+            background-color: white;
+            margin:5px;
+        }
+        .player-info{
+            display: flex;
+        }
+        span{
+            align-self: center;
+        }
     </style>
 </head>
 <body>
     <div class="board" id="board"></div>
-
+    <div class="player-info">
+        <div class="black-circle"></div>
+        <span id="black">a</span>
+    </div>
+    <div class="player-info">
+        <div class="white-circle"></div>
+        <span id="white">b</span>
+    </div>
+    <button type="button" onclick="show()">보여줘</button>
 </body>
     <script>
-        let user = ['<%= user1 %>','<%= user2 %>']
+        const socket = io('/game');
+        const user_id = '<%= user_id %>'
+        const user1 = '<%= user1 %>'
+        const user2 = '<%= user2 %>'
+        const nickname = '<%= nickname %>'
+        const room_id = 'game&<%= user1 %>&<%= user2 %>'
+        const name_space = '/game'
+
+        let socketInfoList;
+        
+        let player_info;
         let suffle;
+        let choose_flag = false;
         let role;
         let turn;
-        rootSetting()
-        console.log('user',user)
         console.log('role',role)
         console.log('turn',turn)
 
-        function rootSetting(){
-            suffle = firstPlayer();
-            const black = user[suffle]
-            const white = user[(suffle + 1) % 2]
-            role = [black,white];
-            turn = 1;
+
+        function show(){
+            console.log(socketInfoList);
+        }
+        
+        function socketSearch(nickname){
+            console.log('serch socket',socketInfoList)
+            const member = socketInfoList.find((e) => e.nickname === nickname);
+            if(!member){
+                alert('유저가 접속중이지 않습니다')
+            }
+            return member.socket_id;
         }
 
         function firstPlayer(){
@@ -84,11 +130,24 @@
                 cells[i][j] = cell;
 
                 cell.addEventListener('click', () => {
+                    console.log('turn',turn);
+                    console.log('player',role[turn])
                     if (cell.classList.contains('black') || cell.classList.contains('white')) {
                         return;
                     }
-
-                    cell.classList.add(currentPlayer);
+                    if(role[turn] === nickname){
+                        console.log('dataset',cell.dataset)
+                        socket.emit('ejs_choose',nickname,room_id,cell.dataset);
+                        cell.classList.add(currentPlayer);
+                        turn = (turn + 1) % 2
+                    } else {
+                        if(choose_flag){
+                            cell.classList.add(currentPlayer);
+                            turn = (turn + 1) % 2
+                        } else {
+                            return;
+                        }
+                    }
 
                     if (checkWin(parseInt(cell.dataset.row), parseInt(cell.dataset.col))) {
                         alert(`${currentPlayer.toUpperCase()} 플레이어가 승리했습니다!`);
@@ -100,6 +159,19 @@
             }
         }
 
+        function simulateClick(row, col) {
+            // row와 col을 기반으로 클릭할 셀을 선택하고 클릭 이벤트를 생성
+            const cell = cells[row][col]; // cells 배열에 셀 요소들이 저장되어 있다고 가정
+            const clickEvent = new MouseEvent('click', {
+                bubbles: true,
+                cancelable: true,
+                view: window,
+            });
+
+            // 선택한 셀에 클릭 이벤트를 디스패치
+            cell.dispatchEvent(clickEvent);
+        }
+        
         // 승리 확인 함수 (5개 연속인지 확인)
         function checkWin(row, col) {
             // 가로 확인

@@ -1,19 +1,3 @@
-socket.on('new_member',(data) => {
-    console.log('new member')
-    const { user_id, nickname, key } = data
-    const socketInfo = {
-        nickname,
-        key
-    }
-    const memberInfo = {
-        user_id,
-        nickname
-    }
-    socketInfoList.push(socketInfo);
-    memberInfoList.push(memberInfo);
-    console.log('socket info',socketInfoList);
-})
-
 socket.on('new_msg',(data)=>{
     console.log(data);
     const { nickname:msg_nickname, content, game } = data
@@ -39,3 +23,4 @@ socket.on('game_accept_res',(game)=>{
     alert('게임 신청이 수락되었습니다')
     window.open(`/game?user1=${user1}&user2=${user2}`)
 })
+// 왜 안 먹는지는 잘 모르겠음.. 여유 날때 확인

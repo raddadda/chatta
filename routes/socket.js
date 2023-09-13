@@ -4,9 +4,10 @@ const Csocket = require('../controller/Csocket');
 module.exports = (io) => {
     const nameSpace = constant.nameSpace;
     nameSpace.forEach((e) => {
-        io.of(e.name).on('connection', (socket) => {
-            Csocket.systemSocket(io,socket);
-            e.func(io, socket);
+        const nameIo = io.of(e.name);
+        nameIo.on('connection',(socket) => {
+            Csocket.systemSocket(nameIo,socket);
+            e.func(nameIo,socket);
         })
     })
 };
