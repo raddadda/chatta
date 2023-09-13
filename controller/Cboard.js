@@ -176,7 +176,7 @@ const boarduser_findall_pagenation = async (req, res)=>{
 
     if (req.body.page_id) {
         pagenation.startid = {id :{ [Op.lt]: req.body.page_id-1}}
-
+        console.log(" pagenation.startid ", pagenation.startid )
     } else {
         pagenation.startid = {id :{[Op.gte]: 1}}
     }
