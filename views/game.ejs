@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/public/js/socket/system_socket.js" defer></script>
+    <script src="/public/js/socket/game_socket.js" defer></script>
+    <title>오목 게임</title>
+    <style>
+        .board {
+            display: grid;
+            grid-template-columns: repeat(18, 18px);
+            grid-template-rows: repeat(18, 18px);
+            gap: 2px;
+            width: 360px;
+            height: 360px;
+            border: 2px solid #000;
+            background-color: #f2b06d;
+        }
+
+        .cell {
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            border: 1px solid #000;
+            cursor: pointer;
+            background-color: #f2b06d;
+        }
+
+        .cell.black {
+            background-color: #000;
+            border: 1px solid #fff;
+            border-radius: 50%;
+        }
+
+        .cell.white {
+            background-color: #fff;
+            border: 1px solid #000;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="board" id="board"></div>
+
+</body>
+    <script>
+        let user = ['<%= user1 %>','<%= user2 %>']
+        let suffle;
+        let role;
+        let turn;
+        rootSetting()
+        console.log('user',user)
+        console.log('role',role)
+        console.log('turn',turn)
+
+        function rootSetting(){
+            suffle = firstPlayer();
+            const black = user[suffle]
+            const white = user[(suffle + 1) % 2]
+            role = [black,white];
+            turn = 1;
+        }
+
+        function firstPlayer(){
+            const rand = Math.floor(Math.random() * 2);
+            return rand;
+        }
+
+        const board = document.getElementById('board');
+        const cells = [];
+        let currentPlayer = 'black';
+
+        // 보드 생성
+        for (let i = 0; i < 18; i++) {
+            cells[i] = [];
+            for (let j = 0; j < 18; j++) {
+                const cell = document.createElement('div');
+                cell.classList.add('cell');
+                cell.dataset.row = i;
+                cell.dataset.col = j;
+                board.appendChild(cell);
+                cells[i][j] = cell;
+
+                cell.addEventListener('click', () => {
+                    if (cell.classList.contains('black') || cell.classList.contains('white')) {
+                        return;
+                    }
+
+                    cell.classList.add(currentPlayer);
+
+                    if (checkWin(parseInt(cell.dataset.row), parseInt(cell.dataset.col))) {
+                        alert(`${currentPlayer.toUpperCase()} 플레이어가 승리했습니다!`);
+                        resetGame();
+                    } else {
+                        currentPlayer = currentPlayer === 'black' ? 'white' : 'black';
+                    }
+                });
+            }
+        }
+
+        // 승리 확인 함수 (5개 연속인지 확인)
+        function checkWin(row, col) {
+            // 가로 확인
+            let count = 1;
+            for (let i = col + 1; i < 18 && cells[row][i].classList.contains(currentPlayer); i++) count++;
+            for (let i = col - 1; i >= 0 && cells[row][i].classList.contains(currentPlayer); i--) count++;
+            if (count >= 5) return true;
+
+            // 세로 확인
+            count = 1;
+            for (let i = row + 1; i < 18 && cells[i][col].classList.contains(currentPlayer); i++) count++;
+            for (let i = row - 1; i >= 0 && cells[i][col].classList.contains(currentPlayer); i--) count++;
+            if (count >= 5) return true;
+
+            // 대각선 확인 (오른쪽 위에서 왼쪽 아래로)
+            count = 1;
+            for (let i = row - 1, j = col + 1; i >= 0 && j < 18 && cells[i][j].classList.contains(currentPlayer); i--, j++) count++;
+            for (let i = row + 1, j = col - 1; i < 18 && j >= 0 && cells[i][j].classList.contains(currentPlayer); i++, j--) count++;
+            if (count >= 5) return true;
+
+            // 대각선 확인 (왼쪽 위에서 오른쪽 아래로)
+            count = 1;
+            for (let i = row - 1, j = col - 1; i >= 0 && j >= 0 && cells[i][j].classList.contains(currentPlayer); i--, j--) count++;
+            for (let i = row + 1, j = col + 1; i < 18 && j < 18 && cells[i][j].classList.contains(currentPlayer); i++, j++) count++;
+            if (count >= 5) return true;
+
+            return false;
+        }
+
+        // 게임 초기화
+        function resetGame() {
+            for (let i = 0; i < 18; i++) {
+                for (let j = 0; j < 18; j++) {
+                    cells[i][j].classList.remove('black', 'white');
+                }
+            }
+            currentPlayer = 'black';
+        }
+    </script>
+</html>

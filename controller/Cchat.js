@@ -61,7 +61,7 @@ const msgLoad = async (req,res) => {
 }
 
 const msgSend = async (req,res) => {
-    const {user_id,nickname,room_id,content} = req.body
+    const {user_id,nickname,room_id,content,game} = req.body
     const msg_send = await Chat_Message.create({
         user_id,
         room_id,
@@ -73,7 +73,13 @@ const msgSend = async (req,res) => {
         nickname,
         room_id,
         content,
+        game,
     })
+}
+
+const gameMain = async (req,res) => {
+    const {user1,user2} = req.query
+    res.render('game',{user1,user2})
 }
 
 module.exports = {
@@ -83,4 +89,5 @@ module.exports = {
     memberLoad,
     msgLoad,
     msgSend,
+    gameMain,
 }

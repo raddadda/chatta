@@ -174,22 +174,6 @@ ${password}
     }
 }
 
-const findPwPost = (req, res) => { // /mail 에서 받는 포스트
-    const { email }  = req.body;
-  
-    let emailParam = {
-      toEmail: email,     // 수신할 이메일
-  
-      subject: '회원님 비밀번호 찾기 안내',   // 메일 제목
-  
-      text: `메일테스트`  // 메일 내용
-    };
-  
-    mailer.sendGmail(emailParam);
-  
-    res.status(200).send("성공");
-  }
-
 
 module.exports ={
     profileUpdate,
@@ -200,7 +184,6 @@ module.exports ={
     pwUpdatePost,
     profileDeletePost,
     findInfoPost,
-    findPwPost,
 }
 
 
