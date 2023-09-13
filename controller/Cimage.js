@@ -29,10 +29,10 @@ const getProfileImage = async (userId) => {
     try {
         const user = await User.findOne({ where: { user_id: userId } });
 
-        if (user && user.profileImageFilename) {
+        if (user && user.profile_image_filename) {
             const params = {
                 Bucket: 'kdt-test-bucket-seunggi',
-                Key: user.profileImageFilename,
+                Key: user.profile_image_filename,
             };
 
             const data = await s3.getObject(params).promise();
@@ -49,7 +49,29 @@ const getProfileImage = async (userId) => {
     }
 };
 
+const uploadProfileImageToS3 = async (userId, file) => {
+    try {
+        const profileImageFilename = `${userId}-${file.originalname}`;
+
+        const params = {
+            Bucket: 'kdt-test-bucket-seunggi',
+            Key: profileImageFilename,
+            Body: file.buffer,
+            ContentType: file.mimetype,
+            ACL: 'public-read',
+        };
+
+        await s3.upload(params).promise();
+
+        return profileImageFilename;
+    } catch (error) {
+        console.error('프로필 이미지 업로드 오류:', error);
+        throw error;
+    }
+};
+
 module.exports = {
     getS3ImageURL,
-    getProfileImage
+    getProfileImage,
+    uploadProfileImageToS3
 };

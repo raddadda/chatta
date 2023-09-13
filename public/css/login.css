@@ -41,11 +41,16 @@ html, body {
 }
 
 /* 입력 필드 스타일 */
-input[type='text'],
-input[type='password'] {
+input[type='text']{
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+input[type='password']{
+    width: 100%;
+    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
@@ -73,7 +78,6 @@ button.Klogin {
     width: 100%;
     font-size: 18px;
     font-weight: bold;
-    margin-bottom: 10px;
 }
 
 /* 로그인 상태 유지 스타일 */
@@ -88,14 +92,21 @@ a {
     text-decoration: none;
     color: rgb(244, 115, 033);
     font-weight: bold;
+    margin-bottom: 10px;
 }
-
+.pwa{
+    margin-bottom: 10px;
+}
 .signup {
-    margin-top: 10px;
+    margin: 0 0 10px 0;
 }
 
 .signup a {
-    color: #000;
+    color: rgb(26, 105, 215);
+    font-size: 20px;
+}
+.first {
+    margin-bottom: 10px;
 }
 
 /* hover */

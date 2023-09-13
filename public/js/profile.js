@@ -43,3 +43,13 @@ function toggleList(listId, button) {
         button.style.color = 'black';
     }
 }
+
+// 모달 열기
+document.addEventListener('click', function(event) {
+    if (event.target.classList.contains('board-title')) {
+        event.preventDefault();
+
+        const boardId = event.target.getAttribute('data-board-id');
+        
+    }
+});

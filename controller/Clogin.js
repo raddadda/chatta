@@ -1,15 +1,17 @@
 const constant = require('../common/constant');
 const {User} = require('../models');
 const Cauth = require('./Cauth');
+const Ckakao = require('./Ckakao');
+const axios = require('axios');
 
 
 const signUp = async (req,res)=>{
     try {
         const {login_id,login_pw,Cpw,user_name,gender,birth,email}=req.body
-        if(login_pw !== Cpw) {
-            res.json({result : false, message : '비밀번호가 일치하는지 확인해주세요'})
-            return;
-        }
+        // if(login_pw !== Cpw) {
+        //     res.json({result : false, message : '비밀번호가 일치하는지 확인해주세요'})
+        //     return;
+        // }
         const flag = await Cauth.dbIdCheck(login_id)
         if(flag){
             res.json({result:false , message:'아이디가 중복되어 사용할 수 없습니다'})
@@ -76,6 +78,26 @@ const signIn = async (req,res)=>{
 
 const userLogOut = async (req,res)=>{
     try {
+        const getCheck = await Cauth.getAuthCheck(req, res);
+        if (!getCheck) {
+            res.redirect('/login')
+            return;
+        }
+        const {id} = req.signedCookies.logined;
+        const token = await Ckakao.tokenLoad(id);
+        if (token.token){
+            const logout = await axios({
+                method: "POST",
+                url: "https://kapi.kakao.com/v1/user/unlink",
+                headers: {
+                    "Authorization": token.token,
+                },
+                data: {
+                    "target_id_type":"user_id",
+                    "target_id":token.id,
+                },
+            })
+        }
         res.clearCookie(constant.loginCookie);
         res.json({result:true});
     } catch (error) {
@@ -83,7 +105,7 @@ const userLogOut = async (req,res)=>{
     }
 }
 
-/////register 분리/////
+
 const register = async (req,res)=>{
     try {
         res.render('register')

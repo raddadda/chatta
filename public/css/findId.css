@@ -2,8 +2,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f0f0f0;
-    
+    background-color: #f0f0f0;   
 }
 
 .header {
@@ -25,9 +24,17 @@ body {
     font-size: 24px;
 }
 
-/* 유저 정보 영역 */
-.center-info {
-    max-width: 600px;
+/* p 태그 스타일 */
+p {
+    font-size: 18px; 
+    color: #333; 
+    margin-bottom: 20px; 
+    text-align: center; 
+}
+
+/* 유저 인풋 영역 */
+form {
+    max-width: 400px;
     margin: 20px auto;
     padding: 20px;
     border: 1px solid #ccc;
@@ -36,13 +43,20 @@ body {
     background-color: white;
 }
 
-.center-info label {
+form label {
     display: block;
     font-weight: bold;
     margin-bottom: 5px;
 }
 
-.center-info input {
+form input {
+    width: 95%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+form select {
     width: 95%;
     padding: 10px;
     margin-bottom: 10px;
@@ -50,13 +64,13 @@ body {
     border-radius: 3px;
 }
 
-/* 버튼 영역 */
+/* 버튼 스타일 */
 .btn {
     display: flex;
-    margin-bottom: 10px;
 }
-.edit_btn button {
-    background-color: #3498db;
+
+.findId_btn button {
+    background-color: rgb(123,142,169);
     color: #fff;
     padding: 10px 20px;
     border: none;
@@ -64,8 +78,8 @@ body {
     cursor: pointer;
 }
 
-.edit_btn button:hover {
-    background-color: #2980b9;
+.findId_btn button:hover {
+    background-color: rgb(71,87,111);
 }
 
 .cancel_btn button {
@@ -75,19 +89,39 @@ body {
     border: none;
     border-radius: 3px;
     cursor: pointer;
-    margin-left: 10px;
+    margin: 0 10px;
 }
 .cancel_btn button:hover {
-    background-color: #8c8c8c;
+    background-color: #c8c8c8;
 }
 
-/* resultBox */
+/* result */
 .result {
     display: none;
     font-weight: bold;
     font-size: 16px;
     color: #e74c3c;
     margin-top: 10px;
+}
+
+/* .resultText {
+    text-align: center;
+} */
+
+a {
+    display: inline-block;
+    background-color: rgb(123,142,169);
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 3px;
+    text-decoration: none;
+    margin: 10px 5px 0 0;
+    font-size: 16px;
+}
+
+a:hover {
+    background-color: rgb(71,87,111);
 }
 /* result 애니메이션 */
 .result.show {

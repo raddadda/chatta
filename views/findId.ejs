@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"></script>
+    <script src="/public/js/findId.js" defer></script>
+    <title>아이디 찾기</title>
+    <link rel="stylesheet" href="/public/css/findId.css">
+</head>
+
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="header-title">
+                아이디 찾기
+            </div>
+        </div>
+    </div>
+    <p id="tx">가입 시 기재한 이름과 생년월일을 입력해주세요</p>
+    <form name="findId-form">
+        <div id="form">
+            <div class="name">
+                <label for="name">이름</label>
+                <input type="text" id="name" /><br />
+            </div>
+            <div class="birth">
+                <label for="birth">생년월일</label>
+                <div id="birth" class="birth_select">
+                    <select name="year" id="birth-year">
+                    </select>
+                    <select name="month" id="birth-month">
+                    </select>
+                    <select name="day" id="birth-day">
+                    </select>
+                </div>
+            </div>    
+            <div class="btn">
+                <div class="findId_btn">
+                    <button type="button" onclick="findId()">찾기</button>
+                </div>
+                <div class="cancel_btn">
+                    <button type="button" onclick="cancel()">뒤로</button>
+                </div>
+            </div>
+            <div class="result"></div>
+        </div>
+        <div class="resultText" hidden>
+            <div class="result2"></div>
+            <a href="/login">로그인</a>
+            <a href="/findpw">비밀번호 찾기</a>
+        </div>
+        
+</body>
+</html>
