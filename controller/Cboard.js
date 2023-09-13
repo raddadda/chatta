@@ -102,9 +102,9 @@ const delete_board = async (req, res) => {
     try {
 
         const board = await Board.destroy({ where : { id }})
+        const bookmark = await Board_Bookmark.destroy({ where : {id}})
         if (board) {
             res.json({result:true});
-        
         } else {
             res.json({result:false});
         } 
@@ -278,7 +278,7 @@ const findall_profile_bookmark_board =  async (req,res)=>{
         const board = await Board_Bookmark.findAll({
             include: [{
                 model: Board,
-                attributes:['title','category'],
+                attributes:['title','category','event_time','views','content','id','poster_id'],
                 where: {
                      poster_id: user_id,
                 }
@@ -287,6 +287,16 @@ const findall_profile_bookmark_board =  async (req,res)=>{
 
         console.log('board', board)
         if (board) {
+            board.forEach(index => {
+                console.log('index', index.dataValues.board)
+                if (index.dataValues.board.dataValues.poster_id === user_id) {
+                    index.dataValues.board.dataValues.poster_check = true;
+                    delete index.dataValues.board.dataValues.poster_id;
+                } else {
+                    index.dataValues.board.dataValues.poster_check = false;
+                    delete index.dataValues.board.dataValues.poster_id;
+                }
+            });
             res.json({result:true, board});
         } else{
             console.log("x");
