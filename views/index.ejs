@@ -110,17 +110,19 @@
 <script src="/public/js/index.js" defer></script>
 <script src="/public/js/header.js"></script>
 <script src="/public/js/board/board_CRUD.js"></script>
-<script src="/public/js/board/board_svg.js"></script>
-<script src="/public/js/board/board_list.js"></script>
+<script src="/public/js/board/board_render.js"></script>
+<script src="/public/js/board/board_render_func.js"></script>
+<script src="/public/js/board/board_book_mark.js"></script>
 <script>
 
+    /**  board list 관련 **/
     let list = [];
     let page_id = 0;
 
     var currentDirection = ''; // 현재의 방향을 나타내는 변수
     var lastScrollTop = 0; // 방향을 구하기 위해 사용되는 변수
     ( async function() {
-        
+        goTop();
         getbaordPagenation();
         window.addEventListener('scroll', ()=>{
             
@@ -134,203 +136,50 @@
                     if(currentDirection != 'down'){
                         getbaordPagenation();
                         currentDirection = 'down';
-                        //console.log(currentDirection+' 실행 !!!!');
-                     
+                        console.log(currentDirection+' 실행 !!!!');
                     }
-
                 } else {
-
-                   
-                        currentDirection = '';
-                        //console.log(currentDirection+' 실행 !!!!');
-                    
+                    if (currentDirection != 'up'){
+                        currentDirection = 'up';
+                        console.log(currentDirection+' 실행 !!!!');
+                    }
                 }
+
                 lastScrollTop = scrollTop;
         })
 
         }
     )()
+    async function getbaordPagenation () {
 
-    async function getbaordPagenation(){
+        const wrap = document.querySelector("#wrap");
 
         try {
-            
             const findAllData = await boradFindAll_pagination(page_id);
-                if (findAllData.length > 0) {
-                    const wrap = document.querySelector("#wrap");
-                    
-                    let boxhtml = ``;
-                    
-                    for (let i=0; i<findAllData.length; i++){
-                        let date = new Date(`${findAllData[i].createdAt}`);
-                        list.push(findAllData[i]);
-                        console.log("findAllData[i]",findAllData[i]);
-                        const data = {
-                            category : findAllData[i] && findAllData[i].category ? findAllData[i].category : '',
-                            title :  findAllData[i] && findAllData[i].title ? findAllData[i].title : '',
-                            views : findAllData[i] && findAllData[i].views ? findAllData[i].views : 0,
-                            createAt: `${date.getFullYear()}-${(date.getMonth() + 1)>= 10 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1) }-${date.getDate() >= 10 ? date.getDate() : '0' + date.getDate()} ${date.getHours()}시`
-                        }
-                        
-                        boxhtml += `
-                            <div class="board-card" onclick="loadDetailModal(${i})">
-                                <div class="roomImg">
-                                    <div class="img-box"></div>
-                                </div>
-                                <div class="boardInfo">
-                                    <div class="boxBordCategory">${data.category}</div>
-                                    <div class="boxTitle">${data.title}</div>
-                                    <div class="boxCreateAt">${data.createAt}</div>
-                                    <div class="boxViews"><img src="../public/images/bookmarkicon.png" >&nbsp; ${data.views}</div>      
-                                </div>
-                            </div>
-                        `;  
-                  
-                        if (findAllData.length === i + 1) {
-                            page_id = findAllData[i].id + 1;
-                        }
-
+            let boxhtml = ``;
+            if (findAllData.length > 0) {
+                
+                for (let i=0; i<findAllData.length; i++){
+                    let date = new Date(`${findAllData[i].createdAt}`);
+                    list.push(findAllData[i]);
+                    const data = {
+                        category : findAllData[i] && findAllData[i].category ? findAllData[i].category : '',
+                        title :  findAllData[i] && findAllData[i].title ? findAllData[i].title : '',
+                        views : findAllData[i] && findAllData[i].views ? findAllData[i].views : 0,
+                        createAt: `${date.getFullYear()}-${(date.getMonth() + 1)>= 10 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1) }-${date.getDate() >= 10 ? date.getDate() : '0' + date.getDate()} ${date.getHours()}시`
                     }
+
+                    boxhtml += await list_item(i , data);
+
+                    if (findAllData.length === i + 1) {
+                        page_id = findAllData[i].id + 1;
+                    }
+                }
                 wrap.innerHTML += boxhtml;
             }
-
-        } catch (e) {
-        }
-    }
-
-    async function loadDetailModal (index) {
-        console.log("list[index]",list[index]);
-        // console.log("list[index]",list[index].views++);
-        list[index].book_mark = await post_bookmark(list[index].id);
-
-        const data = {
-            id : list[index] && list[index].id ? list[index].id : 0,
-            poster_check : list[index] && list[index].poster_check ? list[index].poster_check : false,
-            category : list[index] && list[index].category ? list[index].category : '',
-            content: list[index] && list[index].content ? list[index].content : '',
-            title :  list[index] && list[index].title ? list[index].title : '',
-            views : list[index] && list[index].views ? list[index].views : 0,
-            event_time : list[index] && list[index].event_time ? list[index].event_time.split('T')[0] : '',
-            book_mark : list[index] && list[index].book_mark ? list[index].book_mark : false
-        }
-
-        let modal = document.getElementById('boardDetailModal');
-        modal.style.display = 'block'
-        modal.innerHTML = `
-            <div class="board-modal-close" onclick="modalCloase()">
-                <img src= "https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/close.png"
-                    alt="close_img"
-                />
-            </div>
-            <div class="bd-image"></div>
-            <div class="board-detail-contents">
-                <div class="bd-info">
-                    <div class="bd-info_category"> ${data.category}</div>
-                    <h2 class="bd-info_title">${data.title}</h2>
-                    <div class="bd-book_mark" onclick= "bookMarkToggle(${index})">
-                        ${getBookMarkSvg(data.book_mark)}
-                    </div>
-                </div>
-                <div id="eventDetailSubInfo" class="bd-sub-content">
-                    <div class="txt-box">
-                        <h6>내용</h6>
-                        <p>${data.content}</p>
-                    </div>
-                    <div class="txt-box">
-                        <h6>흥보 시간</h6>
-                        <p>${data.event_time}</p>
-                    </div>
-
-                    <div class="txt-box">
-                        <h6>채팅방</h6>
-                        <p><button onclick='chatRoomJoin(${data.id})'>입장하기</button><p>
-                    </div>
-                    ${data.poster_check === true ? 
-                        `<div class="button-box">
-                            <button type="button" onclick = "boardModified(${data.id})">수정하기</button>
-                            <button type="button" onclick = "boardDelete1(${data.id})">삭제하기</button>
-                        </div>`
-                        : 
-                        ''
-                    }
-                </div>
-               
-            </div>
-        `
-    }
-    async function post_bookmark(id){
-
-        try{
-            const findOneData = await bookMark_FindOne(id);
-            return findOneData
-            console.log("findOneData",findOneData);
-        }catch(e){
-            return false;
-            console.log(e);
-        }
-    }
-
-    async function bookMarkToggle (index) {
-
-
-        const bookmarkDom = document.querySelector('#boardDetailModal > .board-detail-contents >  .bd-info > .bd-book_mark > svg > g');
-
-        if (list[index].book_mark === true) { // 북마크 삭제 할 때
-
-            const result =  await bookMark_delete(list[index].id,list[index].views);
-
-            if (result) {
-                list[index].book_mark = false;
-                list[index].views -=1;
-                bookmarkDom.style.fill = '#eee';
-            } else {
-
-                alert('잠시 후에 사용해 주세요.');
-            } 
-
-        } else if (list[index].book_mark === false) { // 북마크 생성할 때
-
-            const result =  await bookMark_create(list[index].id,list[index].views);
-
-            if (result) {
-                list[index].book_mark = true;
-                list[index].views +=1;
-                bookmarkDom.style.fill = '#f5cd00';
-            } else {
-
-                alert('잠시 후에 사용해 주세요.');
-            } 
-        }
-    }
-    
-
-    function modalCloase () {
-        document.getElementById('boardDetailModal').style.display = 'none';
-    }
-
-    function boardModified (id) {
-
-        if(!confirm('수정페이지로 넘어가겠습니까?')) return;
-
-        // 페이지 이동
-        window.location.href = `/post/edit/${id}`
-
-    }
-
-    async function boardDelete1 (id) {
-
-        if (!confirm('정말로 삭제하시겠습니까?')) return;
-        try {
-            const deleteRes = await boardDelete(id);
-            if (deleteRes) {
-                alert('삭제가 되었습니다.');
-                window.location.reload();
-            } else {
-               return alert('다시 시도해 주세요.');
-            }
             
         } catch (e) {
-            alert('잠시 후에 시도해주세요.');
+
         }
     }
 
@@ -348,28 +197,9 @@
             }
     }
     
-    function goTop(){
-        window.addEventListener('scroll', () => {
-    if ( window.scrollY >100) {
-      document.getElementById('scrollby-top').style.display = "block";
-      document.getElementById('scrollby-top').addEventListener('click',()=>{
-            window.scrollTo({
-                top: 0,
-                left: 0,
-                behavior: 'smooth'
-            });
-        })
-    } else {
-      document.getElementById('scrollby-top').style.display = "none";
-    }
-  });
+  
 
-        
-    }
-
-    goTop();
-
-
+  
 
 </script>
 </body>
