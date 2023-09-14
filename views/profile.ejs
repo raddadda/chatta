@@ -99,7 +99,7 @@
                         <li class="empty-message">내가 개설한 방이 없어요</li>
                         <% } else { %>
                         <% posterChatRooms.forEach(function(room) { %>
-                        <li>
+                        <li class="room-list">
                             <a href="/chat_room?room_id=<%= room.room_id %>&category=<%= room.category %>"
                                 target="_blank">
                                 <%= room.title %> (<%= room.unreadMessages %> 안 읽은 메시지)
@@ -121,7 +121,7 @@
                         <li class="empty-message">내가 참여한 방이 없어요</li>
                         <% } else { %>
                         <% userChatRooms.forEach(function(room) { %>
-                        <li>
+                        <li class="room-list">
                             <a href="/chat_room?room_id=<%= room.room_id %>&category=<%= room.category %>"
                                 target="_blank">
                                 <%= room.title %> (<%= room.unreadMessages %> 안 읽은 메시지)
@@ -155,7 +155,8 @@
                         <% } else { %>
                         <% schedules.forEach(function(schedule) { %>
                         <li>
-                            <%= schedule %>
+                            <p>일정 내용: <%= schedule.description %></p>
+                            <p><%= schedule.formattedDate %></p>
                         </li>
                         <% }); %>
                         <% } %>

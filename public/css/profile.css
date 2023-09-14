@@ -7,9 +7,18 @@ body {
 
 .profile-contents {
     font-family: Arial, sans-serif;
-    max-width: 1200px; min-height: 1000px;
-    margin: 0 auto;
+    max-width: 1200px;
+    min-height: 1000px;
+    background-color: #fff;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    overflow-y: auto;
 }
+
 .header {
     background-color: #007bff;
     padding: 10px 0;
@@ -34,7 +43,7 @@ body {
 .profile-edit-button {
     background-color: transparent;
     border: none;
-    color: white;
+    color: black;
     font-size: 20px;
     cursor: pointer;
 }
@@ -100,7 +109,7 @@ body {
 }
 
 .friend-info button {
-    background-color: rgb(71,87,111);
+    background-color: rgb(71, 87, 111);
     color: white;
     border: none;
     padding: 10px 20px;
@@ -114,6 +123,10 @@ body {
     background-color: #fff;
     padding: 20px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.bottom-section .board-card {
+    width: 48%;
 }
 
 .categories-container {
@@ -157,6 +170,7 @@ body {
 .category-list ul {
     list-style-type: none;
     padding: 0;
+    margin: 10px;
 }
 
 /* 카테고리 목록 스타일 (예: 내 채팅방) */
@@ -185,7 +199,7 @@ body {
 /* 카테고리 목록 아이템 스타일 (예: 내 채팅방 목록 아이템) */
 .category-list li {
     font-size: 16px;
-    margin: 5px 0;
+    margin: 10px 0;
 }
 
 .category-list li a {
