@@ -36,7 +36,7 @@
                 <div class="profile"  onclick="toggleHeaderProfile()">
                     <img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/test_1280.jpg" alt="profile_image" />
                 </div>
-                <span class="allow" style="color: #fff;" onclick="toggleHeaderProfile()">&dtrif;</span>
+                <span class="allow" style="color: #fff; cursor: pointer; padding-left: 0.1em;" onclick="toggleHeaderProfile()">&dtrif;</span>
                 <ul class="header-profile-tab">
                     <li id="mobileView"><a href="/mychat">나의 채팅방</a> </li>
                     <li><a href="/profile">프로필</a> </li>
@@ -168,6 +168,7 @@
                         title :  findAllData[i] && findAllData[i].title ? findAllData[i].title : '',
                         views : findAllData[i] && findAllData[i].views ? findAllData[i].views : 0,
                         createAt: `${date.getFullYear()}-${(date.getMonth() + 1)>= 10 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1) }-${date.getDate() >= 10 ? date.getDate() : '0' + date.getDate()} ${date.getHours()}시`
+                    
                     }
                     
                     boxhtml += await list_item(i , data);

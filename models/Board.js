@@ -17,6 +17,7 @@ const Board = (sequelize) => {
             allowNull: false,
             defaultValue: 0,
         },
+    
         poster_id: {
             type: DataTypes.UUID,
             allowNull: false,

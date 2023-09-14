@@ -6,10 +6,10 @@ async function boardCreate(){
     if(loading) return;
     loading = true;
     const boardForm = document.forms["board-form"];
-    if ( boardForm.title.value === "" ) return alert('제목을 확인해주세요.');
-    if ( boardForm.content.value === "" ) return alert('내용을 확인해주세요.');
-    if ( boardForm.eventDate.value === "" ) return alert('흥보시간 확인해주세요.');
-    if ( boardForm.category.value === "" ) return alert('카테고리를 확인해주세요.');
+    if ( boardForm.title.value === "" ) return alert('제목을 확인해주세요.'),  loading = false;;
+    if ( boardForm.content.value === "" ) return alert('내용을 확인해주세요.'),  loading = false;;
+    if ( boardForm.eventDate.value === "" ) return alert('흥보시간 확인해주세요.'),  loading = false;;
+    if ( boardForm.category.value === "" ) return alert('카테고리를 확인해주세요.'),  loading = false;;
     
     try {
         const data = {
@@ -30,7 +30,7 @@ async function boardCreate(){
         } else{
             alert("다시 시도해주세요.");
         }
-        loading =false;
+        loading = false;
         console.log("result",res.result);
     } catch (error) {
         alert("잠시 후에 시도해주세요.");

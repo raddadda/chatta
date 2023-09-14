@@ -18,12 +18,13 @@ function toggleHeaderProfile () {
 }
 function clickBodyEvent (event) {
     const target = event.target;
-    const  body = document.querySelector("body");
-    if (target == event.currentTarget.querySelector(".header-profile-tab") ) {
-        console.log('여기');
+    const body = document.querySelector("body");
 
+    if (    target === event.currentTarget.querySelector(".header-profile-tab") || 
+            target === event.currentTarget.querySelector(".header-profile-tab > ul")  ) {
+        return;
     } else {
-        console.log('여기22');
+     
         toggleHeaderProfile();
         body.removeEventListener('click', clickBodyEvent);
     }   

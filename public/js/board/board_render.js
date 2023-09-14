@@ -12,7 +12,7 @@ function list_item (index, data) {
                 <div class="boxBordCategory">${data.category}</div>
                 <div class="boxTitle">${data.title}</div>
                 <div class="boxCreateAt">${data.createAt}</div>
-                <div class="boxViews"><img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/viewicon.png" > <span> &nbsp; ${data.views}</span></div>      
+                <div class="boxViews"><img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/bookmarkicon.png" > <span> &nbsp; ${data.views}</span></div>      
             </div>
         </div>
     `; 
@@ -49,7 +49,7 @@ function getBookMarkSvg (book_mark) {
 async function loadDetailModal (index) {
     // console.log("list[index]",list[index].views++);
     list[index].book_mark = await post_bookmark(list[index].id);
-    let date = new Date(`${list[index].event_time}`);
+    // let date = new Date(`${list[index].event_time}`);
     const data = {
         id : list[index] && list[index].id ? list[index].id : 0,
         poster_check : list[index] && list[index].poster_check ? list[index].poster_check : false,
@@ -59,7 +59,7 @@ async function loadDetailModal (index) {
         views : list[index] && list[index].views ? list[index].views : 0,
         //event_time : list[index] && list[index].event_time ? list[index].event_time : '',
         book_mark : list[index] && list[index].book_mark ? list[index].book_mark : false,
-        event_time: `${date.getFullYear()}-${(date.getMonth() + 1)>= 10 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1) }-${date.getDate() >= 10 ? date.getDate() : '0' + date.getDate()} ${date.getHours()}시 ${date.getMinutes()}분`
+        event_time: ``
     }
 
     let modal = document.getElementById('boardDetailModal');
@@ -95,8 +95,8 @@ async function loadDetailModal (index) {
                 </div>
                 ${data.poster_check === true ? 
                     `<div class="button-box">
-                        <button type="button" onclick = "boardModified(${data.id})">수정하기</button>
-                        <button type="button" onclick = "boardDelete1(${data.id})">삭제하기</button>
+                        <button type="button" class="modified" onclick = "boardModified(${data.id})">수정하기</button>
+                        <button type="button" class="delete" onclick = "boardDelete1(${data.id})">삭제하기</button>
                     </div>`
                     : 
                     ''
