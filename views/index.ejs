@@ -24,19 +24,21 @@
     <a href="/profile">프로필 페이지로 이동</a> <br/>
     <a href="/post/new">게시글 작성</a><br/>
     <a href="/post">게시글 목록</a><br/> -->
+    
     <div id="scrollby-top" onclick="goTop()"><img src="../public/images/gotopicon.png"> </div>
     <header class="main-header">
         <div class="header-layout">
             <span class="header-logo logo"><a href="/">Chatta</a></span> 
             <ul class="header-menu">
-                <li><a href="/">게시판 리스트</a></li>
+                <li><a href="/mychat">나의 채팅방</a></li>
             </ul>
             <div class="header-profie">
                 <div class="profile"  onclick="toggleHeaderProfile()">
                     <img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/test_1280.jpg" alt="profile_image" />
                 </div>
+                <span class="allow" onclick="toggleHeaderProfile()">▼</span>
                 <ul class="header-profile-tab">
-                    <li id="mobileView"><a href="/">게시판 리스트</a> </li>
+                    <li id="mobileView"><a href="/mychat">나의 채팅방</a> </li>
                     <li><a href="/profile">프로필</a> </li>
                     <li><button type="button" onclick="userLogOut()">로그아웃</button></li>
                 </ul>
@@ -117,21 +119,18 @@
     /**  board list 관련 **/
     let list = [];
     let page_id = 0;
-
     var currentDirection = ''; // 현재의 방향을 나타내는 변수
     var lastScrollTop = 0; // 방향을 구하기 위해 사용되는 변수
     ( async function() {
         goTop();
         getbaordPagenation();
+     
         window.addEventListener('scroll', ()=>{
             
                 let scrollTop = window.scrollY;
                 let innerHeight = window.innerHeight;
                 let scrollHeight = document.body.offsetHeight;
-                //console.log("scrollTop",scrollTop);
-                //console.log("innerHeight",innerHeight);
-                //console.log("scrollHeight",scrollHeight);
-                if ( scrollTop + innerHeight +400>= scrollHeight){
+                if ( scrollTop + innerHeight + 400 >= scrollHeight){
                     if(currentDirection != 'down'){
                         getbaordPagenation();
                         currentDirection = 'down';
@@ -152,37 +151,44 @@
     async function getbaordPagenation () {
 
         const wrap = document.querySelector("#wrap");
-
         try {
-            const findAllData = await boradFindAll_pagination(page_id);
+            let findAllData = await boradFindAll_pagination(page_id);
             let boxhtml = ``;
+
             if (findAllData.length > 0) {
                 
                 for (let i=0; i<findAllData.length; i++){
                     let date = new Date(`${findAllData[i].createdAt}`);
                     list.push(findAllData[i]);
                     const data = {
+                        board_img: findAllData[i] && findAllData[i].board_img ? findAllData[i].board_img : '',
                         category : findAllData[i] && findAllData[i].category ? findAllData[i].category : '',
                         title :  findAllData[i] && findAllData[i].title ? findAllData[i].title : '',
                         views : findAllData[i] && findAllData[i].views ? findAllData[i].views : 0,
                         createAt: `${date.getFullYear()}-${(date.getMonth() + 1)>= 10 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1) }-${date.getDate() >= 10 ? date.getDate() : '0' + date.getDate()} ${date.getHours()}시`
+                    
                     }
-
+                    
                     boxhtml += await list_item(i , data);
 
                     if (findAllData.length === i + 1) {
                         page_id = findAllData[i].id + 1;
+                       
                     }
                 }
+
                 wrap.innerHTML += boxhtml;
             }
-            
+           
         } catch (e) {
 
         }
     }
 
-    function goTop(){
+    function goTop() {
+        
+        document.getElementById('scrollby-top').style.display = "none";
+
         window.addEventListener('scroll', () => {
             if ( window.scrollY >100) {
             document.getElementById('scrollby-top').style.display = "block";
@@ -208,7 +214,7 @@
             })
             if (res.data.result) {
                 alert('채팅방에 참여했습니다')
-                document.location.assign('/mychat')
+                document.location.assign('/mychat');
             } else {
                 alert('이미 참여한 채팅방입니다')
             }

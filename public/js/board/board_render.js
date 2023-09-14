@@ -1,16 +1,18 @@
 
+const awsURL = 'https://kdt-test-bucket-seunggi.s3.ap-northeast-2.amazonaws.com/'
+
 
 function list_item (index, data) {
     
     return `<div class="board-card" onclick="loadDetailModal(${index})">
             <div class="roomImg">
-                <div class="img-box"></div>
+                <div class="img-box" style="background-image: url(${data.board_img})"></div>
             </div>
             <div class="boardInfo">
                 <div class="boxBordCategory">${data.category}</div>
                 <div class="boxTitle">${data.title}</div>
                 <div class="boxCreateAt">${data.createAt}</div>
-                <div class="boxViews"><img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/viewicon.png" >&nbsp; ${data.views}</div>      
+                <div class="boxViews"><img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/bookmarkicon.png" > <span> &nbsp; ${data.views}</span></div>      
             </div>
         </div>
     `; 
@@ -45,9 +47,9 @@ function getBookMarkSvg (book_mark) {
 }
 
 async function loadDetailModal (index) {
-    // console.log("list[index]",list[index].views++);
-    list[index].book_mark = await post_bookmark(list[index].id);
 
+    
+    list[index].book_mark = await post_bookmark(list[index].id);
     const data = {
         id : list[index] && list[index].id ? list[index].id : 0,
         poster_check : list[index] && list[index].poster_check ? list[index].poster_check : false,
@@ -56,9 +58,10 @@ async function loadDetailModal (index) {
         title :  list[index] && list[index].title ? list[index].title : '',
         views : list[index] && list[index].views ? list[index].views : 0,
         event_time : list[index] && list[index].event_time ? list[index].event_time.split('T')[0] : '',
-        book_mark : list[index] && list[index].book_mark ? list[index].book_mark : false
+        event_time2 : list[index] && list[index].event_time ? list[index].event_time.split('T')[1].substring(0,5) : '',
+        book_mark : list[index] && list[index].book_mark ? list[index].book_mark : false,
+        board_img : list[index] && list[index].board_img ? list[index].board_img : '',
     }
-
     let modal = document.getElementById('boardDetailModal');
     modal.style.display = 'block'
     modal.innerHTML = `
@@ -67,7 +70,7 @@ async function loadDetailModal (index) {
                 alt="close_img"
             />
         </div>
-        <div class="bd-image"></div>
+        <div class="bd-image" style="background-image: url(${data.board_img})"></div>
         <div class="board-detail-contents">
             <div class="bd-info">
                 <div class="bd-info_category"> ${data.category}</div>
@@ -83,7 +86,7 @@ async function loadDetailModal (index) {
                 </div>
                 <div class="txt-box">
                     <h6>흥보 시간</h6>
-                    <p>${data.event_time}</p>
+                    <p>${data.event_time} ${data.event_time2}</p>
                 </div>
 
                 <div class="txt-box">
@@ -92,8 +95,8 @@ async function loadDetailModal (index) {
                 </div>
                 ${data.poster_check === true ? 
                     `<div class="button-box">
-                        <button type="button" onclick = "boardModified(${data.id})">수정하기</button>
-                        <button type="button" onclick = "boardDelete1(${data.id})">삭제하기</button>
+                        <button type="button" class="modified" onclick = "boardModified(${data.id})">수정하기</button>
+                        <button type="button" class="delete" onclick = "boardDelete1(${data.id})">삭제하기</button>
                     </div>`
                     : 
                     ''
