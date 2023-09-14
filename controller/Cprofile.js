@@ -163,11 +163,10 @@ const getBookmarkedBoards = async (userId) => {
 const getSchedules = async (userId) => {
     try {
         const schedules = await Board.findAll({
-            attributes: ['event_time'],
+            attributes: ['content', 'event_time'], // title과 description도 가져오기
             where: { poster_id: userId, event_time: { [Op.not]: null } },
         });
 
-        // event_time을 원하는 형식으로 포맷
         const formattedSchedules = schedules.map((schedule) => {
             const eventTime = new Date(schedule.event_time);
             const options = {
@@ -179,10 +178,14 @@ const getSchedules = async (userId) => {
                 minute: 'numeric',
                 second: 'numeric',
                 hour12: true,
-                timeZoneName: 'short',
             };
             const dateFormatter = new Intl.DateTimeFormat('ko-KR', options);
-            return dateFormatter.format(eventTime);
+            const formattedDate = dateFormatter.format(eventTime);
+
+            return {
+                description: schedule.content,
+                formattedDate: formattedDate,
+            };
         });
 
         return formattedSchedules;
@@ -191,6 +194,7 @@ const getSchedules = async (userId) => {
         throw error;
     }
 };
+
 
 module.exports = {
     profile,
