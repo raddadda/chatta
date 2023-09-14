@@ -35,8 +35,8 @@ for (let day = 1; day <= 31; day++) {
 //////////////////////////sign_up////////////////////////////////////////
 
 async function userSignUp() {
-    const signUpForm = document.forms["signup-form"];
     try {
+        const signUpForm = document.forms["signup-form"];
         if(!idFlag){
             alert('아이디를 확인해 주세요')
             $('#userid').css({ "border" : "2px solid red"})
@@ -124,9 +124,10 @@ function pwCheck() {
     return;
 }
 
-// Enter 키 이벤트 감지
 document.addEventListener("keydown", function (event) {
     if (event.key === "Enter") {
-        userSignUp(); // 엔터 키를 누르면 회원가입 함수 호출
+        (async() => {
+            await userSignUp();
+        })()
     }
 });

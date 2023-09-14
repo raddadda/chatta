@@ -3,7 +3,6 @@ const awsURL = 'https://kdt-test-bucket-seunggi.s3.ap-northeast-2.amazonaws.com/
 
 
 function list_item (index, data) {
-    
     return `<div class="board-card" onclick="loadDetailModal(${index})">
             <div class="roomImg">
                 <div class="img-box" style="background-image: url(${data.board_img})"></div>
@@ -20,7 +19,6 @@ function list_item (index, data) {
 
 
 function getBookMarkSvg (book_mark) {
-
     return ` <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280.000000 1222.000000"
         preserveAspectRatio="xMidYMid meet">
         <metadata>
@@ -47,63 +45,65 @@ function getBookMarkSvg (book_mark) {
 }
 
 async function loadDetailModal (index) {
-
+    try {
+        list[index].book_mark = await post_bookmark(list[index].id);
+        const data = {
+            id : list[index] && list[index].id ? list[index].id : 0,
+            poster_check : list[index] && list[index].poster_check ? list[index].poster_check : false,
+            category : list[index] && list[index].category ? list[index].category : '',
+            content: list[index] && list[index].content ? list[index].content : '',
+            title :  list[index] && list[index].title ? list[index].title : '',
+            views : list[index] && list[index].views ? list[index].views : 0,
+            event_time : list[index] && list[index].event_time ? list[index].event_time.split('T')[0] : '',
+            event_time2 : list[index] && list[index].event_time ? list[index].event_time.split('T')[1].substring(0,5) : '',
+            book_mark : list[index] && list[index].book_mark ? list[index].book_mark : false,
+            board_img : list[index] && list[index].board_img ? list[index].board_img : '',
+        }
+        let modal = document.getElementById('boardDetailModal');
+        modal.style.display = 'block'
+        modal.innerHTML = `
+            <div class="board-modal-close" onclick="modalCloase()">
+                <img src= "https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/close.png"
+                    alt="close_img"
+                />
+            </div>
+            <div class="bd-image" style="background-image: url(${data.board_img})"></div>
+            <div class="board-detail-contents">
+                <div class="bd-info">
+                    <div class="bd-info_category"> ${data.category}</div>
+                    <h2 class="bd-info_title">${data.title}</h2>
+                    <div class="bd-book_mark" onclick= "bookMarkToggle(${index})">
+                        ${getBookMarkSvg(data.book_mark)}
+                    </div>
+                </div>
+                <div id="eventDetailSubInfo" class="bd-sub-content">
     
-    list[index].book_mark = await post_bookmark(list[index].id);
-    const data = {
-        id : list[index] && list[index].id ? list[index].id : 0,
-        poster_check : list[index] && list[index].poster_check ? list[index].poster_check : false,
-        category : list[index] && list[index].category ? list[index].category : '',
-        content: list[index] && list[index].content ? list[index].content : '',
-        title :  list[index] && list[index].title ? list[index].title : '',
-        views : list[index] && list[index].views ? list[index].views : 0,
-        event_time : list[index] && list[index].event_time ? list[index].event_time.split('T')[0] : '',
-        event_time2 : list[index] && list[index].event_time ? list[index].event_time.split('T')[1].substring(0,5) : '',
-        book_mark : list[index] && list[index].book_mark ? list[index].book_mark : false,
-        board_img : list[index] && list[index].board_img ? list[index].board_img : '',
+                    ${data.poster_check === true ? 
+                        `<div class="button-box">
+                            <button type="button" class="modified" onclick = "boardModified(${data.id})">수정하기</button>
+                            <button type="button" class="delete" onclick = "boardDelete1(${data.id})">삭제하기</button>
+                        </div>`
+                        : 
+                        ''
+                    }
+                    <div class="txt-box">
+                        <h6>내용</h6>
+                        <p>${data.content}</p>
+                    </div>
+                    <div class="txt-box">
+                        <h6>흥보 시간</h6>
+                        <p>${data.event_time} ${data.event_time2}</p>
+                    </div>
+    
+                    <div class="txt-box">
+                        <h6>채팅방</h6>
+                        <p><button onclick='chatRoomJoin(${data.id})'>입장하기</button><p>
+                    </div>
+                </div>
+               
+            </div>
+        `
+    } catch (error) {
+        console.log(error)
     }
-    let modal = document.getElementById('boardDetailModal');
-    modal.style.display = 'block'
-    modal.innerHTML = `
-        <div class="board-modal-close" onclick="modalCloase()">
-            <img src= "https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/close.png"
-                alt="close_img"
-            />
-        </div>
-        <div class="bd-image" style="background-image: url(${data.board_img})"></div>
-        <div class="board-detail-contents">
-            <div class="bd-info">
-                <div class="bd-info_category"> ${data.category}</div>
-                <h2 class="bd-info_title">${data.title}</h2>
-                <div class="bd-book_mark" onclick= "bookMarkToggle(${index})">
-                    ${getBookMarkSvg(data.book_mark)}
-                </div>
-            </div>
-            <div id="eventDetailSubInfo" class="bd-sub-content">
-
-                ${data.poster_check === true ? 
-                    `<div class="button-box">
-                        <button type="button" class="modified" onclick = "boardModified(${data.id})">수정하기</button>
-                        <button type="button" class="delete" onclick = "boardDelete1(${data.id})">삭제하기</button>
-                    </div>`
-                    : 
-                    ''
-                }
-                <div class="txt-box">
-                    <h6>내용</h6>
-                    <p>${data.content}</p>
-                </div>
-                <div class="txt-box">
-                    <h6>흥보 시간</h6>
-                    <p>${data.event_time} ${data.event_time2}</p>
-                </div>
-
-                <div class="txt-box">
-                    <h6>채팅방</h6>
-                    <p><button onclick='chatRoomJoin(${data.id})'>입장하기</button><p>
-                </div>
-            </div>
-           
-        </div>
-    `
 }

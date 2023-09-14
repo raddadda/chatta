@@ -1,17 +1,12 @@
 let list = [];
 
 (function () {
-
     getbaordPagenation();
-
 })();
 
 async function getbaordPagenation() {
-
     try {
-
         const findAllData_board = await findall_profile_bookmark_board();
-
         if (findAllData_board.length > 0) {
             const wrap = document.querySelector("#wrap");
             let boxhtml = ``;
@@ -34,36 +29,34 @@ async function getbaordPagenation() {
                 }
             }
             wrap.innerHTML += boxhtml;
-
         } else {
-
             const noneData = document.querySelector('#bookmarkList > .category-list');
             noneData.innerHTML += `  <ul>
                         <li>북마크한 게시물이 없어요</li>
                     </ul>
                 `;
         }
-
     } catch (e) {
-
         console.log(e);
     }
 }
 
 async function chatRoomJoin(board_id) {
-
-    const res = await axios({
-        method: "post",
-        url: "/chat/join",
-        data: {
-            room_id: board_id,
+    try {
+        const res = await axios({
+            method: "post",
+            url: "/chat/join",
+            data: {
+                room_id: board_id,
+            }
+        })
+        if (res.data.result) {
+            alert('채팅방에 참여했습니다')
+            document.location.assign('/mychat')
+            return;
         }
-    })
-
-    if (res.data.result) {
-        alert('채팅방에 참여했습니다')
-        document.location.assign('/mychat')
-        return;
+    } catch (error) {
+        console.log(error)
     }
 }
 
@@ -116,8 +109,6 @@ function toggleList(listId, button) {
 document.addEventListener('click', function (event) {
     if (event.target.classList.contains('board-title')) {
         event.preventDefault();
-
         const boardId = event.target.getAttribute('data-board-id');
-
     }
 });
