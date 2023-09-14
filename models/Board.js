@@ -25,12 +25,17 @@ const Board = (sequelize) => {
             type: DataTypes.STRING(500),
         },
         event_time: {
-            type: DataTypes.DATE,
+            type: DataTypes.STRING(30),
             allowNull: false,
         },
         category: {
             type: DataTypes.STRING(20),
             allowNull: false,
+        },
+        board_img: {
+            type: DataTypes.STRING(200),
+            allowNull: false,
+            defaultValue: 'https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/pi_1280.jpg',
         }
     },
         {

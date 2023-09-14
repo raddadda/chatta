@@ -19,6 +19,7 @@ async function getbaordPagenation() {
                 let date = new Date(`${findAllData_board[i].createdAt}`);
                 list.push(findAllData_board[i].board);
                 const data = {
+                    board_img : findAllData_board[i] && findAllData_board[i].board.board_img ?  findAllData_board[i].board.board_img : '',
                     category: findAllData_board[i] && findAllData_board[i].board.category ?
                         findAllData_board[i].board.category : '',
                     title: findAllData_board[i] && findAllData_board[i].board.title ? findAllData_board[

@@ -234,15 +234,6 @@
             </div>
         </div>
     </footer>
-<<<<<<< HEAD
-    <script src="/public/js/index.js" defer></script>
-    <script src="/public/js/board/board_CRUD.js"></script>
-    <script src="/public/js/board/board_render.js"></script>
-    <script src="/public/js/board/board_render_func.js"></script>
-    <script src="/public/js/board/board_book_mark.js"></script>
-    <script src="/public/js/profile.js"></script>
-    <script src="/public/js/header.js"></script>
-=======
 <script src="/public/js/index.js" defer></script>
 <script src="/public/js/board/board_CRUD.js"></script>
 <script src="/public/js/board/board_render.js"></script>
@@ -274,6 +265,7 @@
                     let date = new Date(`${findAllData_board[i].createdAt}`);
                     list.push(findAllData_board[i].board);
                     const data = {
+                        board_img : findAllData_board[i] && findAllData_board[i].board.board_img ? findAllData_board[i].board.board_img : '',
                         category : findAllData_board[i] && findAllData_board[i].board.category ? findAllData_board[i].board.category : '',
                         title :  findAllData_board[i] && findAllData_board[i].board.title ? findAllData_board[i].board.title : '',
                         views : findAllData_board[i] && findAllData_board[i].board.views ? findAllData_board[i].board.views : 0,
@@ -319,7 +311,6 @@
 
 </script>
 
->>>>>>> asd
 </body>
 
 </html>

@@ -6,13 +6,13 @@ function list_item (index, data) {
     
     return `<div class="board-card" onclick="loadDetailModal(${index})">
             <div class="roomImg">
-                <div class="img-box"></div>
+                <div class="img-box" style="background-image: url(${data.board_img})"></div>
             </div>
             <div class="boardInfo">
                 <div class="boxBordCategory">${data.category}</div>
                 <div class="boxTitle">${data.title}</div>
                 <div class="boxCreateAt">${data.createAt}</div>
-                <div class="boxViews"><img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/viewicon.png" > <span> &nbsp; ${data.views}</span></div>      
+                <div class="boxViews"><img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/bookmarkicon.png" > <span> &nbsp; ${data.views}</span></div>      
             </div>
         </div>
     `; 
@@ -49,7 +49,7 @@ function getBookMarkSvg (book_mark) {
 async function loadDetailModal (index) {
     // console.log("list[index]",list[index].views++);
     list[index].book_mark = await post_bookmark(list[index].id);
-    let date = new Date(`${list[index].event_time}`);
+    //let date = new Date(`${list[index].event_time}`);
     const data = {
         id : list[index] && list[index].id ? list[index].id : 0,
         poster_check : list[index] && list[index].poster_check ? list[index].poster_check : false,
@@ -57,11 +57,14 @@ async function loadDetailModal (index) {
         content: list[index] && list[index].content ? list[index].content : '',
         title :  list[index] && list[index].title ? list[index].title : '',
         views : list[index] && list[index].views ? list[index].views : 0,
-        //event_time : list[index] && list[index].event_time ? list[index].event_time : '',
+        event_time : list[index] && list[index].event_time ? list[index].event_time.split('T')[0] : '',
+        event_time2 : list[index] && list[index].event_time ? list[index].event_time.split('T')[1].substring(0,5) : '',
         book_mark : list[index] && list[index].book_mark ? list[index].book_mark : false,
-        event_time: `${date.getFullYear()}-${(date.getMonth() + 1)>= 10 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1) }-${date.getDate() >= 10 ? date.getDate() : '0' + date.getDate()} ${date.getHours()}시 ${date.getMinutes()}분`
+        board_img : list[index] && list[index].board_img ? list[index].board_img : '',
+        //event_time: `${date.getFullYear()}-${(date.getMonth() + 1)>= 10 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1) }-${date.getDate() >= 10 ? date.getDate() : '0' + date.getDate()} ${date.getHours()}시 ${date.getMinutes()}분`
     }
-
+    console.log("list[index].event_time",list[index].event_time.split('T')[1]);
+    // console.log("list[index].event_time",list[index].event_time.split('T')[1]).indexOf('.');
     let modal = document.getElementById('boardDetailModal');
     modal.style.display = 'block'
     modal.innerHTML = `
@@ -70,7 +73,7 @@ async function loadDetailModal (index) {
                 alt="close_img"
             />
         </div>
-        <div class="bd-image"></div>
+        <div class="bd-image" style="background-image: url(${data.board_img})"></div>
         <div class="board-detail-contents">
             <div class="bd-info">
                 <div class="bd-info_category"> ${data.category}</div>
@@ -86,7 +89,7 @@ async function loadDetailModal (index) {
                 </div>
                 <div class="txt-box">
                     <h6>흥보 시간</h6>
-                    <p>${data.event_time}</p>
+                    <p>${data.event_time} ${data.event_time2}</p>
                 </div>
 
                 <div class="txt-box">

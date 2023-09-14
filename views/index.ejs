@@ -164,6 +164,7 @@
                     let date = new Date(`${findAllData[i].createdAt}`);
                     list.push(findAllData[i]);
                     const data = {
+                        board_img: findAllData[i] && findAllData[i].board_img ? findAllData[i].board_img : '',
                         category : findAllData[i] && findAllData[i].category ? findAllData[i].category : '',
                         title :  findAllData[i] && findAllData[i].title ? findAllData[i].title : '',
                         views : findAllData[i] && findAllData[i].views ? findAllData[i].views : 0,
