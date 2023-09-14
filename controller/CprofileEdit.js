@@ -55,8 +55,9 @@ const pwUpdate = async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
+        const profileImage = await Cimage.getProfileImage(userId);
 
-        res.render('pwEdit', { user });
+        res.render('pwEdit', { user, profileImage });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });
@@ -79,8 +80,9 @@ const profileDelete = async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
+        const profileImage = await Cimage.getProfileImage(userId);
 
-        res.render('profileDelete', { user });
+        res.render('profileDelete', { user, profileImage });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });

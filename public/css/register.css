@@ -13,7 +13,32 @@ html, body {
     background-color: #f3f3f3;
 }
 
+/* 로고 스타일 */
+.logo {
+    width: 150px;
+    margin-bottom: 20px;
+}
+.logo a{
+    cursor: pointer; font-weight: bold;
+    color: #fff;
+    text-decoration: none;
+    font-family: 'PartialSansKR-Regular', Courier, monospace;
+      color: rgb(244, 115, 033);
+      font-size: 35px;
+}
+
+@font-face {
+    font-family: 'PartialSansKR-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/PartialSansKR-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
 /* 회원가입 폼 컨테이너 스타일 */
+p{
+    margin-top: 10px;
+
+}
 .user-info {
     text-align: center;
     background-color: #fff;

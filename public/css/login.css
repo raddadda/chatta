@@ -28,6 +28,21 @@ html, body {
     width: 150px;
     margin-bottom: 20px;
 }
+.logo a{
+    cursor: pointer; font-weight: bold;
+    color: #fff;
+    text-decoration: none;
+    font-family: 'PartialSansKR-Regular', Courier, monospace;
+      color: black;
+      font-size: 35px;
+}
+
+@font-face {
+    font-family: 'PartialSansKR-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/PartialSansKR-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
 
 /* 로그인 폼 스타일 */
 .signin-form {
@@ -38,6 +53,7 @@ html, body {
 .signin-form h2 {
     font-size: 24px;
     margin-bottom: 20px;
+    margin-top: 10px;
 }
 
 /* 입력 필드 스타일 */
@@ -95,6 +111,9 @@ a {
     margin-bottom: 10px;
 }
 .pwa{
+    text-decoration: none;
+    color: rgb(244, 115, 033);
+    font-weight: bold;
     margin-bottom: 10px;
 }
 .signup {
