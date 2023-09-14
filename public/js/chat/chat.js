@@ -162,6 +162,14 @@ document.addEventListener('click', () => {
     customContextMenu.style.display = 'none';
 });
 
+const messageInput = document.getElementById('message-input');
+const sendButton = document.getElementById('send-button');
+messageInput.addEventListener('keyup', (event) => {
+    if (event.key === 'Enter') {
+        sendButton.click()
+    }
+})
+
 async function msgSend(){
     const msg = document.getElementById('message-input');
     if(!msg.value){
