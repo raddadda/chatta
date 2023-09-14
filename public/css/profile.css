@@ -34,7 +34,7 @@ body {
 .profile-edit-button {
     background-color: transparent;
     border: none;
-    color: black;
+    color: white;
     font-size: 20px;
     cursor: pointer;
 }
@@ -100,7 +100,7 @@ body {
 }
 
 .friend-info button {
-    background-color: #007bff;
+    background-color: rgb(71,87,111);
     color: white;
     border: none;
     padding: 10px 20px;
