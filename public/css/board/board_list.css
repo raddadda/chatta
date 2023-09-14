@@ -101,6 +101,14 @@
     .board-wrap > .board-card:nth-child(3n) {
         margin-right: 0;
     }
+
+    .profile-board-wrap > .board-card:nth-child(3n) {
+        margin-right: 2%;
+    }
+
+    .profile-board-wrap > .board-card:nth-child(2n) {
+        margin-right: 0;
+    }
     
 }
 
