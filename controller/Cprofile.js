@@ -36,6 +36,7 @@ const profile = async (req, res) => {
         }
 
         const profileImage = await Cimage.getProfileImage(userId);
+
         res.render('profile', { user, age, profileImage, friendCount, posterChatRooms, userChatRooms, bookmarkedBoards, schedules });
         return;
     } catch (error) {

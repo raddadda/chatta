@@ -76,7 +76,7 @@
 
         function histryBack () {
 
-            window.history.back();
+            window.location.href='/';
         }
 
         async function boardEdit1 () {
@@ -112,7 +112,7 @@
                 const deleteRes = await boardDelete(boardID);
                 if (deleteRes) {
                     alert('삭제가 되었습니다.');
-                    window.history.back();
+                    window.location.href='/';
                 } else {
                     alert('다시 시도해 주세요.');
                 }
