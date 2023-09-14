@@ -79,7 +79,9 @@ const msgSend = async (req,res) => {
 
 const gameMain = async (req,res) => {
     const {user1,user2} = req.query
-    res.render('game',{user1,user2})
+    const { id, nickname } = req.signedCookies.logined
+    const user_id = await Cauth.stringToUuid(id)
+    res.render('game',{ user1, user2, user_id, nickname })
 }
 
 module.exports = {

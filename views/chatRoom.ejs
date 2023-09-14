@@ -68,7 +68,7 @@
         if(!member){
             alert('유저가 접속중이지 않습니다')
         }
-        return member.key;
+        return member.socket_id;
     }
 
     async function chatMsgLoad(){
@@ -119,7 +119,7 @@
             if(game){
                 li.onclick = (e) => {
                     if(confirm('게임에 참여 하시겠습니까?')){
-                        socket.emit
+                        // socket.emit
                     }
                 }
             }
