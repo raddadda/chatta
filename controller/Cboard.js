@@ -286,12 +286,15 @@ const delete_board_bookmark = async (req, res)=>{
 }
 
 const findone_board_bookmark = async (req,res)=>{
+
+
     const {board_id} = req.body;
+    const user_id = await getUserId(req);
 
     try {
         const board = await Board_Bookmark.findOne({
             // attributes:['id', 'title', 'views', 'content', 'event_time', 'category', 'createdAt'],
-            where: {board_id}
+            where: { board_id, user_id }
         })
       
         if (board && board.dataValues){
