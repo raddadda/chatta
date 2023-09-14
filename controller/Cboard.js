@@ -288,50 +288,86 @@ const findone_board_bookmark = async (req,res)=>{
 }
 
 
+// const findall_profile_bookmark_board =  async (req,res)=>{
+//     try {
+//         const user_id = await getUserId(req);
+//         const id = [];
+       
+//         const board = await Board_Bookmark.findAll({
+//             //북마크에서 내가 체크한 보드아이디 가져오기
+//             where:{user_id:user_id},  
+//         })
+
+//         if(board){
+//             console.log("board",board);
+//             board.forEach(element => {
+//                 id.push({
+//                     id: element.dataValues.board_id 
+//                 })
+//             });
+//             console.log("id",id);
+//             const board2 = await Board.findAll({
+//                 where : {
+//                     [Sequelize.Op.or]: id,
+//                 }
+//             })
+//             console.log("board2",board2);
+//             res.json({result:true, board2});
+          
+
+//         }else {
+//             res.json({result:false});
+//             return;
+//         }
+       
+//         // if (board) {
+//         //     board.forEach(index => {
+//         //         console.log('index', index.dataValues.board)
+//         //         if (index.dataValues.board.dataValues.poster_id === user_id) {
+//         //             index.dataValues.board.dataValues.poster_check = true;
+//         //             delete index.dataValues.board.dataValues.poster_id;
+//         //         } else {
+//         //             index.dataValues.board.dataValues.poster_check = false;
+//         //             delete index.dataValues.board.dataValues.poster_id;
+//         //         }
+//         //     });
+           
+//     } catch(error){
+//         res.json({result:false});
+//         console.log(error);
+//     }
+// }
 const findall_profile_bookmark_board =  async (req,res)=>{
     try {
         const user_id = await getUserId(req);
-        const id = [];
-       
         const board = await Board_Bookmark.findAll({
-            //북마크에서 내가 체크한 보드아이디 가져오기
-            where:{user_id:user_id},  
+            where: {user_id : user_id},
+            include: [{
+                model: Board,
+                attributes:['title','category','event_time','views','content','id','poster_id','board_img'],
+                // where: {
+                //      id: user_id,
+                // }
+            }]
         })
-
-        if(board){
-            console.log("board",board);
-            board.forEach(element => {
-                id.push({
-                    id: element.dataValues.board_id 
-                })
-            });
-            console.log("id",id);
-            const board2 = await Board.findAll({
-                where : {
-                    [Sequelize.Op.or]: id,
+        
+        if (board) {
+            board.forEach(index => {
+                console.log('index', index.dataValues.user_id)
+                if (index.dataValues.board.dataValues.user_id === user_id) {
+                    index.dataValues.board.dataValues.poster_check = true;
+                    delete index.dataValues.board.dataValues.user_id;
+                } else {
+                    index.dataValues.board.dataValues.poster_check = false;
+                    delete index.dataValues.board.dataValues.user_id;
                 }
-            })
-            console.log("board2",board2);
-            res.json({result:true, board2});
-          
-
-        }else {
+            });
+            res.json({result:true, board});
+            return;
+        } else{
             res.json({result:false});
             return;
         }
-       
-        // if (board) {
-        //     board.forEach(index => {
-        //         console.log('index', index.dataValues.board)
-        //         if (index.dataValues.board.dataValues.poster_id === user_id) {
-        //             index.dataValues.board.dataValues.poster_check = true;
-        //             delete index.dataValues.board.dataValues.poster_id;
-        //         } else {
-        //             index.dataValues.board.dataValues.poster_check = false;
-        //             delete index.dataValues.board.dataValues.poster_id;
-        //         }
-        //     });
-           
     } catch(error){
         res.json({result:false});
         console.log(error);
