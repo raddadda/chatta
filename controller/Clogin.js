@@ -8,10 +8,6 @@ const axios = require('axios');
 const signUp = async (req,res)=>{
     try {
         const {login_id,login_pw,Cpw,user_name,gender,birth,email}=req.body
-        // if(login_pw !== Cpw) {
-        //     res.json({result : false, message : '비밀번호가 일치하는지 확인해주세요'})
-        //     return;
-        // }
         const flag = await Cauth.dbIdCheck(login_id)
         if(flag){
             res.json({result:false , message:'아이디가 중복되어 사용할 수 없습니다'})
@@ -21,6 +17,7 @@ const signUp = async (req,res)=>{
         const birthday = new Date (birth);
         const {uuid} = await signUpCreate(login_id,user_name,gender,birthday,email,null,signConst);
         res.json({result:true,message:`${login_id}님이 회원가입 하셨습니다`,uuid});
+        return;
     } catch (error) {
         console.log(error);
     }
@@ -64,11 +61,14 @@ const signIn = async (req,res)=>{
                 const auth = await Cauth.authCodeIssue(user_id);
                 await Cauth.loginCookieRes(id,nickname,auth,res);
                 res.json({result:true, message:`${nickname}님 어서오세요`})
+                return;
             } else {
                 res.json({result:false, message:"pw가 일치하지 않습니다"})
+                return;
             }
         } else {
             res.json({result:false, message:"id가 존재하지 않습니다"})
+            return;
         }
     } catch (error) {
         console.log(error);
@@ -100,6 +100,7 @@ const userLogOut = async (req,res)=>{
         }
         res.clearCookie(constant.loginCookie);
         res.json({result:true});
+        return;
     } catch (error) {
         console.log(error);
     }
@@ -109,6 +110,7 @@ const userLogOut = async (req,res)=>{
 const register = async (req,res)=>{
     try {
         res.render('register')
+        return;
     } catch (error) {
         console.log(error)
     }

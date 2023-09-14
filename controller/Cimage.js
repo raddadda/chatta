@@ -19,6 +19,7 @@ const getS3ImageURL = async (req, res) => {
         const imageBase64 = data.Body.toString('base64');
         const imageSrc = `data:${data.ContentType};base64,${imageBase64}`;
         res.send(imageSrc);
+        return;
     } catch (err) {
         console.error(err);
         res.status(500).send('S3 이미지 가져오기 에러');

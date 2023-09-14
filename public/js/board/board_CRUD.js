@@ -26,9 +26,10 @@ async function boardCreate(){
         if(res.data.result){
             alert("등록 되었습니다.");
             window.location.href = "/";
-    
+            return
         } else{
             alert("다시 시도해주세요.");
+            return;
         }
         loading = false;
     
@@ -67,34 +68,29 @@ async function boardEdit(resdata) {
 
     }
 }
+
 //게시판 삭제
-  async function boardDelete (id) {
-
+async function boardDelete (id) {
     try {
-
         const deleteRes = await axios({
             method:"DELETE",
             url:"/post/delete",
             data: { id }
         })
-
+  
         if (deleteRes.data.result) {
             return true;
         } else{
             return false;
         }
-
-    } catch(error){
-
+        
+    } catch(error) {
         return false
     }
-    
 }
 
 //게시판 조회
-
 async function boardFindOne(id){
-
     try {
         const res = await axios({
             method: "POST",
@@ -103,23 +99,18 @@ async function boardFindOne(id){
                 id
             }
         })
-        if (res.data.result){
+        if (res.data.result) {
             return res.data;
-        } else{
-            return {result:false};
+        } else {
+            return { result: false };
         }
-
     } catch (e) {
-        return {result:false};
+        return { result: false };
     }
 }
 
 
-
-
-
 async function boradFindAll(offset){
-
     try { 
         const res = await axios({
             method: "POST",
@@ -131,17 +122,14 @@ async function boradFindAll(offset){
         if (res.data.result){
             return res.data.board;
         } else{
-            console.log('res',res);
             return [];
         }
     } catch (e) {
         return [];
     }
- 
 }
 
 async function boradFindAll_pagination(page_id){
-
     if (page_id === undefined || page_id == null) 
         return console.log('page_id이 없음');
     const res = await axios({
@@ -151,18 +139,15 @@ async function boradFindAll_pagination(page_id){
             page_id
         }
     })
-    
     if (res.data.result){
         return res.data.board;
     } else{
-        console.log('res',res);
         return [];
     }
 }
 
 
 const bookMark_FindOne = async (id) => {
-
     const data = { board_id : id }
     try {
         const createBookMarkres = await axios({
@@ -175,16 +160,13 @@ const bookMark_FindOne = async (id) => {
         } else {
             return false
         }
-
     } catch (e) {
         return false
     }
-
-    
 }
 
 const bookMark_create = async (id,view) => {
-    const data = { board_id : id ,view : view}
+    const data = { board_id : id ,view : view }
     try {   
         const createBookMarkres = await axios({
             method:"post",
@@ -231,7 +213,6 @@ async function findall_profile_bookmark_board(){
     if (res.data.result){
         return res.data.board;
     } else{
-        console.log('res',res);
         return [];
     }
 }

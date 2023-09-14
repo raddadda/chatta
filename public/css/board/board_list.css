@@ -43,7 +43,6 @@
 .board-card > .roomImg > .img-box {
     border: 3px solid rgb(123,142,169); 
     width: 80%;  height: 100%; border-radius: 15%;
-    /* background-image: url("https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/test_1280.jpg"); */
     background-image: url('https://source.unsplash.com/category/nature/1600x900');
     background-position: center;
     background-repeat: no-repeat;

@@ -72,8 +72,10 @@ const create_board_post = async (req,res)=>{
         })
         if(board){
             res.json({result:true , title , content, event_time, category});
+            return;
         } else {
             res.json({result:false});
+            return;
         }
     } catch(e){
         res.json({result:false});
@@ -107,8 +109,10 @@ const edit_board_post = async(req,res)=>{
         })
         if(board){
             res.json({result:true , title , content, event_time, category});
+            return;
         }else{
             res.json({result:false});
+            return;
         }
        
     }catch(e){
@@ -126,8 +130,10 @@ const delete_board = async (req, res) => {
         
         if (board) {
             res.json({result:true});
+            return;
         } else {
             res.json({result:false});
+            return;
         } 
         
     } catch (e) {
@@ -146,8 +152,10 @@ const boarduser_findone = async (req,res)=>{
       
         if (board && board.dataValues){
             res.json({result:true, board});
+            return;
         }else{
             res.json({result:false});
+            return;
         }   
       
     } catch(e) {
@@ -176,8 +184,10 @@ const boarduser_findall = async(req,res)=>{
                 }
             });
             res.json({result:true, board});
+            return;
         }else{
             res.json({result:false});
+            return;
         }
     } catch(e){
         res.json({result:false});
@@ -194,7 +204,6 @@ const boarduser_findall_pagenation = async (req, res)=>{
 
     if (req.body.page_id) {
         pagenation.startid = {id :{ [Op.lt]: req.body.page_id-1}}
-        console.log(" pagenation.startid ", pagenation.startid )
     } else {
         pagenation.startid = {id :{[Op.gte]: 1}}
     }
@@ -219,8 +228,10 @@ const boarduser_findall_pagenation = async (req, res)=>{
             });
             
             res.json({result:true, board});
+            return;
         } else{
             res.json({result:false});
+            return;
         }
     } catch(e){
         res.json({result:false});
@@ -234,7 +245,6 @@ const create_board_bookmark = async (req, res)=>{
     try {
             const user_id = await getUserId(req);
             const { board_id, view } = req.body;
-            console.log("view",view)
             const board = await Board_Bookmark.create({
                 user_id: user_id,
                 board_id:board_id
@@ -242,8 +252,10 @@ const create_board_bookmark = async (req, res)=>{
             const findone = await Board.update({views: view+1},{where: {id:board_id} })
             if(board){
                 res.json({result:true});
+                return;
             } else {
                 res.json({result:false});
+                return;
             }
 
         } catch(e){
@@ -262,8 +274,10 @@ const delete_board_bookmark = async (req, res)=>{
         const findone = await Board.update({views: view-1},{where: {id:board_id} })
         if (board) {
             res.json({result:true});
+            return;
         } else {
             res.json({result:false});
+            return;
         }
         } catch(e){
             res.json({result:false});
@@ -282,8 +296,10 @@ const findone_board_bookmark = async (req,res)=>{
       
         if (board && board.dataValues){
             res.json({result:true });
+            return;
         }else{
             res.json({result:false});
+            return;
         }   
       
     } catch(e) {
@@ -307,7 +323,6 @@ const findall_profile_bookmark_board =  async (req,res)=>{
             }]
         })
 
-        console.log('board', board)
         if (board) {
             board.forEach(index => {
                 console.log('index', index.dataValues.board)
@@ -320,9 +335,10 @@ const findall_profile_bookmark_board =  async (req,res)=>{
                 }
             });
             res.json({result:true, board});
+            return;
         } else{
-            console.log("x");
             res.json({result:false});
+            return;
         }
     } catch(e){
         res.json({result:false});

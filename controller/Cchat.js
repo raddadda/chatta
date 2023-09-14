@@ -15,6 +15,7 @@ const chatRoomJoin = async (req,res) => {
             room_id
         });
         res.json({ result: true }) 
+        return;
     } catch (error) {
         console.log(error);
     }
@@ -29,6 +30,7 @@ const myChatRoomList = async (req,res) => {
         roomInfoList.push(roomInfo);
     }
     res.json({ result: true, roomInfoList});
+    return;
 }
 
 const chatRoomMain = async (req,res) => {
@@ -41,6 +43,7 @@ const chatRoomMain = async (req,res) => {
     const { id, nickname } = req.signedCookies.logined
     const user_id = await Cauth.stringToUuid(id)
     res.render('chatRoom',{ user_id, nickname, room_id, category });
+    return;
 }
 
 const memberLoad = async (req,res) => {
@@ -52,12 +55,14 @@ const memberLoad = async (req,res) => {
         memberInfoList.push(memberInfo);
     }
     res.json({result: true , memberInfoList})
+    return;
 }
 
 const msgLoad = async (req,res) => {
     const {room_id} = req.body
     const msg_list = await Chat_Message.findAll({ attributes: ['user_id','content','createdAt'], where: { room_id }, raw: true })
     res.json({result: true , msg_list})
+    return;
 }
 
 const msgSend = async (req,res) => {
@@ -75,6 +80,7 @@ const msgSend = async (req,res) => {
         content,
         game,
     })
+    return;
 }
 
 const gameMain = async (req,res) => {

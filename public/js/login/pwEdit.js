@@ -26,9 +26,11 @@ async function pwEdit() {
         if (res.data.result) {
             alert('변경완료')
             document.location.href='/profile';
+            return;
         }else if(res.data.result === false) {
             resultBox.textContent = (`${res.data.message}`)
             resultBox.classList.add('show');
+            return;
         }      
     } catch (error) {
         console.log(error)
@@ -38,10 +40,10 @@ function cancel() {
     window.location.href='/profile/edit'
 }
 
-// Enter 키 이벤트 감지
+
 document.addEventListener("keydown", function (event) {
     if (event.key === "Enter") {
-        pwEdit(); // 엔터 키를 누르면 함수 호출
+        pwEdit();
     }
 });
 

@@ -9,8 +9,8 @@ const {REST_API_KEY,REDIRECT_URI} = secret;
 const signUpKakao = async (req,res)=>{
     try {
         const url = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}`;
-        console.log('url',url)
         res.redirect(url);
+        return;
     } catch (error) {
         console.log(error);
     }
@@ -62,6 +62,7 @@ const authKakao = async (req,res)=>{
             await Cauth.loginCookieRes(id,profile.nickname,auth,res)
         }
         res.redirect('/');
+        return;
     } catch (error) {
         console.log(error)   
     }

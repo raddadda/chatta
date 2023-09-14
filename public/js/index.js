@@ -5,7 +5,6 @@ async function cookieAuthCheck(){
         method:'post',
         url:'/auth'
     })
-    console.log("auth res",res);
 }
 
 async function userLogOut() {

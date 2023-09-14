@@ -36,9 +36,8 @@ const profile = async (req, res) => {
         }
 
         const profileImage = await Cimage.getProfileImage(userId);
-        // const profileImage = '';
-        // console.log(user, age, friendCount, posterChatRooms, userChatRooms, bookmarkedBoards, schedules)
         res.render('profile', { user, age, profileImage, friendCount, posterChatRooms, userChatRooms, bookmarkedBoards, schedules });
+        return;
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: '내부 서버 오류' });
@@ -152,8 +151,6 @@ const getBookmarkedBoards = async (userId) => {
             where: { user_id: userId },
             include: [Board],
         });
-        console.log('bookmarkedBoards:', bookmarkedBoards);
-
         return bookmarkedBoards.map((bookmark) => bookmark.board);
     } catch (error) {
         console.error('북마크한 게시물 가져오기 오류:', error);

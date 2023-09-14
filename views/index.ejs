@@ -11,13 +11,11 @@
     <link rel="stylesheet" href="/public/css/board/board_list.css">
     <link rel="stylesheet" href="/public/css/board/board_detail.css">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-
     <script src="/public/js/index_modal.js" defer></script>
     <link rel="stylesheet" href="/public/css/index_modal.css">
 </head>
-<body>  
 
-    
+<body>  
     <div id="scrollby-top" onclick="goTop()"><img src="../public/images/gotopicon.png"> </div>
     <header class="main-header">
         <div class="header-layout">
@@ -127,12 +125,10 @@
                     if(currentDirection != 'down'){
                         getbaordPagenation();
                         currentDirection = 'down';
-                        console.log(currentDirection+' 실행 !!!!');
                     }
                 } else {
                     if (currentDirection != 'up'){
                         currentDirection = 'up';
-                        console.log(currentDirection+' 실행 !!!!');
                     }
                 }
 
@@ -207,7 +203,6 @@
             })
             if (res.data.result) {
                 alert('채팅방에 참여했습니다')
-                document.location.assign('/mychat');
             } else {
                 alert('이미 참여한 채팅방입니다')
             }

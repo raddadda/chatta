@@ -10,12 +10,12 @@ const main = async (req, res) => {
 }
 
 const loginMain = async (req, res) => {
-    console.log("cookie", req.signedCookies);
     const { logined } = req.signedCookies;
     if (logined) {
         const getCheck = await Cauth.getAuthCheck(req, res);
         if (getCheck) {
             res.redirect('/')
+            return;
         }
     }
     res.render('login');

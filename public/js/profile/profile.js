@@ -63,6 +63,7 @@ async function chatRoomJoin(board_id) {
     if (res.data.result) {
         alert('채팅방에 참여했습니다')
         document.location.assign('/mychat')
+        return;
     }
 }
 
@@ -98,7 +99,6 @@ listContainers.forEach(function (container) {
 // 목록을 토글하는 함수
 function toggleList(listId, button) {
     const listContainer = document.getElementById(listId);
-    console.log('listContainer', listContainer)
     if (listContainer.style.display === 'block') {
         listContainer.style.display = 'none';
         button.style.color = 'gray';
