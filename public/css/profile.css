@@ -109,13 +109,17 @@ body {
 }
 
 .friend-info button {
-    background-color: rgb(71, 87, 111);
+    background-color: rgb(106, 118, 138);
     color: white;
     border: none;
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
     border-radius: 30px;
+}
+
+.friend-info button:hover {
+    background-color: rgb(71, 87, 111);
 }
 
 /* 하단 섹션 (카테고리, 목록 등) 스타일 */
