@@ -7,12 +7,10 @@ const main = async (req, res) => {
         res.redirect('/login')
         return;
     }
-
-    const cookieValue = req.signedCookies.logined.id;
-    const userId = await Cauth.stringToUuid(cookieValue);
+    //const userId = await Cauth.stringToUuid(cookieValue);
     const profileImage = await Cimage.getProfileImage(userId);
-
     res.render('index', { profileImage });
+
 }
 
 const loginMain = async (req, res) => {
