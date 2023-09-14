@@ -13,18 +13,9 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
     <script src="/public/js/index_modal.js" defer></script>
-    <link rel="stylesheet" href="/public/css/index_modal.css">
 
 </head>
 <body>  
-
-    <!-- <button onclick="cookieAuthCheck()">쿠키 인증 체크</button><br/>
-    <button onclick="userLogOut()">로그아웃</button><br/>
-
-    <a href="/profile">프로필 페이지로 이동</a> <br/>
-    <a href="/post/new">게시글 작성</a><br/>
-    <a href="/post">게시글 목록</a><br/> -->
-    
     <div id="scrollby-top" onclick="goTop()"><img src="../public/images/gotopicon.png"> </div>
     <header class="main-header">
         <div class="header-layout">
@@ -134,12 +125,10 @@
                     if(currentDirection != 'down'){
                         getbaordPagenation();
                         currentDirection = 'down';
-                        console.log(currentDirection+' 실행 !!!!');
                     }
                 } else {
                     if (currentDirection != 'up'){
                         currentDirection = 'up';
-                        console.log(currentDirection+' 실행 !!!!');
                     }
                 }
 
@@ -214,7 +203,6 @@
             })
             if (res.data.result) {
                 alert('채팅방에 참여했습니다')
-                document.location.assign('/mychat');
             } else {
                 alert('이미 참여한 채팅방입니다')
             }

@@ -33,13 +33,10 @@ let socketInfoList;
                 cells[i][j] = cell;
 
                 cell.addEventListener('click', () => {
-                    console.log('turn',turn);
-                    console.log('player',role[turn])
                     if (cell.classList.contains('black') || cell.classList.contains('white')) {
                         return;
                     }
                     if(role[turn] === nickname){
-                        console.log('dataset',cell.dataset)
                         socket.emit('ejs_choose',nickname,room_id,cell.dataset);
                         cell.classList.add(currentPlayer);
                         turn = (turn + 1) % 2
@@ -67,15 +64,12 @@ let socketInfoList;
         }
 
         function simulateClick(row, col) {
-            // row와 col을 기반으로 클릭할 셀을 선택하고 클릭 이벤트를 생성
-            const cell = cells[row][col]; // cells 배열에 셀 요소들이 저장되어 있다고 가정
+            const cell = cells[row][col];
             const clickEvent = new MouseEvent('click', {
                 bubbles: true,
                 cancelable: true,
                 view: window,
             });
-
-            // 선택한 셀에 클릭 이벤트를 디스패치
             cell.dispatchEvent(clickEvent);
         }
         

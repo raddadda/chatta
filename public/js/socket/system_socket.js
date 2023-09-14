@@ -3,7 +3,6 @@
 console.log("socket", socket);
 
 socket.emit('connection', user_id, nickname, room_id, (users, log) => {
-    console.log('user',users)
     socketInfoList = users
     console.log("system : ",log)
 });

@@ -1,16 +1,13 @@
 socket.on('new_msg',(data)=>{
-    console.log(data);
     const { nickname:msg_nickname, content, game } = data
     const flag = ( msg_nickname === nickname)
     msgLiAdd(msg_nickname, content, flag, game)
     const messageList = document.getElementById('message-list');
     messageList.scrollTop = messageList.scrollHeight;
-    // 스크롤을 아래로 이동하여 최신 메시지를 보여줍니다.
 })
 
 socket.on('game_open_req',(game) => {
     const {user1,user2} = game
-    console.log('js game open')
     if(confirm(`${user1}님의 게임에 참여 하시겠습니까`)){
         socket.emit('game_accept',game)
         window.open(`/game?user1=${user1}&user2=${user2}`)

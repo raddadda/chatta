@@ -48,14 +48,11 @@ const User = (sequelize) => {
             defaultValue: 'default-profile-image.png'
         },
     },
-        {
-            // tableName:'user',
-            freezeTableName: true,
-            // timestamps:true,
-            charset: 'utf8mb4',
-            collate: 'utf8mb4_general_ci',
-            // charset, collate가 없으면 uuid를 foriengnKey로 받는게 오류남..
-        })
+    {
+        freezeTableName: true,
+        charset: 'utf8mb4',
+        collate: 'utf8mb4_general_ci',
+    })
 }
 
 module.exports = User;

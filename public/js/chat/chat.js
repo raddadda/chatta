@@ -54,21 +54,21 @@ async function chatMsgLoad(){
 function msgLiAdd(nickname,content,isMine,game){
     const messageList = document.getElementById('message-list');
     const li = document.createElement('li');
-    const profileImg = document.createElement('img');
+    // const profileImg = document.createElement('img');
     const user = document.createElement('div');
     const userInfo = document.createElement('div');
     const messageContent = document.createElement('div');
     li.className = 'message';
-    profileImg.className = 'profile-img';
+    // profileImg.className = 'profile-img';
     userInfo.className = 'user-info';
     messageContent.className = 'message-content';
-    profileImg.src = '/public/giticon.png'; // 프로필 이미지 경로
+    // profileImg.src = '/public/giticon.png'; // 프로필 이미지 경로
     userInfo.textContent = nickname;
     messageContent.textContent = content;
     if (isMine) {
-        profileImg.style.marginRight = '0';
-        profileImg.style.marginLeft = '10px';
-        profileImg.style.float = 'right';
+        // profileImg.style.marginRight = '0';
+        // profileImg.style.marginLeft = '10px';
+        // profileImg.style.float = 'right';
         messageContent.style.textAlign = 'right';
         messageContent.style.backgroundColor = '#007bff';
         messageContent.style.color = '#fff';
@@ -89,7 +89,7 @@ function msgLiAdd(nickname,content,isMine,game){
             showContextMenu(e.clientX, e.clientY);
         }
     }
-    user.appendChild(profileImg);
+    // user.appendChild(profileImg);
     user.appendChild(userInfo);
     li.appendChild(user);
     li.appendChild(messageContent);
@@ -125,7 +125,6 @@ menuItems.forEach((menuItem) => {
         const my_socket = socketSearch(nickname);
         const opponent_socket = socketSearch(opponent);
         if(menuItemId === 'game'){
-            console.log('game click')
             axios ({
                 method: 'post',
                 url: '/msg/send',
@@ -137,7 +136,6 @@ menuItems.forEach((menuItem) => {
                     game:true
                 }
             }).then((msg_send) => {
-                console.log('msg',msg_send)
                 const info = {
                     user1: nickname,
                     user2: opponent,
@@ -149,11 +147,6 @@ menuItems.forEach((menuItem) => {
                 socket.emit('game_open', info)
             })
         }
-        
-        // 여기에서 각 메뉴 항목을 클릭했을 때의 동작을 정의할 수 있습니다.
-        // 예를 들어, 메뉴 항목에 따라 다른 작업을 수행하도록 할 수 있습니다.
-        
-        // 컨텍스트 메뉴 숨기기
         customContextMenu.style.display = 'none';
     });
 });

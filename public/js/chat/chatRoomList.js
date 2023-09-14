@@ -9,7 +9,6 @@ async function myChatRoomList(){
         data:{user_id}
     })
     let list = myChatRoom.data.roomInfoList;
-    console.log('chat room',list)
     const room_list_ul = document.getElementById('room-list')
     for (let i = 0; i < list.length; i++){
         const chatRoom = list[i];

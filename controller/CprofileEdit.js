@@ -21,7 +21,6 @@ const profileUpdate = async (req, res) => {
             return;
         }
         const cookieValue = req.signedCookies.logined.id;
-        console.log(cookieValue)
         const userId = await Cauth.stringToUuid(cookieValue);
 
         const user = await User.findOne({ where: { user_id: userId } });
@@ -47,7 +46,7 @@ const pwUpdate = async (req, res) => {
             return;
         }
         const cookieValue = req.signedCookies.logined.id;
-        console.log(cookieValue)
+
         const userId = await Cauth.stringToUuid(cookieValue);
 
         const user = await User.findOne({ where: { user_id: userId } });
@@ -72,7 +71,7 @@ const profileDelete = async (req, res) => {
             return;
         }
         const cookieValue = req.signedCookies.logined.id;
-        console.log(cookieValue)
+
         const userId = await Cauth.stringToUuid(cookieValue);
 
         const user = await User.findOne({ where: { user_id: userId } });
@@ -243,8 +242,7 @@ const findIdPost = async (req, res) => {
         if(!user){
             res.send({result : false,  message : '존재하지 않는 회원입니다.'})
         }
-        console.log('birth',birth2)
-        console.log('user.birth',user.birth)
+
         if(birth2 == user.birth){
             res.send({result : true, name : user.user_name, message : user.login_id})
         }

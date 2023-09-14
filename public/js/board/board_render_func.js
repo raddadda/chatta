@@ -5,12 +5,8 @@ function modalCloase () {
 }
 
 function boardModified (id) {
-
     if(!confirm('수정페이지로 넘어가겠습니까?')) return;
-
-    // 페이지 이동
     window.location.href = `/post/edit/${id}`
-
 }
 
 async function boardDelete1 (id) {

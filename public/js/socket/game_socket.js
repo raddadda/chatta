@@ -47,7 +47,6 @@ socket.on('js_choose',(player_name,cell)=>{
 })
 
 function socketSearch(nickname){
-    console.log('serch socket',socketInfoList)
     const member = socketInfoList.find((e) => e.nickname === nickname);
     if(!member){
         alert('유저가 접속중이지 않습니다')

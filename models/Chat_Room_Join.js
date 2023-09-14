@@ -20,7 +20,6 @@ const Chat_Room_Join = (sequelize) => {
             freezeTableName: true,
             charset: 'utf8mb4',
             collate: 'utf8mb4_general_ci'
-            // charset, collate가 없으면 uuid를 foriengnKey로 받는게 오류남..
         })
 }
 

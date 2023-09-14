@@ -1,7 +1,3 @@
-// const Cauth = require('./Cauth');
-// const Cchat = require('./Cchat')
-const constant = require('../common/constant');
-
 const systemSocket = async (io,socket) => {
     socket.on('connection',(user_id, nickname, room_id, cb) => {
         const users = [];
@@ -10,16 +6,12 @@ const systemSocket = async (io,socket) => {
         socket.room = room_id
         socket.join(room_id)
         const clients = io.adapter.rooms.get(room_id);
-        console.log('clients',clients);
         if (clients) {
             clients.forEach((socketId) => {
-                console.log('socket.id',socket.id)
-                console.log('socketId',socketId)
                 const userSocket = io.sockets.get(socketId);
                 const {user_id,nickname} = userSocket
                 users.push({user_id,nickname,socket_id:userSocket.id});
             });
-            console.log('user',users)
         }
         cb(users,`${nickname}님 id:${socket.id}로 연결되었습니다`)
         io.to(room_id).emit('new_member',{user_id, nickname, socket_id:socket.id})
@@ -35,12 +27,10 @@ const chatSocket = async (io,socket) => {
 
     socket.on('game_open',(info) => {
         const { user1, user2, my_socket, opponent_socket } = info
-        console.log('info',info);
         io.to(opponent_socket).emit('game_open_req',{user1, user2, opponent_socket:my_socket})
     })
 
     socket.on('game_accpet',(game) => {
-        console.log('cjs game accept')
         const { opponent_socket } = game
         io.to(opponent_socket).emit('game_accept_res',game);
     })
@@ -60,33 +50,9 @@ const gameSocket = async (io,socket) => {
     })
 }
 
-const rootSocket = async(io,socket) => {
-    socket.on('open',()=>{
-        console.log(`루트접속`)
-    })
-}
-
-const newSocket = async(io,socket) => {
-    socket.on('userLog',()=>{
-        console.log(`new접속`)
-    })
-}
-
-const roomSocket = async (io,socket) => {
-    socket.emit('roomList', async (cb) => {
-        // console.log(Cauth)
-        // const user_id = await Cauth.stringToUuid(socket.user_id);
-        // console.log("user_id",user_id);
-        // await Cchat.myChatRoomList(user_id);
-    })
-}
-
 
 module.exports = {
     systemSocket,
     gameSocket,
-    rootSocket,
-    newSocket,
-    roomSocket,
     chatSocket,
 }
