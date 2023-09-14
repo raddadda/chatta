@@ -287,28 +287,24 @@ const findone_board_bookmark = async (req,res)=>{
     }
 }
 
-
 const findall_profile_bookmark_board =  async (req,res)=>{
     try {
         const user_id = await getUserId(req);
         const board = await Board_Bookmark.findAll({
+            where: {user_id : user_id},
             include: [{
                 model: Board,
                 attributes:['title','category','event_time','views','content','id','poster_id','board_img'],
-                where: {
-                     poster_id: user_id,
-                }
             }]
         })
         if (board) {
             board.forEach(index => {
-                console.log('index', index.dataValues.board)
-                if (index.dataValues.board.dataValues.poster_id === user_id) {
+                if (index.dataValues.board.dataValues.user_id === user_id) {
                     index.dataValues.board.dataValues.poster_check = true;
-                    delete index.dataValues.board.dataValues.poster_id;
+                    delete index.dataValues.board.dataValues.user_id;
                 } else {
                     index.dataValues.board.dataValues.poster_check = false;
-                    delete index.dataValues.board.dataValues.poster_id;
+                    delete index.dataValues.board.dataValues.user_id;
                 }
             });
             res.json({result:true, board});
