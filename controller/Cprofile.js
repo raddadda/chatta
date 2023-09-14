@@ -13,28 +13,21 @@ const profile = async (req, res) => {
         }
         const cookieValue = req.signedCookies.logined.id;
         const userId = await Cauth.stringToUuid(cookieValue);
-
         const user = await User.findOne({ where: { user_id: userId } });
-
         const friendCount = await getFriendCount(userId);
-
         const posterChatRooms = await getPosterChatRooms(userId);
         const userChatRooms = await getUserChatRooms(userId);
         const allChatRooms = posterChatRooms.concat(userChatRooms);
-
         for (const room of allChatRooms) {
             room.unreadMessages = await calculateUnreadMessages(room.room_id, userId);
             room.latestUnreadMessage = await getLatestUnreadMessage(room.room_id, userId);
         };
-
         const bookmarkedBoards = await getBookmarkedBoards(userId);
         const schedules = await getSchedules(userId);
         const age = await calculateAge(user.birth);
-
         if (!user) {
             return res.status(404).render('404');
         }
-
         const profileImage = await Cimage.getProfileImage(userId);
         res.render('profile', { user, age, profileImage, friendCount, posterChatRooms, userChatRooms, bookmarkedBoards, schedules });
         return;
@@ -49,12 +42,9 @@ const calculateAge = (birthdate) => {
     try {
         const birthDate = new Date(birthdate);
         const currentDate = new Date();
-
         const age = currentDate.getFullYear() - birthDate.getFullYear();
-
         const currentMonth = currentDate.getMonth();
         const birthMonth = birthDate.getMonth();
-
         if (currentMonth < birthMonth || (currentMonth === birthMonth && currentDate.getDate() < birthDate.getDate())) {
             return age - 1;
         } else {
@@ -71,7 +61,6 @@ const getFriendCount = async (userId) => {
         const userFriendsCount = await Friend_List.count({ where: { user_id: userId } });
         const friendFriendsCount = await Friend_List.count({ where: { friend_id: userId } });
         const totalFriendCount = userFriendsCount + friendFriendsCount;
-
         return totalFriendCount;
     } catch (error) {
         console.error('친구 수 계산 오류:', error);
@@ -85,7 +74,6 @@ const getPosterChatRooms = async (userId) => {
         const posterChatRooms = await Chat_Room.findAll({
             where: { poster_id: userId },
         });
-
         return posterChatRooms;
     } catch (error) {
         console.error('채팅방 가져오기 오류:', error);
@@ -104,7 +92,6 @@ const getUserChatRooms = async (userId) => {
                 },
             ],
         });
-
         return userChatRooms;
     } catch (error) {
         console.error('채팅방 가져오기 오류:', error);
@@ -118,7 +105,6 @@ const calculateUnreadMessages = async (roomId, userId) => {
         const unreadMessages = await Chat_Message.count({
             where: { room_id: roomId, user_id: { [Op.ne]: userId }, is_read: false },
         });
-
         return unreadMessages;
     } catch (error) {
         console.error('안 읽은 메시지 수 계산 오류:', error);
@@ -136,7 +122,6 @@ const getLatestUnreadMessage = async (roomId, userId) => {
             },
             order: [['createdAt', 'DESC']],
         });
-
         return latestUnreadMessage;
     } catch (error) {
         console.error('가장 최신의 안 읽은 메시지 가져오기 오류:', error);
@@ -185,7 +170,6 @@ const getSchedules = async (userId) => {
                 formattedDate: formattedDate,
             };
         });
-
         return formattedSchedules;
     } catch (error) {
         console.error('일정 가져오기 오류:', error);

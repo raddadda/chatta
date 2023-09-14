@@ -22,72 +22,91 @@ const chatRoomJoin = async (req,res) => {
 }
 
 const myChatRoomList = async (req,res) => {
-    const user_id = await Cauth.stringToUuid(req.body.user_id) 
-    const list = await Chat_Room_Join.findAll({ attributes: ["room_id"], where: { user_id }, raw: true })
-    let roomInfoList = [];
-    for(let i =0; i < list.length; i++ ){
-        const roomInfo = await Chat_Room.findOne({where:{room_id:list[i].room_id},raw:true})
-        roomInfoList.push(roomInfo);
+    try {
+        const user_id = await Cauth.stringToUuid(req.body.user_id) 
+        const list = await Chat_Room_Join.findAll({ attributes: ["room_id"], where: { user_id }, raw: true })
+        let roomInfoList = [];
+        for(let i =0; i < list.length; i++ ){
+            const roomInfo = await Chat_Room.findOne({where:{room_id:list[i].room_id},raw:true})
+            roomInfoList.push(roomInfo);
+        }
+        res.json({ result: true, roomInfoList});
+    } catch (error) {
+        console.log(error)
     }
-    res.json({ result: true, roomInfoList});
-    return;
 }
 
 const chatRoomMain = async (req,res) => {
-    const getCheck = await Cauth.getAuthCheck(req, res);
-    if (!getCheck) {
-        res.redirect('/login')
-        return;
+    try {
+        const getCheck = await Cauth.getAuthCheck(req, res);
+        if (!getCheck) {
+            res.redirect('/login')
+            return;
+        }
+        const {room_id, category} = req.query
+        const { id, nickname } = req.signedCookies.logined
+        const user_id = await Cauth.stringToUuid(id)
+        res.render('chatRoom',{ user_id, nickname, room_id, category });
+    } catch (error) {
+        console.log(error)
     }
-    const {room_id, category} = req.query
-    const { id, nickname } = req.signedCookies.logined
-    const user_id = await Cauth.stringToUuid(id)
-    res.render('chatRoom',{ user_id, nickname, room_id, category });
-    return;
 }
 
 const memberLoad = async (req,res) => {
-    const {room_id} = req.body
-    const member_list = await Chat_Room_Join.findAll({ attributes: ['user_id'], where: { room_id }, raw: true })
-    let memberInfoList = [];
-    for(let i =0; i < member_list.length; i++ ){
-        const memberInfo = await User.findOne({attributes: ['user_id','nickname'], where:{user_id:member_list[i].user_id},raw:true})
-        memberInfoList.push(memberInfo);
+    try {
+        const {room_id} = req.body
+        const member_list = await Chat_Room_Join.findAll({ attributes: ['user_id'], where: { room_id }, raw: true })
+        let memberInfoList = [];
+        for(let i =0; i < member_list.length; i++ ){
+            const memberInfo = await User.findOne({attributes: ['user_id','nickname'], where:{user_id:member_list[i].user_id},raw:true})
+            memberInfoList.push(memberInfo);
+        }
+        res.json({result: true , memberInfoList})
+    } catch (error) {
+        console.log(error)
     }
-    res.json({result: true , memberInfoList})
-    return;
 }
 
 const msgLoad = async (req,res) => {
-    const {room_id} = req.body
-    const msg_list = await Chat_Message.findAll({ attributes: ['user_id','content','createdAt'], where: { room_id }, raw: true })
-    res.json({result: true , msg_list})
-    return;
+    try {
+        const {room_id} = req.body
+        const msg_list = await Chat_Message.findAll({ attributes: ['user_id','content','createdAt'], where: { room_id }, raw: true })
+        res.json({result: true , msg_list})
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 const msgSend = async (req,res) => {
-    const {user_id,nickname,room_id,content,game} = req.body
-    const msg_send = await Chat_Message.create({
-        user_id,
-        room_id,
-        content,
-    })
-    res.json({
-        result: true,
-        user_id,
-        nickname,
-        room_id,
-        content,
-        game,
-    })
-    return;
+    try {
+        const {user_id,nickname,room_id,content,game} = req.body
+        const msg_send = await Chat_Message.create({
+            user_id,
+            room_id,
+            content,
+        })
+        res.json({
+            result: true,
+            user_id,
+            nickname,
+            room_id,
+            content,
+            game,
+        })
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 const gameMain = async (req,res) => {
-    const {user1,user2} = req.query
-    const { id, nickname } = req.signedCookies.logined
-    const user_id = await Cauth.stringToUuid(id)
-    res.render('game',{ user1, user2, user_id, nickname })
+    try {
+        const {user1,user2} = req.query
+        const { id, nickname } = req.signedCookies.logined
+        const user_id = await Cauth.stringToUuid(id)
+        res.render('game',{ user1, user2, user_id, nickname })
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 module.exports = {

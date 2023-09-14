@@ -10,8 +10,8 @@ const dayDropdown = document.getElementById('birth-day');
 //////////////////////////sign_in////////////////////////////////////////
 
 async function userSignin() {
-    const signInForm = document.forms["signin-form"];
     try {
+        const signInForm = document.forms["signin-form"];
         const data = {
             login_id: signInForm.userid.value,
             login_pw: signInForm.pw.value,
@@ -37,6 +37,8 @@ async function authKaKao() {
 
 document.addEventListener("keydown", function (event) {
     if (event.key === "Enter") {
-        userSignin();
+        (async() => {
+            await userSignin();
+        })
     }
 });
