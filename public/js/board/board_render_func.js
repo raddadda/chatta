@@ -24,7 +24,6 @@ async function boardDelete1 (id) {
         } else {
            return alert('다시 시도해 주세요.');
         }
-        
     } catch (e) {
         alert('잠시 후에 시도해주세요.');
     }
