@@ -6,10 +6,10 @@ async function boardCreate(){
     if(loading) return;
     loading = true;
     const boardForm = document.forms["board-form"];
-    if ( boardForm.title.value === "" ) return alert('제목을 확인해주세요.');
-    if ( boardForm.content.value === "" ) return alert('내용을 확인해주세요.');
-    if ( boardForm.eventDate.value === "" ) return alert('흥보시간 확인해주세요.');
-    if ( boardForm.category.value === "" ) return alert('카테고리를 확인해주세요.');
+    if ( boardForm.title.value === "" ) return alert('제목을 확인해주세요.'),  loading = false;;
+    if ( boardForm.content.value === "" ) return alert('내용을 확인해주세요.'),  loading = false;;
+    if ( boardForm.eventDate.value === "" ) return alert('흥보시간 확인해주세요.'),  loading = false;;
+    if ( boardForm.category.value === "" ) return alert('카테고리를 확인해주세요.'),  loading = false;;
     
     try {
         const data = {
@@ -30,8 +30,8 @@ async function boardCreate(){
         } else{
             alert("다시 시도해주세요.");
         }
-        loading =false;
-        console.log("result",res.result);
+        loading = false;
+    
     } catch (error) {
         alert("잠시 후에 시도해주세요.");
         loading = false;
@@ -119,7 +119,6 @@ async function boardFindOne(id){
 
 
 async function boradFindAll(offset){
-    console.log("offset 확인",offset);
 
     try { 
         const res = await axios({
@@ -142,7 +141,7 @@ async function boradFindAll(offset){
 }
 
 async function boradFindAll_pagination(page_id){
-    console.log("page_id",page_id)
+
     if (page_id === undefined || page_id == null) 
         return console.log('page_id이 없음');
     const res = await axios({

@@ -47,9 +47,9 @@ function getBookMarkSvg (book_mark) {
 }
 
 async function loadDetailModal (index) {
-    // console.log("list[index]",list[index].views++);
+
+    
     list[index].book_mark = await post_bookmark(list[index].id);
-    //let date = new Date(`${list[index].event_time}`);
     const data = {
         id : list[index] && list[index].id ? list[index].id : 0,
         poster_check : list[index] && list[index].poster_check ? list[index].poster_check : false,
@@ -61,10 +61,7 @@ async function loadDetailModal (index) {
         event_time2 : list[index] && list[index].event_time ? list[index].event_time.split('T')[1].substring(0,5) : '',
         book_mark : list[index] && list[index].book_mark ? list[index].book_mark : false,
         board_img : list[index] && list[index].board_img ? list[index].board_img : '',
-        //event_time: `${date.getFullYear()}-${(date.getMonth() + 1)>= 10 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1) }-${date.getDate() >= 10 ? date.getDate() : '0' + date.getDate()} ${date.getHours()}시 ${date.getMinutes()}분`
     }
-    console.log("list[index].event_time",list[index].event_time.split('T')[1]);
-    // console.log("list[index].event_time",list[index].event_time.split('T')[1]).indexOf('.');
     let modal = document.getElementById('boardDetailModal');
     modal.style.display = 'block'
     modal.innerHTML = `
@@ -98,8 +95,8 @@ async function loadDetailModal (index) {
                 </div>
                 ${data.poster_check === true ? 
                     `<div class="button-box">
-                        <button type="button" onclick = "boardModified(${data.id})">수정하기</button>
-                        <button type="button" onclick = "boardDelete1(${data.id})">삭제하기</button>
+                        <button type="button" class="modified" onclick = "boardModified(${data.id})">수정하기</button>
+                        <button type="button" class="delete" onclick = "boardDelete1(${data.id})">삭제하기</button>
                     </div>`
                     : 
                     ''
