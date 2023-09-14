@@ -4,74 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="/public/css/chat/chatRoomList.css">
+    <script src="/public/js/chat/chatRoomList.js" defer></script>
     <title>Document</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            margin: 0;
-            padding: 0;
-        }
-
-        #chat-room-list {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        }
-
-        h1 {
-            text-align: center;
-        }
-
-        #room-list {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .room {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            margin-bottom: 10px;
-            background-color: #f9f9f9;
-        }
-
-        .room-info {
-            flex: 1;
-        }
-
-        .title {
-            margin: 0;
-            font-size: 24px;
-        }
-
-        p {
-            margin: 0;
-            color: #777;
-        }
-    </style>
 </head>
 <body>
     <div id="chat-room-list">
         <h1> <%= nickname %>님 채팅방 목록</h1>
-        <ul id="room-list">
-            <!-- <li class="room">
-                <div class="room-info">
-                    <div class="title">채팅방 </div>
-                    <div class="category">카테고리</div>
-                    <div class="headcount">인원수</div>
-                    <div class='event-time'>약속 시간</div>
-                    <p>채팅방 설명이 여기에 들어갈 수 있습니다.</p>
-                </div>
-            </li> -->
-        </ul>
+        <ul id="room-list"></ul>
     </div>
 </body>
 <script>
@@ -79,51 +19,5 @@
     const nickname = '<%= nickname %>'
     const listUl = document.querySelector("#lists");
     (async () => { await myChatRoomList() })()
-    async function myChatRoomList(){
-        const myChatRoom = await axios({
-            method: "post",
-            url: "/load/roomlist",
-            data:{user_id}
-        })
-        let list = myChatRoom.data.roomInfoList;
-        console.log('chat room',list)
-        const room_list_ul = document.getElementById('room-list')
-        for (let i = 0; i < list.length; i++){
-            const chatRoom = list[i];
-            const li = document.createElement('li');
-            const div = document.createElement('div');
-            const title = document.createElement('div');
-            const category = document.createElement('div');
-            const headcount = document.createElement('div');
-            const event_time = document.createElement('div');
-            li.className = 'room'
-            div.className = 'room-info'
-            title.className = 'title'
-            category.className = 'category'
-            headcount.className = 'headcount'
-            event_time.className = 'event-time'
-            title.textContent = chatRoom.title
-            category.textContent = `카테고리 : ${chatRoom.category}`
-            headcount.textContent = `인원수 : ${chatRoom.headcount}`
-            const date = chatRoom.event_time.slice(0,10);
-            const time = chatRoom.event_time.slice(11,16)
-            event_time.textContent = `약속시간 : ${date} , ${time}`
-            div.appendChild(title)
-            div.appendChild(category)
-            div.appendChild(headcount)
-            div.appendChild(event_time)
-            li.appendChild(div)
-            li.onmouseover = () => {
-                li.style.backgroundColor = 'skyblue'
-            }
-            li.onmouseleave = () => {
-                li.style.backgroundColor = null
-            }
-            li.ondblclick = () => {
-                window.open(`/chat_room?room_id=${chatRoom.room_id}&category=${chatRoom.category}`)
-            }
-            room_list_ul.appendChild(li)
-        }
-    }
 </script>
 </html>
