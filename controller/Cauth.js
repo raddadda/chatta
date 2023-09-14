@@ -151,6 +151,7 @@ const loginCookieRes = async (id, nickname, auth, res) => {
         const cookieValue = { id, nickname, auth };
         const { loginCookie, cookieSetting } = constant;
         res.cookie(loginCookie, cookieValue, cookieSetting);
+        return;
     } catch (error) {
         console.log(error);
     }

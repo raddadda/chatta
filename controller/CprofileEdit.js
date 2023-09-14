@@ -32,6 +32,7 @@ const profileUpdate = async (req, res) => {
         const profileImage = await Cimage.getProfileImage(userId);
 
         res.render('profileEdit', { user, profileImage });
+        return;
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });
@@ -57,6 +58,7 @@ const pwUpdate = async (req, res) => {
         const profileImage = await Cimage.getProfileImage(userId);
 
         res.render('pwEdit', { user, profileImage });
+        return;
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });
@@ -82,6 +84,7 @@ const profileDelete = async (req, res) => {
         const profileImage = await Cimage.getProfileImage(userId);
 
         res.render('profileDelete', { user, profileImage });
+        return;
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });
@@ -114,6 +117,7 @@ const handleUploadedProfileImage = async (req, res) => {
         await User.update({ profile_image_filename }, { where: { user_id: userId } });
 
         res.json({ result: true, message: '프로필 이미지가 업로드되었습니다.' });
+        return;
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });
@@ -125,7 +129,7 @@ const profileUpdatePost = async (req, res) => {
         const { id, nick, email } = req.body
         const update = await User.update({ nickname: nick, email, }, { where: { user_id: id } })
         res.json({ result: true, message: '저장되었습니다.' })
-
+        return;
     } catch (error) {
         console.log(error)
     }
@@ -142,12 +146,16 @@ const pwUpdatePost = async (req, res) => {
         if(pwCompare && pw_edit === pw_edit2) {
             const update = await User.update({login_pw : hashPwEdit}, {where : {user_id : id}})
             res.json({result : true})
+            return;
         } else if(!pwCompare && pw_edit === pw_edit2) {
             res.json({result : false, message : '현재 비밀번호가 틀립니다'})
+            return;
         } else if(pwCompare && pw_edit !== pw_edit2) {
             res.json({result : false, message : '비밀번호가 서로 다릅니다'})
+            return;
         } else {
             res.json({ result: false, message: '작성한 내용을 확인해주세요' })
+            return;
         }
     } catch (error) {
         console.log(error)
@@ -163,10 +171,13 @@ const profileDeletePost = async (req, res) => {
         if (pwCompare && login_id === Cid) {
             const destroy = await User.destroy({ where: { user_id: id } })
             res.json({ result: true })
+            return;
         } else if (!pwCompare && login_id === Cid) {
             res.send({ result: false, message: '비밀번호가 틀립니다.' })
+            return;
         } else {
             res.send({ result: false, message: '존재하지 않는 회원입니다.' })
+            return;
         }
     } catch (error) {
         console.log(error)
@@ -180,6 +191,7 @@ const findInfoPost = async (req, res) => {
         const user = await User.findOne({ attributes: ["email", "user_name"], where: { login_id }, raw: true })
         if (!user) {
             res.send({ result: false, message: '존재하지 않는 회원입니다.' })
+            return;
         }
         if (user.user_name === name) {
             const email = user.email
@@ -202,8 +214,10 @@ ${password}
             mailer.sendGmail(emailParam);
 
             res.send({ result: true, message: '계정에 입력한 email로 임시 비밀번호 발급 완료' })
+            return;
         } else {
             res.send({ result: false, message: '아이디와 이름을 확인해주세요' })
+            return;
         }
     } catch (error) {
         console.log(error)
@@ -224,6 +238,7 @@ const findPwPost = (req, res) => { // /mail 에서 받는 포스트
     mailer.sendGmail(emailParam);
 
     res.status(200).send("성공");
+    return;
 }
 
 
@@ -241,10 +256,12 @@ const findIdPost = async (req, res) => {
         const user = await User.findOne({attributes: ["login_id","birth","user_name"] ,where:{user_name : name}})
         if(!user){
             res.send({result : false,  message : '존재하지 않는 회원입니다.'})
+            return;
         }
 
         if(birth2 == user.birth){
             res.send({result : true, name : user.user_name, message : user.login_id})
+            return;
         }
     } catch (error) {
         console.log(error)

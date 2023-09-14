@@ -35,8 +35,9 @@ const profile = async (req, res) => {
             return res.status(404).render('404');
         }
 
-        const profileImage = '';
+        const profileImage = await Cimage.getProfileImage(userId);
         res.render('profile', { user, age, profileImage, friendCount, posterChatRooms, userChatRooms, bookmarkedBoards, schedules });
+        return;
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: '내부 서버 오류' });

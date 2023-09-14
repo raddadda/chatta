@@ -64,6 +64,7 @@ async function userSignUp() {
         alert(res.data.message);
         if (res.data.result) {
             document.location.href='/login'
+            return;
         }
     } catch (error) {
         console.log(error);

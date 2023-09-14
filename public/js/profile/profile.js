@@ -63,6 +63,7 @@ async function chatRoomJoin(board_id) {
     if (res.data.result) {
         alert('채팅방에 참여했습니다')
         document.location.assign('/mychat')
+        return;
     }
 }
 

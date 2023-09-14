@@ -26,9 +26,10 @@ async function boardCreate(){
         if(res.data.result){
             alert("등록 되었습니다.");
             window.location.href = "/";
-    
+            return
         } else{
             alert("다시 시도해주세요.");
+            return;
         }
         loading = false;
     

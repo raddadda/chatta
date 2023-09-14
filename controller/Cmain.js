@@ -15,6 +15,7 @@ const loginMain = async (req, res) => {
         const getCheck = await Cauth.getAuthCheck(req, res);
         if (getCheck) {
             res.redirect('/')
+            return;
         }
     }
     res.render('login');
