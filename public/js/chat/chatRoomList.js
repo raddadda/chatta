@@ -1,3 +1,7 @@
+const listUl = document.querySelector("#lists");
+
+(async () => { await myChatRoomList() })()
+
 async function myChatRoomList(){
     const myChatRoom = await axios({
         method: "post",
