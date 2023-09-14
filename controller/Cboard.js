@@ -9,6 +9,16 @@ const Op = Sequelize.Op;
 
 const Cauth = require('./Cauth');
 
+let imgArray = new Array();
+    imgArray[0] = "https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/pi_1280.jpg";
+	imgArray[1] = "https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/football_1280.jpg";
+	imgArray[2] = "https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/arm-wrestling_1280.jpg";
+	imgArray[3] = "https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/moon_1280.jpg";
+
+const random_choice_img_url = async()=>{
+        let imgNum = await Math.round(Math.random()*3);
+		return imgArray[imgNum];
+}
 // res.cookies(signedCookies) id값 복호화
 const getUserId = async (req) => {
 
@@ -41,7 +51,7 @@ const edit_board = async (req, res)=>{
 const create_board_post = async (req,res)=>{
     try {
         const user_id = await getUserId(req);
-    
+        const board_img = await random_choice_img_url()
         const {title,content,event_time,category} = req.body
 
         const board = await Board.create({
@@ -55,7 +65,8 @@ const create_board_post = async (req,res)=>{
                 poster_id : user_id,
                 category,
                 event_time,
-            }
+            },
+            board_img
         },{
             include:Chat_Room,
         })
@@ -69,6 +80,7 @@ const create_board_post = async (req,res)=>{
         console.log(e);
     }
 }
+
 const edit_board_post = async(req,res)=>{
 
     const user_id = await getUserId(req);
@@ -128,7 +140,7 @@ const boarduser_findone = async (req,res)=>{
     const {id} = req.body;
     try {
         const board = await Board.findOne({
-            attributes:['id', 'title', 'views', 'content', 'event_time', 'category', 'createdAt'],
+            attributes:['id', 'title', 'views', 'content', 'event_time', 'category', 'createdAt','board_img'],
             where: {id}
         })
       
@@ -153,7 +165,6 @@ const boarduser_findall = async(req,res)=>{
             order: [["id","desc"]],
             limit:3
         })
-
         if(board){
             board.forEach(index => {
                 if (index.dataValues.poster_id === user_id) {
@@ -164,7 +175,6 @@ const boarduser_findall = async(req,res)=>{
                     delete index.dataValues.poster_id;
                 }
             });
-            
             res.json({result:true, board});
         }else{
             res.json({result:false});
@@ -290,7 +300,7 @@ const findall_profile_bookmark_board =  async (req,res)=>{
         const board = await Board_Bookmark.findAll({
             include: [{
                 model: Board,
-                attributes:['title','category','event_time','views','content','id','poster_id'],
+                attributes:['title','category','event_time','views','content','id','poster_id','board_img'],
                 where: {
                      poster_id: user_id,
                 }

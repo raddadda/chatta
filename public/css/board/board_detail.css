@@ -91,6 +91,7 @@
 
 .board-detail-modal > .board-detail-contents > .bd-sub-content > .txt-box {
     color: #333; font-size: 24px; line-height: 1.95;
+    background-image: (Ur);
 }
 
 .board-detail-modal > .board-detail-contents > .bd-sub-content > .txt-box > h6 {
@@ -104,11 +105,24 @@
     font-size: 16px; line-height: 1.75; padding-right: 1em;
 }
 
-.board-detail-modal > .board-detail-contents > .bd-sub-content > .txt-box > .button-box {
+.board-detail-modal > .board-detail-contents > .bd-sub-content > .button-box {
 
-    position: absolute; bottom: 0;
+  text-align: center; margin-top: 1em; font-size: 1em;
 }
 
+.board-detail-modal > .board-detail-contents > .bd-sub-content > .button-box > button {
+    border: 2px solid #ccc; color: #fff; cursor: pointer;
+    width: 150px; height: 40px; border-radius: 7px;
+}
+.board-detail-modal > .board-detail-contents > .bd-sub-content > .button-box > .modified {
+
+    background-color: rgb(106, 118, 138); margin-right: 0.4em;
+}
+
+.board-detail-modal > .board-detail-contents > .bd-sub-content > .button-box > .delete {
+    background-color: rgb(178, 80, 78);
+
+}
 
 
 @media screen and (max-width:756px) {
