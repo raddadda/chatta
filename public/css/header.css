@@ -62,7 +62,7 @@ body {
 
 
 .main-header > .header-layout  > .header-profie > .allow {
-    color: #fff; cursor: pointer; padding-left: 0.1em; font-size: 0.6em;
+    color: #fff; cursor: pointer; padding-left: 0.4em; font-size: 0.6em;
 }
 .main-header >  .header-layout  >.header-profie > .header-profile-tab {
     position: absolute; display: none;     z-index: 10000;
