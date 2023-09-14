@@ -1,18 +1,13 @@
-
-
-async function cookieAuthCheck(){
-    const res = await axios({
-        method:'post',
-        url:'/auth'
-    })
-}
-
 async function userLogOut() {
-    const res = await axios({
-        method: "post",
-        url: "/logout",
-    })
-    document.location.href = "/login";
+    try {
+        const res = await axios({
+            method: "post",
+            url: "/logout",
+        })
+        document.location.href = "/login";
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 

@@ -1,18 +1,25 @@
 
 
 function modalCloase () {
-    document.getElementById('boardDetailModal').style.display = 'none';
+    try {
+        document.getElementById('boardDetailModal').style.display = 'none';
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 function boardModified (id) {
-    if(!confirm('수정페이지로 넘어가겠습니까?')) return;
-    window.location.href = `/post/edit/${id}`
+    try {
+        if(!confirm('수정페이지로 넘어가겠습니까?')) return;
+        window.location.href = `/post/edit/${id}`    
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 async function boardDelete1 (id) {
-
-    if (!confirm('정말로 삭제하시겠습니까?')) return;
     try {
+        if (!confirm('정말로 삭제하시겠습니까?')) return;
         const deleteRes = await boardDelete(id);
         if (deleteRes) {
             alert('삭제가 되었습니다.');
@@ -22,5 +29,6 @@ async function boardDelete1 (id) {
         }
     } catch (e) {
         alert('잠시 후에 시도해주세요.');
+        return
     }
 }

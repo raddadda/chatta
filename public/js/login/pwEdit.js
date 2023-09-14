@@ -1,7 +1,7 @@
 async function pwEdit() {
-    const resultBox = document.querySelector('.result')
-    const form = document.forms['pw-edit']
     try {
+        const resultBox = document.querySelector('.result')
+        const form = document.forms['pw-edit']
         if(!pwFlag){
             alert('비밀번호를 확인해 주세요')
             $('#pw_edit').focus();
@@ -36,14 +36,16 @@ async function pwEdit() {
         console.log(error)
     }
 }
+
 function cancel() {
     window.location.href='/profile/edit'
 }
 
-
 document.addEventListener("keydown", function (event) {
     if (event.key === "Enter") {
-        pwEdit();
+        (async() => {
+            await pwEdit();
+        })()
     }
 });
 

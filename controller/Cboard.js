@@ -21,11 +21,14 @@ const random_choice_img_url = async()=>{
 }
 // res.cookies(signedCookies) id값 복호화
 const getUserId = async (req) => {
-
-    if (req.signedCookies && req.signedCookies['logined'] && req.signedCookies['logined'].id) {
-        return uuid = await Cauth.stringToUuid(req.signedCookies['logined'].id);
-    } else {
-        return ''
+    try {
+        if (req.signedCookies && req.signedCookies['logined'] && req.signedCookies['logined'].id) {
+            return uuid = await Cauth.stringToUuid(req.signedCookies['logined'].id);
+        } else {
+            return ''
+        }
+    } catch (error) {
+        console.log(error)
     }
 }
 
@@ -77,19 +80,16 @@ const create_board_post = async (req,res)=>{
             res.json({result:false});
             return;
         }
-    } catch(e){
+    } catch(error){
         res.json({result:false});
-        console.log(e);
+        console.log(error);
     }
 }
 
 const edit_board_post = async(req,res)=>{
-
-    const user_id = await getUserId(req);
-
-    const {id, title,content,event_time,category} = req.body
-    console.log("req.body",req.body)
     try{
+        const user_id = await getUserId(req);
+        const {id, title,content,event_time,category} = req.body
         const board = await Board.update({
             title,
             poster_id : user_id,
@@ -114,20 +114,16 @@ const edit_board_post = async(req,res)=>{
             res.json({result:false});
             return;
         }
-       
-    }catch(e){
+    }catch(error){
         res.json({result:false});
-        console.log(e);
+        console.log(error);
     }
 }
 const delete_board = async (req, res) => {
-
-    const { id } = req.body;
     try {
-
+        const { id } = req.body;
         const board = await Board.destroy({ where : { id }});
         const bookmark = await Board_Bookmark.destroy({ where : {id}});
-        
         if (board) {
             res.json({result:true});
             return;
@@ -135,21 +131,19 @@ const delete_board = async (req, res) => {
             res.json({result:false});
             return;
         } 
-        
-    } catch (e) {
+    } catch (error) {
         res.json({result:false});
-        console.log(e);
+        console.log(error);
     }
 }
 
 const boarduser_findone = async (req,res)=>{
-    const {id} = req.body;
     try {
+        const {id} = req.body;
         const board = await Board.findOne({
             attributes:['id', 'title', 'views', 'content', 'event_time', 'category', 'createdAt','board_img'],
             where: {id}
         })
-      
         if (board && board.dataValues){
             res.json({result:true, board});
             return;
@@ -157,18 +151,15 @@ const boarduser_findone = async (req,res)=>{
             res.json({result:false});
             return;
         }   
-      
-    } catch(e) {
+    } catch(error) {
         res.json({result:false});
-        console.log(e);
+        console.log(error);
     }
 }
 
 const boarduser_findall = async(req,res)=>{
-    
-    const user_id = await getUserId(req);
-   
     try {
+        const user_id = await getUserId(req);
         const board = await Board.findAll({
             order: [["id","desc"]],
             limit:3
@@ -189,33 +180,27 @@ const boarduser_findall = async(req,res)=>{
             res.json({result:false});
             return;
         }
-    } catch(e){
+    } catch(error){
         res.json({result:false});
-        console.log(e);
+        console.log(error);
     }
 }
 
 const boarduser_findall_pagenation = async (req, res)=>{
-    
-    const user_id = await getUserId(req);
-    
-    let pagenation = {};
-    let boardRowlimit = 12; 
-
-    if (req.body.page_id) {
-        pagenation.startid = {id :{ [Op.lt]: req.body.page_id-1}}
-    } else {
-        pagenation.startid = {id :{[Op.gte]: 1}}
-    }
-
-
     try {
+        const user_id = await getUserId(req);
+        let pagenation = {};
+        let boardRowlimit = 12; 
+        if (req.body.page_id) {
+            pagenation.startid = {id :{ [Op.lt]: req.body.page_id-1}}
+        } else {
+            pagenation.startid = {id :{[Op.gte]: 1}}
+        }
         const board = await Board.findAll({
              order: [["id","desc"]],
             where: pagenation.startid,
             limit : boardRowlimit
         })
-
         if (board) {
             board.forEach(index => {
                 if (index.dataValues.poster_id === user_id) {
@@ -226,22 +211,19 @@ const boarduser_findall_pagenation = async (req, res)=>{
                     delete index.dataValues.poster_id;
                 }
             });
-            
             res.json({result:true, board});
             return;
         } else{
             res.json({result:false});
             return;
         }
-    } catch(e){
+    } catch(error){
         res.json({result:false});
-
-        console.log(e);
+        console.log(error);
     }
 }
 
 const create_board_bookmark = async (req, res)=>{
-
     try {
             const user_id = await getUserId(req);
             const { board_id, view } = req.body;
@@ -257,16 +239,14 @@ const create_board_bookmark = async (req, res)=>{
                 res.json({result:false});
                 return;
             }
-
-        } catch(e){
+        } catch(error) {
 
             res.json({result:false});
-            console.log(e);
+            console.log(error);
 
         }
 }
 const delete_board_bookmark = async (req, res)=>{
-
     try {
         const user_id = await getUserId(req);
         const { board_id , view} = req.body;
@@ -286,14 +266,12 @@ const delete_board_bookmark = async (req, res)=>{
 }
 
 const findone_board_bookmark = async (req,res)=>{
-    const {board_id} = req.body;
-
     try {
+        const {board_id} = req.body;
         const board = await Board_Bookmark.findOne({
             // attributes:['id', 'title', 'views', 'content', 'event_time', 'category', 'createdAt'],
             where: {board_id}
         })
-      
         if (board && board.dataValues){
             res.json({result:true });
             return;
@@ -301,18 +279,16 @@ const findone_board_bookmark = async (req,res)=>{
             res.json({result:false});
             return;
         }   
-      
-    } catch(e) {
+    } catch(error) {
         res.json({result:false});
-        console.log(e);
+        console.log(error);
     }
 }
 
 
 const findall_profile_bookmark_board =  async (req,res)=>{
-    const user_id = await getUserId(req);
-    // const {findAllData} = req.body;
     try {
+        const user_id = await getUserId(req);
         const board = await Board_Bookmark.findAll({
             include: [{
                 model: Board,
@@ -322,7 +298,6 @@ const findall_profile_bookmark_board =  async (req,res)=>{
                 }
             }]
         })
-
         if (board) {
             board.forEach(index => {
                 console.log('index', index.dataValues.board)
@@ -340,9 +315,9 @@ const findall_profile_bookmark_board =  async (req,res)=>{
             res.json({result:false});
             return;
         }
-    } catch(e){
+    } catch(error){
         res.json({result:false});
-        console.log(e);
+        console.log(error);
     }
 }
 
