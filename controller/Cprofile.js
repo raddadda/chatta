@@ -35,9 +35,7 @@ const profile = async (req, res) => {
             return res.status(404).render('404');
         }
 
-        // const profileImage = await Cimage.getProfileImage(userId);
         const profileImage = '';
-        // console.log(user, age, friendCount, posterChatRooms, userChatRooms, bookmarkedBoards, schedules)
         res.render('profile', { user, age, profileImage, friendCount, posterChatRooms, userChatRooms, bookmarkedBoards, schedules });
     } catch (error) {
         console.error(error);
@@ -152,8 +150,6 @@ const getBookmarkedBoards = async (userId) => {
             where: { user_id: userId },
             include: [Board],
         });
-        console.log('bookmarkedBoards:', bookmarkedBoards);
-
         return bookmarkedBoards.map((bookmark) => bookmark.board);
     } catch (error) {
         console.error('북마크한 게시물 가져오기 오류:', error);

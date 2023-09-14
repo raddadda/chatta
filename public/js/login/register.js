@@ -45,7 +45,6 @@ async function userSignUp() {
         if(!pwFlag){
             alert('비밀번호를 확인해 주세요')
             $('#pw').css({ "border" : "2px solid red"})
-            //$('#pw').focus();
             return;
         }
         const data = {
@@ -71,10 +70,7 @@ async function userSignUp() {
     }
 }
 
-/////////////////////////이메일 인증/////////////////
-// function emailAuth() {
-//     auth.hidden = false;
-// }
+
 
 //////////////유효성 검사///////////////
 

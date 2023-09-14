@@ -194,7 +194,6 @@ const boarduser_findall_pagenation = async (req, res)=>{
 
     if (req.body.page_id) {
         pagenation.startid = {id :{ [Op.lt]: req.body.page_id-1}}
-        console.log(" pagenation.startid ", pagenation.startid )
     } else {
         pagenation.startid = {id :{[Op.gte]: 1}}
     }
@@ -234,7 +233,6 @@ const create_board_bookmark = async (req, res)=>{
     try {
             const user_id = await getUserId(req);
             const { board_id, view } = req.body;
-            console.log("view",view)
             const board = await Board_Bookmark.create({
                 user_id: user_id,
                 board_id:board_id
@@ -307,7 +305,6 @@ const findall_profile_bookmark_board =  async (req,res)=>{
             }]
         })
 
-        console.log('board', board)
         if (board) {
             board.forEach(index => {
                 console.log('index', index.dataValues.board)
@@ -321,7 +318,6 @@ const findall_profile_bookmark_board =  async (req,res)=>{
             });
             res.json({result:true, board});
         } else{
-            console.log("x");
             res.json({result:false});
         }
     } catch(e){

@@ -98,7 +98,6 @@ listContainers.forEach(function (container) {
 // 목록을 토글하는 함수
 function toggleList(listId, button) {
     const listContainer = document.getElementById(listId);
-    console.log('listContainer', listContainer)
     if (listContainer.style.display === 'block') {
         listContainer.style.display = 'none';
         button.style.color = 'gray';
