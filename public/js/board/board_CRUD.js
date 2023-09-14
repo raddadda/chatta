@@ -1,5 +1,10 @@
+let loading = false;
+
 //게시판 생성
 async function boardCreate(){
+
+    if (loading) return;
+    loading = true
     const boardForm = document.forms["board-form"];
     if ( boardForm.title.value === "" ) return alert('제목을 확인해주세요.');
     if ( boardForm.content.value === "" ) return alert('내용을 확인해주세요.');
@@ -21,19 +26,25 @@ async function boardCreate(){
         if(res.data.result){
             alert("등록 되었습니다.");
             window.location.href = "/";
-        }else{
+    
+        } else{
             alert("다시 시도해주세요.");
         }
-        
+        loading = false;
         console.log("result",res.result);
     } catch (error) {
         alert("잠시 후에 시도해주세요.");
         console.log(error);
+        loading = false;
     }
 }
 
 //게시판 수정
 async function boardEdit(data) {
+
+
+    if (loading) return;
+    loading = true
 
     try {
         const data = {...data}
@@ -44,13 +55,15 @@ async function boardEdit(data) {
         })
 
         if(res.data.result){
+            loading = false;
             return true;
         } else{
+            loading = false;
             return false;
         }
-
+   
     } catch(error) {
-
+        loading = false;
         alert("잠시후 다시 시도해주세요.");
         console.log(error);
 
