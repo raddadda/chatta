@@ -30,13 +30,14 @@ p {
     color: #333; 
     margin-bottom: 20px; 
     text-align: center; 
+    margin-top : 20px
 }
 
 /* 인풋 영역 */
 .user-info {
     max-width: 400px;
-    margin: 20px auto;
-    padding: 20px;
+    margin: 30px auto;
+    padding: 20px 20px 20px 40px;
     border: 1px solid #ccc;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -62,7 +63,7 @@ p {
     display: flex;
 }
 .destroy_btn button {
-    background-color: #3498db;
+    background-color: rgb(123,142,169);
     color: #fff;
     padding: 10px 20px;
     border: none;
@@ -81,7 +82,7 @@ p {
 }
 
 .destroy_btn button:hover {
-    background-color: #2980b9;
+    background-color: rgb(71,87,111);
 }
 .cancel_btn button:hover {
     background-color: #c8c8c8;

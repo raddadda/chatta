@@ -104,19 +104,19 @@ function idCheck() {
 function pwCheck() {
     pwFlag = false
     if(!pwdCheck.test( $("#pw").val() ) ) {
-        $('#pwtx').text('영문자+숫자 조합으로 8~25자리 입력해 주세요').addClass('red')
+        $('#pwtx').text('영문자+숫자 조합으로 8~25자리 입력해 주세요').addClass('red').removeClass('green')
         return
     }  
     if($('#pw').val() == "") {
-        $('#pwtx').text('비밀번호를 입력하세요').addClass('red')
+        $('#pwtx').text('비밀번호를 입력하세요').addClass('red').removeClass('green')
         return
     }
     if($('#pw').val() !== $('#Cpw').val()) {
-        $('#pwtx').text('비밀번호가 일치하지 않습니다').addClass('red')
+        $('#pwtx').text('비밀번호가 일치하지 않습니다').addClass('red').removeClass('green')
         return
     }
     if($('#pw').val() == $('#Cpw').val()) {
-        $('#pwtx').text('비밀번호가 일치합니다').addClass('green')
+        $('#pwtx').text('비밀번호가 일치합니다').addClass('green').removeClass('red')
         $('#pw').css({
             "font-size": "12px",
             "text-align" : "start",

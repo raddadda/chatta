@@ -6,19 +6,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>프로필 수정</title>
+    <link rel="stylesheet" href="/public/css/header.css">
+    <link rel="stylesheet" href="/public/css/footer.css">
     <link rel="stylesheet" href="/public/css/profileEdit.css">
     <script src="/public/js/profile/profileEdit.js" defer></script>
 </head>
 
 <body>
-    <div class="header">
-        <div class="header-content">
-            <div class="header-title">
-                프로필 편집
+    <header class="main-header">
+        <div class="header-layout">
+            <span class="header-logo logo"><a href="/">Chatta</a></span>
+            <ul class="header-menu">
+                <li><a href="/">게시판 리스트</a></li>
+            </ul>
+            <div class="header-profie">
+                <div class="profile" onclick="toggleHeaderProfile()">
+                    <img src="<%= profileImage %>" alt="profile_image" />
+                </div>
+                <ul class="header-profile-tab">
+                    <li id="mobileView"><a href="/">게시판 리스트</a> </li>
+                    <li><a href="/profile">프로필</a> </li>
+                    <li><button type="button" onclick="">로그아웃</button></li>
+                </ul>
             </div>
         </div>
-    </div>
-
+    </header>
     <!-- 중앙 사용자 정보 영역 -->
     <div class="user-info">
         <div class="a">
@@ -89,17 +101,91 @@
                         <input type="text" id="categoryB">
                     </div>
                 </div>
-                <!-- 저장 버튼 -->
-                <div class="btn">
-                    <div class="save_btn">
-                        <button type="button" onclick="edit()">저장하기</button>
-                    </div>
-                    <div class="cancel_btn">
-                        <button type="button" onclick="cancel()">뒤로가기</button>
-                    </div>
+            </div>
+            <!-- 저장 버튼 -->
+            <div class="btn">
+                <div class="save_btn">
+                    <button type="button" onclick="edit()">저장하기</button>
                 </div>
+                <div class="cancel_btn">
+                    <button type="button" onclick="cancel()">뒤로가기</button>
+                </div>
+            </div>
         </form>
     </div>
+    <footer class="footer-body">
+        <div class="footer-left">
+            <div class="logo">chatta</div>
+            <p class="footer-home">
+                <a href="/" class="link-1">Home</a>
+                <a class="utube" href="/"> | <img
+                        src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/youtubeicon.png"
+                        style="width: 20px; position: relative; top: 5px;" /></a>
+                <a class="facebook" href="/"> | <img
+                        src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/facebookicon.png"
+                        style="width: 20px; position: relative; top: 5px;" /></a>
+            </p>
+            <hr>
+            <p class="footer-project-info">
+                <span>back-end socket project</span>
+                실시간 채팅 및 동시 영상시청 웹 애플리케이션
+            </p>
+            </p>
+            <p class="footer-team-name">Copyright © 2023 socket-chat project</p>
+        </div>
+
+        <div class="footer-space"></div>
+
+        <div class="footer-git">
+            <div>
+                <p>김민영</p>
+            </div>
+            <div>
+                <p><a href="https://github.com/raddadda"><img
+                            src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/giticon.png"
+                            style="width: 20px; position: relative; top: 5px;"> github.com/raddadda</a>
+            </div>
+            <div>
+                <p>김성제</p>
+            </div>
+            <div>
+                <p><a href="https://github.com/raddadda"><img
+                            src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/giticon.png"
+                            style="width: 20px; position: relative; top: 5px;"> github.com/raddadda</a>
+            </div>
+            <div>
+                <p>류승기</p>
+            </div>
+            <div>
+                <p><a href="https://github.com/raddadda"><img
+                            src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/giticon.png"
+                            style="width: 20px; position: relative; top: 5px;"> github.com/raddadda</a>
+            </div>
+            <div>
+                <p>정인근</p>
+            </div>
+            <div>
+                <p><a href="https://github.com/raddadda"><img
+                            src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/giticon.png"
+                            style="width: 20px; position: relative; top: 5px;"> github.com/raddadda</a>
+            </div>
+            <div>
+                <p>최영찬 </p>
+            </div>
+            <div>
+                <p><a href="https://github.com/raddadda"><img
+                            src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/giticon.png"
+                            style="width: 20px; position: relative; top: 5px;"> github.com/raddadda</a>
+            </div>
+        </div>
+    </footer>
+    <script src="/public/js/index.js" defer></script>
+    <script src="/public/js/board/board_CRUD.js"></script>
+    <script src="/public/js/board/board_render.js"></script>
+    <script src="/public/js/board/board_render_func.js"></script>
+    <script src="/public/js/board/board_book_mark.js"></script>
+    <script src="/public/js/profile.js"></script>
+    <script src="/public/js/header.js"></script>
 </body>
 
 </html>

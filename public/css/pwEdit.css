@@ -29,7 +29,7 @@ body {
 .center-info {
     max-width: 600px;
     margin: 20px auto;
-    padding: 20px;
+    padding: 20px 20px 20px 40px;
     border: 1px solid #ccc;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -56,7 +56,7 @@ body {
     margin-bottom: 10px;
 }
 .edit_btn button {
-    background-color: #3498db;
+    background-color: rgb(123,142,169);
     color: #fff;
     padding: 10px 20px;
     border: none;
@@ -65,7 +65,7 @@ body {
 }
 
 .edit_btn button:hover {
-    background-color: #2980b9;
+    background-color: rgb(71,87,111);
 }
 
 .cancel_btn button {
