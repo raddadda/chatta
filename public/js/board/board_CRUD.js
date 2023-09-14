@@ -1,5 +1,10 @@
+let loading = false;
+
+
 //게시판 생성
 async function boardCreate(){
+    if(loading) return;
+    loading = true;
     const boardForm = document.forms["board-form"];
     if ( boardForm.title.value === "" ) return alert('제목을 확인해주세요.');
     if ( boardForm.content.value === "" ) return alert('내용을 확인해주세요.');
@@ -24,17 +29,20 @@ async function boardCreate(){
         }else{
             alert("다시 시도해주세요.");
         }
-        
+        loading =false;
         console.log("result",res.result);
     } catch (error) {
         alert("잠시 후에 시도해주세요.");
+        loading = false;
         console.log(error);
+        
     }
 }
 
 //게시판 수정
 async function boardEdit(data) {
-
+    if(loading) return;
+    loading = true;
     try {
         const data = {...data}
         const res = await axios({
@@ -48,10 +56,11 @@ async function boardEdit(data) {
         } else{
             return false;
         }
-
+        loading =false;
     } catch(error) {
 
         alert("잠시후 다시 시도해주세요.");
+        loading =false;
         console.log(error);
 
     }

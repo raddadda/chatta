@@ -232,6 +232,7 @@
             </div>
         </div>
     </footer>
+<<<<<<< HEAD
     <script src="/public/js/index.js" defer></script>
     <script src="/public/js/board/board_CRUD.js"></script>
     <script src="/public/js/board/board_render.js"></script>
@@ -239,6 +240,84 @@
     <script src="/public/js/board/board_book_mark.js"></script>
     <script src="/public/js/profile.js"></script>
     <script src="/public/js/header.js"></script>
+=======
+<script src="/public/js/index.js" defer></script>
+<script src="/public/js/board/board_CRUD.js"></script>
+<script src="/public/js/board/board_render.js"></script>
+<script src="/public/js/board/board_render_func.js"></script>
+<script src="/public/js/board/board_book_mark.js"></script>
+<script src="/public/js/profile.js"></script>
+<script src="/public/js/header.js"></script>
+
+<script>
+
+    let list = [];
+    
+    ( function() {
+       
+        getbaordPagenation();
+    
+    })();
+
+    async function getbaordPagenation() {    
+
+        try {
+        
+            const findAllData_board = await findall_profile_bookmark_board ();
+
+            if (findAllData_board.length > 0) {
+                const wrap = document.querySelector("#wrap");
+                let boxhtml = ``;
+                for ( let i=0; i<findAllData_board.length; i++) {
+                    let date = new Date(`${findAllData_board[i].createdAt}`);
+                    list.push(findAllData_board[i].board);
+                    const data = {
+                        category : findAllData_board[i] && findAllData_board[i].board.category ? findAllData_board[i].board.category : '',
+                        title :  findAllData_board[i] && findAllData_board[i].board.title ? findAllData_board[i].board.title : '',
+                        views : findAllData_board[i] && findAllData_board[i].board.views ? findAllData_board[i].board.views : 0,
+                        createAt: `${date.getFullYear()}-${(date.getMonth() + 1)>= 10 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1) }-${date.getDate() >= 10 ? date.getDate() : '0' + date.getDate()} ${date.getHours()}시`
+                    }
+                    boxhtml += await list_item(i , data);
+                    if (findAllData_board.length === i + 1) {
+                        page_id = findAllData_board[i].id + 1;
+                    }
+                }
+                wrap.innerHTML += boxhtml;
+
+            } else {
+
+                const noneData = document.querySelector('#bookmarkList > .category-list');
+                noneData.innerHTML +=  `  <ul>
+                        <li>북마크한 게시물이 없어요</li>
+                    </ul>
+                `;
+            }
+
+        } catch (e) {
+            
+            console.log(e);
+        }
+    }   
+
+    async function chatRoomJoin(board_id){
+        
+        const res = await axios({
+            method: "post",
+            url: "/chat/join",
+            data: {
+                room_id:board_id,
+            }
+        })
+
+        if (res.data.result) {
+            alert('채팅방에 참여했습니다')
+            document.location.assign('/mychat')
+        }
+    }
+
+</script>
+
+>>>>>>> asd
 </body>
 
 </html>

@@ -24,6 +24,7 @@
     <a href="/profile">프로필 페이지로 이동</a> <br/>
     <a href="/post/new">게시글 작성</a><br/>
     <a href="/post">게시글 목록</a><br/> -->
+    
     <div id="scrollby-top" onclick="goTop()"><img src="../public/images/gotopicon.png"> </div>
     <header class="main-header">
         <div class="header-layout">
@@ -117,12 +118,12 @@
     /**  board list 관련 **/
     let list = [];
     let page_id = 0;
-
     var currentDirection = ''; // 현재의 방향을 나타내는 변수
     var lastScrollTop = 0; // 방향을 구하기 위해 사용되는 변수
     ( async function() {
         goTop();
         getbaordPagenation();
+     
         window.addEventListener('scroll', ()=>{
             
                 let scrollTop = window.scrollY;
@@ -131,7 +132,7 @@
                 //console.log("scrollTop",scrollTop);
                 //console.log("innerHeight",innerHeight);
                 //console.log("scrollHeight",scrollHeight);
-                if ( scrollTop + innerHeight +400>= scrollHeight){
+                if ( scrollTop + innerHeight + 400 >= scrollHeight){
                     if(currentDirection != 'down'){
                         getbaordPagenation();
                         currentDirection = 'down';
@@ -152,10 +153,10 @@
     async function getbaordPagenation () {
 
         const wrap = document.querySelector("#wrap");
-
         try {
-            const findAllData = await boradFindAll_pagination(page_id);
+            let findAllData = await boradFindAll_pagination(page_id);
             let boxhtml = ``;
+
             if (findAllData.length > 0) {
                 
                 for (let i=0; i<findAllData.length; i++){
@@ -167,16 +168,18 @@
                         views : findAllData[i] && findAllData[i].views ? findAllData[i].views : 0,
                         createAt: `${date.getFullYear()}-${(date.getMonth() + 1)>= 10 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1) }-${date.getDate() >= 10 ? date.getDate() : '0' + date.getDate()} ${date.getHours()}시`
                     }
-
+                    
                     boxhtml += await list_item(i , data);
 
                     if (findAllData.length === i + 1) {
                         page_id = findAllData[i].id + 1;
+                       
                     }
                 }
+                console.log("page_id확인",page_id);
                 wrap.innerHTML += boxhtml;
             }
-            
+           
         } catch (e) {
 
         }
@@ -208,7 +211,7 @@
             })
             if (res.data.result) {
                 alert('채팅방에 참여했습니다')
-                document.location.assign('/mychat')
+                document.location.assign('/mychat');
             } else {
                 alert('이미 참여한 채팅방입니다')
             }

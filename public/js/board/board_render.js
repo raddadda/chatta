@@ -10,7 +10,7 @@ function list_item (index, data) {
                 <div class="boxBordCategory">${data.category}</div>
                 <div class="boxTitle">${data.title}</div>
                 <div class="boxCreateAt">${data.createAt}</div>
-                <div class="boxViews"><img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/viewicon.png" >&nbsp; ${data.views}</div>      
+                <div class="boxViews"><img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/bookmarkicon.png" >&nbsp; ${data.views}</div>      
             </div>
         </div>
     `; 
@@ -47,7 +47,7 @@ function getBookMarkSvg (book_mark) {
 async function loadDetailModal (index) {
     // console.log("list[index]",list[index].views++);
     list[index].book_mark = await post_bookmark(list[index].id);
-
+    let date = new Date(`${list[index].event_time}`);
     const data = {
         id : list[index] && list[index].id ? list[index].id : 0,
         poster_check : list[index] && list[index].poster_check ? list[index].poster_check : false,
@@ -55,8 +55,9 @@ async function loadDetailModal (index) {
         content: list[index] && list[index].content ? list[index].content : '',
         title :  list[index] && list[index].title ? list[index].title : '',
         views : list[index] && list[index].views ? list[index].views : 0,
-        event_time : list[index] && list[index].event_time ? list[index].event_time.split('T')[0] : '',
-        book_mark : list[index] && list[index].book_mark ? list[index].book_mark : false
+        //event_time : list[index] && list[index].event_time ? list[index].event_time : '',
+        book_mark : list[index] && list[index].book_mark ? list[index].book_mark : false,
+        event_time: `${date.getFullYear()}-${(date.getMonth() + 1)>= 10 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1) }-${date.getDate() >= 10 ? date.getDate() : '0' + date.getDate()} ${date.getHours()}시 ${date.getMinutes()}분`
     }
 
     let modal = document.getElementById('boardDetailModal');
