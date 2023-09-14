@@ -29,7 +29,8 @@ p {
     font-size: 18px; 
     color: #333; 
     margin-bottom: 20px; 
-    text-align: center; 
+    text-align: center;
+    margin-top: 20px;
 }
 
 /* 유저 인풋 영역 */
@@ -50,7 +51,7 @@ form label {
 }
 
 form input {
-    width: 95%;
+    width: 100%;
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
@@ -110,13 +111,13 @@ form select {
 
 a {
     display: inline-block;
-    background-color: rgb(123,142,169);
+    background-color: rgb(71,87,111);
     color: #fff;
     padding: 5px 10px;
     border: none;
     border-radius: 3px;
     text-decoration: none;
-    margin: 10px 5px 0 0;
+    margin: 10px 15px 10px 0;
     font-size: 16px;
 }
 
