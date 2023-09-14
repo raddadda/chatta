@@ -2,8 +2,6 @@ const axios = require('axios');
 const {User} = require('../models');
 const secret = require('../config/secret');
 const Cauth = require('./Cauth');
-const Clogin = require('./Clogin');
-const constant = require('../common/constant');
 const {REST_API_KEY,REDIRECT_URI} = secret;
 
 
@@ -33,6 +31,11 @@ const authKakao = async (req,res)=>{
             const id = await Cauth.uuidToString(user_id);
             const auth = await Cauth.authCodeIssue(user_id);
             await Cauth.loginCookieRes(id,nickname,auth,res);
+            const tokenUpdate = await User.update({
+                token: Authorization
+            }, {
+                where: { user_id },
+            })
         } else {
             const {profile,birthday,gender,email} = user.kakao_account
             const signConst = await Cauth.signUpConst(Authorization);
@@ -40,7 +43,20 @@ const authKakao = async (req,res)=>{
             if (birthday){
                 birth = new Date (`1999-${birthday.slice(0,2)}-${birthday.slice(2,4)}`)
             }
-            const {uuid} = await Clogin.signUpCreate(login_id,profile.nickname,gender,birth,email,Authorization,signConst)
+            const {uuid,hash,auth:signAuth,auth_num} = signConst;
+            const user_create = await User.create({
+                user_id: uuid,
+                login_id,
+                login_pw: hash,
+                user_name: profile.nickname,
+                nickname: login_id,
+                gender,
+                birth,
+                email,
+                auth: signAuth,
+                auth_num,
+                token: Authorization,
+            });           
             const id = await Cauth.uuidToString(uuid);
             const auth = await Cauth.authCodeIssue(uuid);
             await Cauth.loginCookieRes(id,profile.nickname,auth,res)
