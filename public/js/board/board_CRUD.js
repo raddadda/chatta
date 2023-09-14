@@ -42,11 +42,11 @@ async function boardCreate(){
 }
 
 //게시판 수정
-async function boardEdit(data) {
+async function boardEdit(resdata) {
     if(loading) return;
     loading = true;
     try {
-        const data = {...data}
+        const data = {...resdata}
         const res = await axios({
             method:"post",
             url:"/post/edit",

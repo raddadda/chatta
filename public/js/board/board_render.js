@@ -80,6 +80,15 @@ async function loadDetailModal (index) {
                 </div>
             </div>
             <div id="eventDetailSubInfo" class="bd-sub-content">
+
+                ${data.poster_check === true ? 
+                    `<div class="button-box">
+                        <button type="button" class="modified" onclick = "boardModified(${data.id})">수정하기</button>
+                        <button type="button" class="delete" onclick = "boardDelete1(${data.id})">삭제하기</button>
+                    </div>`
+                    : 
+                    ''
+                }
                 <div class="txt-box">
                     <h6>내용</h6>
                     <p>${data.content}</p>
@@ -93,14 +102,6 @@ async function loadDetailModal (index) {
                     <h6>채팅방</h6>
                     <p><button onclick='chatRoomJoin(${data.id})'>입장하기</button><p>
                 </div>
-                ${data.poster_check === true ? 
-                    `<div class="button-box">
-                        <button type="button" class="modified" onclick = "boardModified(${data.id})">수정하기</button>
-                        <button type="button" class="delete" onclick = "boardDelete1(${data.id})">삭제하기</button>
-                    </div>`
-                    : 
-                    ''
-                }
             </div>
            
         </div>

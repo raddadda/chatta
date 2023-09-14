@@ -88,7 +88,7 @@ const edit_board_post = async(req,res)=>{
     const user_id = await getUserId(req);
 
     const {id, title,content,event_time,category} = req.body
-
+    console.log("req.body",req.body)
     try{
         const board = await Board.update({
             title,
@@ -107,7 +107,7 @@ const edit_board_post = async(req,res)=>{
         },{
             where:{room_id:id}
         })
-        if(board.dataValues){
+        if(board){
             res.json({result:true , title , content, event_time, category});
             return;
         }else{
