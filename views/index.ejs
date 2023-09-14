@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,22 +11,23 @@
     <link rel="stylesheet" href="/public/css/footer.css">
     <link rel="stylesheet" href="/public/css/board/board_list.css">
     <link rel="stylesheet" href="/public/css/board/board_detail.css">
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="/public/js/index_modal.js" defer></script>
     <link rel="stylesheet" href="/public/css/index_modal.css">
 </head>
 
-<body>  
+<body>
     <div id="scrollby-top" onclick="goTop()"><img src="../public/images/gotopicon.png"> </div>
     <header class="main-header">
         <div class="header-layout">
-            <span class="header-logo logo"><a href="/">Chatta</a></span> 
+            <span class="header-logo logo"><a href="/">Chatta</a></span>
             <ul class="header-menu">
                 <li><a href="/mychat">나의 채팅방</a></li>
             </ul>
             <div class="header-profie">
-                <div class="profile"  onclick="toggleHeaderProfile()">
-                    <img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/test_1280.jpg" alt="profile_image" />
+                <div class="profile" onclick="toggleHeaderProfile()">
+                    <img src="<%= profileImage %>" alt="profile_image" />
                 </div>
                 <span class="allow" onclick="toggleHeaderProfile()">▼</span>
                 <ul class="header-profile-tab">
@@ -45,160 +47,173 @@
         </div>
     </div>
     <footer class="footer-body">
-            <div class="footer-left">
-                <div class="logo">chatta</div>
-                <p class="footer-home">
+        <div class="footer-left">
+            <div class="logo">chatta</div>
+            <p class="footer-home">
                 <a href="/" class="link-1">Home</a>
-                <a class = "utube" href="/"> | <img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/youtubeicon.png" style="width: 20px; position: relative; top: 5px;"/></a>
-                <a class = "facebook" href="/"> | <img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/facebookicon.png" style="width: 20px; position: relative; top: 5px;"/></a>
-                </p>    
-                <hr>
-                <p class="footer-project-info">
-                    <span>back-end socket project</span>
-                    실시간 채팅 및 동시 영상시청 웹 애플리케이션
-                    
-                </p> 
+                <a class="utube" href="/"> | <img
+                        src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/youtubeicon.png"
+                        style="width: 20px; position: relative; top: 5px;" /></a>
+                <a class="facebook" href="/"> | <img
+                        src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/facebookicon.png"
+                        style="width: 20px; position: relative; top: 5px;" /></a>
             </p>
-                <p class="footer-team-name">Copyright © 2023 socket-chat project</p>
-            </div>
+            <hr>
+            <p class="footer-project-info">
+                <span>back-end socket project</span>
+                실시간 채팅 및 동시 영상시청 웹 애플리케이션
 
-            <div class="footer-space">
-            </div>
+            </p>
+            </p>
+            <p class="footer-team-name">Copyright © 2023 socket-chat project</p>
+        </div>
 
-            <div class="footer-git">
-                <div>
-                    <p>김민영</p>
-                </div>
-                <div>
-                    <p><a href="https://github.com/k-minyoung"><img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/giticon.png" style="width: 20px; position: relative; top: 5px;"> github.com/k-minyoung</a>
-                </div>
-                <div>
-                    <p>김성제</p>
-                </div>
-                <div>
-                    <p><a href="https://github.com/aymrm"><img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/giticon.png" style="width: 20px; position: relative; top: 5px;"> github.com/aymrm</a>
-                </div>
-                <div>
-                    <p>류승기</p>
-                </div>
-                <div>
-                    <p><a href="https://github.com/eukkki210"><img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/giticon.png" style="width: 20px; position: relative; top: 5px;"> github.com/eukkki210</a>
-                </div>
-                <div>
-                    <p>정인근</p>
-                </div>
-                <div>
-                    <p><a href="https://github.com/justin-jig"><img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/giticon.png" style="width: 20px; position: relative; top: 5px;"> github.com/justin-jig</a>
-                </div>
-                <div>
-                    <p>최영찬 </p>
-                </div>
-                <div>
-                    <p><a href="https://github.com/raddadda"><img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/giticon.png" style="width: 20px; position: relative; top: 5px;"> github.com/raddadda</a>
-                </div>
+        <div class="footer-space">
+        </div>
+
+        <div class="footer-git">
+            <div>
+                <p>김민영</p>
+            </div>
+            <div>
+                <p><a href="https://github.com/k-minyoung"><img
+                            src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/giticon.png"
+                            style="width: 20px; position: relative; top: 5px;"> github.com/k-minyoung</a>
+            </div>
+            <div>
+                <p>김성제</p>
+            </div>
+            <div>
+                <p><a href="https://github.com/aymrm"><img
+                            src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/giticon.png"
+                            style="width: 20px; position: relative; top: 5px;"> github.com/aymrm</a>
+            </div>
+            <div>
+                <p>류승기</p>
+            </div>
+            <div>
+                <p><a href="https://github.com/eukkki210"><img
+                            src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/giticon.png"
+                            style="width: 20px; position: relative; top: 5px;"> github.com/eukkki210</a>
+            </div>
+            <div>
+                <p>정인근</p>
+            </div>
+            <div>
+                <p><a href="https://github.com/justin-jig"><img
+                            src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/giticon.png"
+                            style="width: 20px; position: relative; top: 5px;"> github.com/justin-jig</a>
+            </div>
+            <div>
+                <p>최영찬 </p>
+            </div>
+            <div>
+                <p><a href="https://github.com/raddadda"><img
+                            src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/giticon.png"
+                            style="width: 20px; position: relative; top: 5px;"> github.com/raddadda</a>
+            </div>
         </div>
     </footer>
 
-<script src="/public/js/index.js" defer></script>
-<script src="/public/js/header.js"></script>
-<script src="/public/js/board/board_CRUD.js"></script>
-<script src="/public/js/board/board_render.js"></script>
-<script src="/public/js/board/board_render_func.js"></script>
-<script src="/public/js/board/board_book_mark.js"></script>
-<script>
+    <script src="/public/js/index.js" defer></script>
+    <script src="/public/js/header.js"></script>
+    <script src="/public/js/board/board_CRUD.js"></script>
+    <script src="/public/js/board/board_render.js"></script>
+    <script src="/public/js/board/board_render_func.js"></script>
+    <script src="/public/js/board/board_book_mark.js"></script>
+    <script>
+        /**  board list 관련 **/
+        let list = [];
+        let page_id = 0;
+        var currentDirection = ''; // 현재의 방향을 나타내는 변수
+        var lastScrollTop = 0; // 방향을 구하기 위해 사용되는 변수
+        (async function () {
+            goTop();
+            getbaordPagenation();
 
-    /**  board list 관련 **/
-    let list = [];
-    let page_id = 0;
-    var currentDirection = ''; // 현재의 방향을 나타내는 변수
-    var lastScrollTop = 0; // 방향을 구하기 위해 사용되는 변수
-    ( async function() {
-        goTop();
-        getbaordPagenation();
-     
-        window.addEventListener('scroll', ()=>{
-            
+            window.addEventListener('scroll', () => {
+
                 let scrollTop = window.scrollY;
                 let innerHeight = window.innerHeight;
                 let scrollHeight = document.body.offsetHeight;
-                if ( scrollTop + innerHeight + 400 >= scrollHeight){
-                    if(currentDirection != 'down'){
+                if (scrollTop + innerHeight + 400 >= scrollHeight) {
+                    if (currentDirection != 'down') {
                         getbaordPagenation();
                         currentDirection = 'down';
                     }
                 } else {
-                    if (currentDirection != 'up'){
+                    if (currentDirection != 'up') {
                         currentDirection = 'up';
                     }
                 }
 
                 lastScrollTop = scrollTop;
-        })
+            })
 
-        }
-    )()
-    async function getbaordPagenation () {
+        })()
+        async function getbaordPagenation() {
 
-        const wrap = document.querySelector("#wrap");
-        try {
-            let findAllData = await boradFindAll_pagination(page_id);
-            let boxhtml = ``;
+            const wrap = document.querySelector("#wrap");
+            try {
+                let findAllData = await boradFindAll_pagination(page_id);
+                let boxhtml = ``;
 
-            if (findAllData.length > 0) {
-                
-                for (let i=0; i<findAllData.length; i++){
-                    let date = new Date(`${findAllData[i].createdAt}`);
-                    list.push(findAllData[i]);
-                    const data = {
-                        board_img: findAllData[i] && findAllData[i].board_img ? findAllData[i].board_img : '',
-                        category : findAllData[i] && findAllData[i].category ? findAllData[i].category : '',
-                        title :  findAllData[i] && findAllData[i].title ? findAllData[i].title : '',
-                        views : findAllData[i] && findAllData[i].views ? findAllData[i].views : 0,
-                        createAt: `${date.getFullYear()}-${(date.getMonth() + 1)>= 10 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1) }-${date.getDate() >= 10 ? date.getDate() : '0' + date.getDate()} ${date.getHours()}시`
-                    
+                if (findAllData.length > 0) {
+
+                    for (let i = 0; i < findAllData.length; i++) {
+                        let date = new Date(`${findAllData[i].createdAt}`);
+                        list.push(findAllData[i]);
+                        const data = {
+                            board_img: findAllData[i] && findAllData[i].board_img ? findAllData[i].board_img :
+                                '',
+                            category: findAllData[i] && findAllData[i].category ? findAllData[i].category : '',
+                            title: findAllData[i] && findAllData[i].title ? findAllData[i].title : '',
+                            views: findAllData[i] && findAllData[i].views ? findAllData[i].views : 0,
+                            createAt: `${date.getFullYear()}-${(date.getMonth() + 1)>= 10 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1) }-${date.getDate() >= 10 ? date.getDate() : '0' + date.getDate()} ${date.getHours()}시`
+
+                        }
+
+                        boxhtml += await list_item(i, data);
+
+                        if (findAllData.length === i + 1) {
+                            page_id = findAllData[i].id + 1;
+
+                        }
                     }
-                    
-                    boxhtml += await list_item(i , data);
 
-                    if (findAllData.length === i + 1) {
-                        page_id = findAllData[i].id + 1;
-                       
-                    }
+                    wrap.innerHTML += boxhtml;
                 }
 
-                wrap.innerHTML += boxhtml;
-            }
-           
-        } catch (e) {
+            } catch (e) {
 
+            }
         }
-    }
 
-    function goTop() {
-        
-        document.getElementById('scrollby-top').style.display = "none";
+        function goTop() {
 
-        window.addEventListener('scroll', () => {
-            if ( window.scrollY >100) {
-            document.getElementById('scrollby-top').style.display = "block";
-            document.getElementById('scrollby-top').addEventListener('click',()=>{
-                    window.scrollTo({
-                        top: 0,
-                        left: 0,
-                        behavior: 'smooth'
-                    });
-                })
-            } else {
-                document.getElementById('scrollby-top').style.display = "none";
-            }
-        });
-    }
-    async function chatRoomJoin(board_id){
+            document.getElementById('scrollby-top').style.display = "none";
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 100) {
+                    document.getElementById('scrollby-top').style.display = "block";
+                    document.getElementById('scrollby-top').addEventListener('click', () => {
+                        window.scrollTo({
+                            top: 0,
+                            left: 0,
+                            behavior: 'smooth'
+                        });
+                    })
+                } else {
+                    document.getElementById('scrollby-top').style.display = "none";
+                }
+            });
+        }
+        async function chatRoomJoin(board_id) {
             const res = await axios({
                 method: "post",
                 url: "/chat/join",
                 data: {
-                    room_id:board_id,
+                    room_id: board_id,
                 }
             })
             if (res.data.result) {
@@ -206,12 +221,8 @@
             } else {
                 alert('이미 참여한 채팅방입니다')
             }
-    }
-    
-  
-
-  
-
-</script>
+        }
+    </script>
 </body>
+
 </html>
