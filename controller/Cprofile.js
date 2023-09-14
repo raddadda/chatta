@@ -28,8 +28,8 @@ const profile = async (req, res) => {
         if (!user) {
             return res.status(404).render('404');
         }
-        // const profileImage = await Cimage.getProfileImage(userId);
-        const profileImage = '';
+        const profileImage = await Cimage.getProfileImage(userId);
+        
         res.render('profile', { user, age, profileImage, friendCount, posterChatRooms, userChatRooms, bookmarkedBoards, schedules });
         return;
     } catch (error) {
