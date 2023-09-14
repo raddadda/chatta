@@ -4,14 +4,14 @@ function toggleHeaderProfile () {
     const  body = document.querySelector("body");
     if (window.getComputedStyle(headerProfile).display === 'none') {
         
-        headerallow.innerHTML = '&utrif;'
+        headerallow.innerHTML = '▲'
         headerProfile.style.display = 'block';
         setTimeout(() => {
             body.addEventListener('click', clickBodyEvent);
         },[100])
 
     } else {
-        headerallow.innerHTML = '&dtrif;'
+        headerallow.innerHTML = '▼'
         headerProfile.style.display = 'none';
         body.removeEventListener('click', clickBodyEvent);
     }

@@ -60,6 +60,10 @@ body {
     object-fit: cover;
 }
 
+
+.main-header > .header-layout  > .header-profie > .allow {
+    color: #fff; cursor: pointer; padding-left: 0.1em; font-size: 0.6em;
+}
 .main-header >  .header-layout  >.header-profie > .header-profile-tab {
     position: absolute; display: none;     z-index: 10000;
     top: 27px; width: 150px; left: -120px; background-color: #fff;
