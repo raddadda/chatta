@@ -19,17 +19,19 @@
         <div class="header-layout">
             <span class="header-logo logo"><a href="/">Chatta</a></span>
             <ul class="header-menu">
-                <li><a href="/">게시판 리스트</a></li>
+                <li><a href="/mychat">나의 채팅방</a></li>
             </ul>
             <div class="header-profie">
                 <div class="profile" onclick="toggleHeaderProfile()">
                     <img src="<%= profileImage %>" alt="profile_image" />
                 </div>
+                <span class="allow" style="color: #fff;" onclick="toggleHeaderProfile()">&dtrif;</span>
                 <ul class="header-profile-tab">
-                    <li id="mobileView"><a href="/">게시판 리스트</a> </li>
+                    <li id="mobileView"><a href="/mychat">나의 채팅방</a> </li>
                     <li><a href="/profile">프로필</a> </li>
-                    <li><button type="button" onclick="">로그아웃</button></li>
+                    <li><button type="button" onclick="userLogOut()">로그아웃</button></li>
                 </ul>
+                <div class="close-box"></div>
             </div>
         </div>
     </header>

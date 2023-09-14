@@ -26,7 +26,8 @@ async function boardCreate(){
         if(res.data.result){
             alert("등록 되었습니다.");
             window.location.href = "/";
-        }else{
+    
+        } else{
             alert("다시 시도해주세요.");
         }
         loading =false;
@@ -52,13 +53,14 @@ async function boardEdit(data) {
         })
 
         if(res.data.result){
+            loading = false;
             return true;
         } else{
+            loading = false;
             return false;
         }
-        loading =false;
     } catch(error) {
-
+        loading = false;
         alert("잠시후 다시 시도해주세요.");
         loading =false;
         console.log(error);

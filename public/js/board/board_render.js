@@ -1,4 +1,6 @@
 
+const awsURL = 'https://kdt-test-bucket-seunggi.s3.ap-northeast-2.amazonaws.com/'
+
 
 function list_item (index, data) {
     
@@ -10,7 +12,7 @@ function list_item (index, data) {
                 <div class="boxBordCategory">${data.category}</div>
                 <div class="boxTitle">${data.title}</div>
                 <div class="boxCreateAt">${data.createAt}</div>
-                <div class="boxViews"><img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/bookmarkicon.png" >&nbsp; ${data.views}</div>      
+                <div class="boxViews"><img src="https://kdt9-justin.s3.ap-northeast-2.amazonaws.com/viewicon.png" > <span> &nbsp; ${data.views}</span></div>      
             </div>
         </div>
     `; 
