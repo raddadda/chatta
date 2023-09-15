@@ -1,5 +1,5 @@
 let list = [];
-
+let board_index = 0;
 (function () {
     getbaordPagenation();
 })();
@@ -23,7 +23,8 @@ async function getbaordPagenation() {
                         i].board.views : 0,
                     createAt: `${date.getFullYear()}-${(date.getMonth() + 1) >= 10 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1)}-${date.getDate() >= 10 ? date.getDate() : '0' + date.getDate()} ${date.getHours()}시`
                 }
-                boxhtml += await list_item(i, data);
+                boxhtml += await list_item(board_index, data);
+                board_index +=1;
                 if (findAllData_board.length === i + 1) {
                     page_id = findAllData_board[i].id + 1;
                 }
