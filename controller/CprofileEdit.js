@@ -80,7 +80,7 @@ const profileDelete = async (req, res) => {
 };
 
 const findPw = async (req, res) => {
-    res.render('findpw')
+    res.render('findPw')
 }
 
 const findId = async (req,res) => {

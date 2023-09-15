@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const http = require('http');
 const express = require('express');
 const cookieParser = require('cookie-parser');
@@ -28,8 +30,19 @@ app.use('*', (req, res) => {
     res.status(404).render('404');
 })
 
-db.sequelize.sync({ force: false }).then(() => {
-    server.listen(PORT, () => {
-        console.log(`http://localhost:${PORT}`);
-    })
-})
+async function startServer() {
+    try {
+        const sequelize = db.sequelize;
+        sequelize.authenticate();
+
+        await sequelize.sync({ force: false }).then(() => {
+            server.listen(PORT, () => {
+                console.log(`http://localhost:${PORT}`);
+            });
+        })
+    } catch (error) {
+        console.error('서버 시작 오류:', error);
+    }
+}
+
+startServer();
