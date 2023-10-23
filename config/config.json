@@ -1,0 +1,23 @@
+{
+    "development": {
+      "username": "newuser",
+      "password": "q1w2e3r4",
+      "database": "test2",
+      "host": "127.0.0.1",
+      "dialect": "mysql"
+    },
+    "test": {
+      "username": "eukkki",
+      "password": "Inter!0719",
+      "database": "kdt9",
+      "host": "127.0.0.1",
+      "dialect": "mysql"
+    },
+    "production": {
+      "username": "admin",
+      "password": "q1w2e3r4",
+      "database": "kdt9",
+      "host": "sockettest.crtwr5i8is6o.ap-southeast-2.rds.amazonaws.com",
+      "dialect": "mysql"
+    }
+  }
