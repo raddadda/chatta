@@ -1,15 +1,17 @@
 'use strict';
 
 const Sequelize = require('sequelize');
+const config = require(__dirname + '/../config/config.json')['development'];
 const db = {};
 const sequelize = new Sequelize(
-    process.env.DB_DATABASE,
-    process.env.DB_USER,
-    process.env.DB_PASSWORD,
-    {
-        host: process.env.DB_HOST,
-        dialect: 'mysql',
-    }
+    config.database, config.username, config.password, config
+    // process.env.DB_DATABASE,
+    // process.env.DB_USER,
+    // process.env.DB_PASSWORD,
+    // {
+    //     host: process.env.DB_HOST,
+    //     dialect: 'mysql',
+    // }
 );
 
 db.User = require('./User')(sequelize);
