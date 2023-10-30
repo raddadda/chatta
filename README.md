@@ -1,6 +1,6 @@
 <h1>1️⃣ 프로젝트 소개</h1>
 관심사 기반 채팅 커뮤니티 웹서비스
-<img width="492" alt="스크린샷 2023-09-23 오후 7 14 36" src="https://github.com/raddadda/socket_project/assets/102424773/1d8ce838-f912-43f7-8150-676ad35e3ce1">
+<img width="492" alt="project3" src="https://github.com/raddadda/chatta/assets/102424773/f71976f1-0bf7-41e5-b81d-98166d7d9f45">
 
 <h1>2️⃣ 개발기간</h1>
 2023.08.31~ 2023.09.15
