@@ -1,6 +1,30 @@
 <h1>1️⃣ 프로젝트 소개</h1>
 관심사 기반 채팅 커뮤니티 웹서비스
 <img width="492" alt="project3" src="https://github.com/raddadda/chatta/assets/102424773/f71976f1-0bf7-41e5-b81d-98166d7d9f45">
+<h2>프로젝트 설계</h2>
+![KakaoTalk_Photo_2023-11-05-13-36-17 001png](https://github.com/raddadda/chatta/assets/102424773/2b0a867e-0cae-4c88-a4f3-603aa6e35c03)
+<h2>ERD 설계</h2>
+![KakaoTalk_Photo_2023-11-05-13-36-17 002png](https://github.com/raddadda/chatta/assets/102424773/bf454ddd-5ada-48f1-aae2-99d8c9956326)
+<h2>로그인 화면</h2>
+<img width="1512" alt="스크린샷 2023-11-05 오후 1 38 42" src="https://github.com/raddadda/chatta/assets/102424773/37898627-bc41-4133-bb8d-9dc09bb146b0">
+
+<h2>회원가입 화면</h2>
+<img width="1512" alt="스크린샷 2023-11-05 오후 1 39 00" src="https://github.com/raddadda/chatta/assets/102424773/e77af300-7d59-4c76-8409-8b2114cac236">
+
+<h2>메인 화면</h2>
+<img width="872" alt="스크린샷 2023-11-05 오후 1 46 47" src="https://github.com/raddadda/chatta/assets/102424773/a03c6098-24da-4731-8fae-4acfb068788d">
+<h3>무한 스크롤 페이지네이션 조회 기능</h3>
+<img width="364" alt="스크린샷 2023-11-05 오후 1 55 05" src="https://github.com/raddadda/chatta/assets/102424773/2c7d398d-233d-426d-9f56-c877885f2897">
+cefc0c6c">
+<img width="1481" alt="스크린샷 2023-11-05 오후 1 52 11" src="https://github.com/raddadda/chatta/assets/102424773/c0f4ed7b-ba19-4522-9050-db55
+<h3>게시판 모달창</h3>
+<img width="1490" alt="스크린샷 2023-11-05 오후 1 52 41" src="https://github.com/raddadda/chatta/assets/102424773/ef2c8de8-5084-4649-952c-2c70f3c74407">
+<h3>수정페이지</h3>
+<img width="863" alt="스크린샷 2023-11-05 오후 1 53 37" src="https://github.com/raddadda/chatta/assets/102424773/72f721dd-e92b-4624-a99a-4fd95cc1acc2">
+
+<h2>게시판 화면</h2>
+<img width="872" alt="스크린샷 2023-11-05 오후 1 42 07" src="https://github.com/raddadda/chatta/assets/102424773/a5da92f5-3941-4882-83a9-bb706f46316e">
+<h2>채팅창 화면</h2>
 
 <h1>2️⃣ 개발기간</h1>
 2023.08.31~ 2023.09.15
