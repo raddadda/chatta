@@ -25,6 +25,8 @@
 <h2>게시판 화면</h2>
 <img width="872" alt="스크린샷 2023-11-05 오후 1 42 07" src="https://github.com/raddadda/chatta/assets/102424773/a5da92f5-3941-4882-83a9-bb706f46316e">
 <h2>채팅창 화면</h2>
+<img width="865" alt="스크린샷 2023-11-05 오후 2 00 55" src="https://github.com/raddadda/chatta/assets/102424773/60bfe6f0-7a20-4e50-a026-8cd3f7897c03">
+<img width="1512" alt="스크린샷 2023-11-05 오후 2 01 37" src="https://github.com/raddadda/chatta/assets/102424773/27386556-5db8-4151-81c5-350f69346cad">
 
 <h1>2️⃣ 개발기간</h1>
 2023.08.31~ 2023.09.15
